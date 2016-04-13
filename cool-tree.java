@@ -287,7 +287,7 @@ class programc extends Program {
       * */
     public void cgen(PrintStream s) {
 	CgenClassTable codegen_classtable = new CgenClassTable(classes, s);
-    s.println("abc");
+    // s.println("abc");
     for (Enumeration<class_c> e_iter = classes.getElements(); e_iter.hasMoreElements();){
 
        
