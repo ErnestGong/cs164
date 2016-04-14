@@ -574,7 +574,7 @@ class CgenClassTable extends SymbolTable {
 			AbstractSymbol attr_name=attrs.get(k);
 			ArrayList<Integer> offset=new ArrayList<Integer>();
 			offset.add(1);
-			offset.add(k);
+			offset.add(12+4*k);
 			offset_table.put(attr_name,offset);
 			System.out.print(cnode.getName());
 			System.out.print("  ");
