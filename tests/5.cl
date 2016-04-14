@@ -3,6 +3,10 @@
 
 class Main inherits IO
 {
+	x:Int<-3;
+	y:Main;
+	b:Bool;
+	z:String;
   main() : Object
   {
     let thing : Object <- self in

@@ -42,6 +42,7 @@ class StringTable extends AbstractTable {
     Utilities.fatalError("String table lookup failed on string: " + s);
     return -1;
     }
+   
 
 
     protected AbstractSymbol getNewSymbol(String s, int len, int index) {

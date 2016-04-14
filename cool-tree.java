@@ -288,28 +288,28 @@ class programc extends Program {
     public void cgen(PrintStream s) {
 	CgenClassTable codegen_classtable = new CgenClassTable(classes, s);
     // s.println("abc");
-    for (Enumeration<class_c> e_iter = classes.getElements(); e_iter.hasMoreElements();){
+    // for (Enumeration<class_c> e_iter = classes.getElements(); e_iter.hasMoreElements();){
 
        
-            class_c tc = e_iter.nextElement();
-             System.out.println(tc.getName()+" "+tc.getParent());    
-            Features features = tc.getFeatures();
-             for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
-                Feature fe = f.nextElement();
-                // add method to map
-                Formals formals = method.class.cast(fe).getFormals();
-                System.out.println(fe);
-                if(fe instanceof method){
-                    for (Enumeration<formalc> fc = formals.getElements(); fc.hasMoreElements();){
-                        formalc fcc = fc.nextElement();
-                        System.out.println(fcc); 
-                    }
-                }
-            }
+    //         class_c tc = e_iter.nextElement();
+    //          System.out.println(tc.getName()+" "+tc.getParent());    
+    //         Features features = tc.getFeatures();
+    //          for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
+    //             Feature fe = f.nextElement();
+    //             // add method to map
+    //             Formals formals = method.class.cast(fe).getFormals();
+    //             System.out.println(fe);
+    //             if(fe instanceof method){
+    //                 for (Enumeration<formalc> fc = formals.getElements(); fc.hasMoreElements();){
+    //                     formalc fcc = fc.nextElement();
+    //                     System.out.println(fcc); 
+    //                 }
+    //             }
+    //         }
 
 
             
-        }
+    //     }
         // classes = new_cls;
 
 
@@ -450,6 +450,12 @@ class attr extends Feature {
     }
     public TreeNode copy() {
         return new attr(lineNumber, copy_AbstractSymbol(name), copy_AbstractSymbol(type_decl), (Expression)init.copy());
+    }
+    public AbstractSymbol getName(){
+        return this.name;
+    }
+    public AbstractSymbol gettype(){
+        return this.type_decl;
     }
     public void dump(PrintStream out, int n) {
         out.print(Utilities.pad(n) + "attr\n");
@@ -1207,8 +1213,8 @@ class lt extends Expression {
 
     
     public void dump_with_types(PrintStream out, int n) {
-        dump_line(out, n);
-        out.println(Utilities.pad(n) + "_lt");
+    dump_line(out, n);
+    out.println(Utilities.pad(n) + "_lt");
 	e1.dump_with_types(out, n + 2);
 	e2.dump_with_types(out, n + 2);
 	dump_type(out, n);
