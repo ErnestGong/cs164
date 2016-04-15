@@ -33,6 +33,9 @@ class IntSymbol extends AbstractSymbol {
     public IntSymbol(String str, int len, int index) {
 	super(str, len, index);
     }
+    public int getIndex(){
+        return index;
+    }
 
     /** Generates code for the integer constant definition.  This method
      * is incomplete; you get to finish it up in programming assignment
@@ -63,9 +66,7 @@ class IntSymbol extends AbstractSymbol {
 	s.print(CgenSupport.INTCONST_PREFIX + index);
     }
 
-    public int getIndex(){
-        return index;
-    }
+  
 
     /** Returns a copy of this symbol */
     public Object clone() {

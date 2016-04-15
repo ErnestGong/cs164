@@ -34,6 +34,8 @@ class CgenNode extends class_c {
     private Vector children;
 
     private ArrayList<AbstractSymbol> methods;
+    private ArrayList<AbstractSymbol> attrs;
+    private ArrayList<AbstractSymbol> attrs_type;
 
     /** Indicates a basic class */
     final static int Basic = 0;
@@ -54,6 +56,8 @@ class CgenNode extends class_c {
 	this.parent = null;
 	this.children = new Vector();
     this.methods=new ArrayList<AbstractSymbol> ();
+    this.attrs=new ArrayList<AbstractSymbol> ();
+    this.attrs_type=new ArrayList<AbstractSymbol> ();
 	this.basic_status = basic_status;
 	AbstractTable.stringtable.addString(name.getString());
     class_c tc = (class_c) c;
@@ -65,6 +69,13 @@ class CgenNode extends class_c {
         if(fe instanceof method){
             methods.add(method.class.cast(fe).getName());
         }
+        else if(fe instanceof attr){
+            attrs.add(attr.class.cast(fe).getName());
+            attrs_type.add(attr.class.cast(fe).gettype());
+
+
+
+        }
     
     // System.out.println("Hello world!");
 
@@ -74,6 +85,12 @@ class CgenNode extends class_c {
 
     ArrayList<AbstractSymbol> getMethods(){
         return methods;
+    }
+    ArrayList<AbstractSymbol> getAttrs(){
+        return attrs;
+    }
+    ArrayList<AbstractSymbol> getAttrs_type(){
+        return attrs_type;
     }
 
     void addChild(CgenNode child) {

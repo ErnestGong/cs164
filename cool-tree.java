@@ -300,28 +300,28 @@ class programc extends Program {
     public void cgen(PrintStream s) {
 	CgenClassTable codegen_classtable = new CgenClassTable(classes, s);
     // s.println("abc");
-    for (Enumeration<class_c> e_iter = classes.getElements(); e_iter.hasMoreElements();){
+    // for (Enumeration<class_c> e_iter = classes.getElements(); e_iter.hasMoreElements();){
 
        
-            class_c tc = e_iter.nextElement();
-             System.out.println(tc.getName()+" "+tc.getParent());    
-            Features features = tc.getFeatures();
-             for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
-                Feature fe = f.nextElement();
-                // add method to map
-                Formals formals = method.class.cast(fe).getFormals();
-                System.out.println(fe);
-                if(fe instanceof method){
-                    for (Enumeration<formalc> fc = formals.getElements(); fc.hasMoreElements();){
-                        formalc fcc = fc.nextElement();
-                        System.out.println(fcc); 
-                    }
-                }
-            }
+    //         class_c tc = e_iter.nextElement();
+    //          System.out.println(tc.getName()+" "+tc.getParent());    
+    //         Features features = tc.getFeatures();
+    //          for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
+    //             Feature fe = f.nextElement();
+    //             // add method to map
+    //             Formals formals = method.class.cast(fe).getFormals();
+    //             System.out.println(fe);
+    //             if(fe instanceof method){
+    //                 for (Enumeration<formalc> fc = formals.getElements(); fc.hasMoreElements();){
+    //                     formalc fcc = fc.nextElement();
+    //                     System.out.println(fcc); 
+    //                 }
+    //             }
+    //         }
 
 
             
-        }
+    //     }
         // classes = new_cls;
 
 
@@ -398,6 +398,7 @@ class method extends Feature {
     protected AbstractSymbol return_type;
     protected Expression expr;
      public Formals getFormals() { return formals;}
+     public Expression getExpr(){return expr;}
      public AbstractSymbol getName() { return name;}
     /** Creates "method" AST node. 
       *
@@ -464,6 +465,10 @@ class attr extends Feature {
     }
     public TreeNode copy() {
         return new attr(lineNumber, copy_AbstractSymbol(name), copy_AbstractSymbol(type_decl), (Expression)init.copy());
+    }
+  
+    public AbstractSymbol gettype(){
+        return this.type_decl;
     }
     public void dump(PrintStream out, int n) {
         out.print(Utilities.pad(n) + "attr\n");
@@ -1021,7 +1026,7 @@ class plus extends Expression {
         str.println(CgenSupport.ADD + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.JAL + "Object.copy");
-        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         pop(str);
     }
     public TreeNode copy() {
@@ -1076,7 +1081,7 @@ class sub extends Expression {
         str.println(CgenSupport.SUB + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.JAL + "Object.copy");
-        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         pop(str);
     }
     public sub(int lineNumber, Expression a1, Expression a2) {
@@ -1136,7 +1141,7 @@ class mul extends Expression {
         str.println(CgenSupport.MUL + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.JAL + "Object.copy");
-        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         pop(str);
     }
     public mul(int lineNumber, Expression a1, Expression a2) {
@@ -1195,7 +1200,7 @@ class divide extends Expression {
         str.println(CgenSupport.DIV + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.JAL + "Object.copy");
-        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         pop(str);
     }
     public divide(int lineNumber, Expression a1, Expression a2) {
@@ -1243,6 +1248,12 @@ class neg extends Expression {
       * @param a0 initial value for e1
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
+    e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+    str.println(CgenSupport.JAL +"Object.copy");
+    // str.println(CgenSupport.LW +CgenSupport.T1+"Object.copy");
+    str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
+    str.println(CgenSupport.NEG + CgenSupport.T1 + " "  + CgenSupport.T1 );
+    str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
 
     }
     public neg(int lineNumber, Expression a1) {
@@ -1289,7 +1300,22 @@ class lt extends Expression {
       * @param a1 initial value for e2
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        push(CgenSupport.ACC, str);
 
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
+        pop(str);
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
+        str.println(CgenSupport.LW + CgenSupport.T2 + " " + "12(" + CgenSupport.ACC + ")");
+        int label_index_0=CgenSupport.newlabel();
+        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const1");
+        str.println(CgenSupport.BLT+CgenSupport.T1+" "+CgenSupport.T2+" "+"label"+label_index_0);
+        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const0");
+  
+        CgenSupport.emitLabelDef(label_index_0, str);
+       
+    
     }
     public lt(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
@@ -1307,8 +1333,8 @@ class lt extends Expression {
 
     
     public void dump_with_types(PrintStream out, int n) {
-        dump_line(out, n);
-        out.println(Utilities.pad(n) + "_lt");
+    dump_line(out, n);
+    out.println(Utilities.pad(n) + "_lt");
 	e1.dump_with_types(out, n + 2);
 	e2.dump_with_types(out, n + 2);
 	dump_type(out, n);
@@ -1319,6 +1345,20 @@ class lt extends Expression {
       * @param s the output stream 
       * */
     public void code(PrintStream s) {
+
+//         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
+//         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
+//         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
+//         str.println(CgenSupport.ADD + CgenSupport.ACC + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+//         pop(str);
+
+//             lw  $t1 12($s1)
+//     lw  $t2 12($a0)
+//     la  $a0 bool_const1
+//     blt $t1 $t2 label0
+//     la  $a0 bool_const0
+// label0:
+
     }
 
 
@@ -1338,7 +1378,20 @@ class eq extends Expression {
       * @param a1 initial value for e2
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
+         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        push(CgenSupport.ACC, str);
 
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
+        pop(str);
+        // str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
+        str.println(CgenSupport.LW + CgenSupport.T2 + " " + CgenSupport.ACC );
+        int label_index_0=CgenSupport.newlabel();
+        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const1");
+        str.println(CgenSupport.BEQ+CgenSupport.T1+" "+CgenSupport.T2+" "+"label"+label_index_0);
+        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const0");
+        str.println(CgenSupport.JAL+"equality_test");
+        CgenSupport.emitLabelDef(label_index_0, str);
     }
     public eq(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
@@ -1388,6 +1441,22 @@ class leq extends Expression {
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
 
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        push(CgenSupport.ACC, str);
+
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
+        pop(str);
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
+        str.println(CgenSupport.LW + CgenSupport.T2 + " " + "12(" + CgenSupport.ACC + ")");
+        int label_index_0=CgenSupport.newlabel();
+        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const1");
+        str.println(CgenSupport.BLEQ+CgenSupport.T1+" "+CgenSupport.T2+" "+"label"+label_index_0);
+        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const0");
+  
+        CgenSupport.emitLabelDef(label_index_0, str);
+
+
     }
     public leq(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
@@ -1434,6 +1503,15 @@ class comp extends Expression {
       * @param a0 initial value for e1
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
+        int label_index_0=CgenSupport.newlabel();
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
+        str.println(CgenSupport.LA+ CgenSupport.ACC + " " + "bool_const0");
+        str.println(CgenSupport.BEQZ + CgenSupport.T1 + " " + "label"+label_index_0);
+        str.println(CgenSupport.LA+ CgenSupport.ACC + " " + "bool_const1");
+
+        CgenSupport.emitLabelDef(label_index_0, str);
+        
 
     }
     public comp(int lineNumber, Expression a1) {

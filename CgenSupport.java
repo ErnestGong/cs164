@@ -116,6 +116,7 @@ class CgenSupport {
     final static String BLEQ    = "\tble\t";
     final static String BLT     = "\tblt\t";
     final static String BGT     = "\tbgt\t";
+    static int label_count=0;
 
     /** Emits an LW instruction.
      * @param dest_reg the destination register
@@ -128,6 +129,9 @@ class CgenSupport {
 	s.println(LW + dest_reg + " " 
 		  + offset * WORD_SIZE 
 		  + "(" + source_reg + ")");
+    }
+    static int newlabel(){
+        return label_count++;
     }
 
     /** Emits an SW instruction.
