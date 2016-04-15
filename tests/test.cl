@@ -11,10 +11,13 @@ class Main inherits IO {
   j : IO <- i;
   k : Bool <- true;
   l : Bool <- k;
+  m : Bool <- false;
 
 
   main():Object {
-    not k
+    {
+      while k loop a pool;
+    }
   };
 };
 

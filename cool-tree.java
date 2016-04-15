@@ -582,6 +582,19 @@ class assign extends Expression {
       */
 
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        System.out.println(name);
+        System.out.println(c.getName());
+
+        ArrayList<Integer> info = environment.get(c.getName()).get(name);
+        System.out.println(info.get(1));
+        if(info.get(0).equals(0)){
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
+        }
+        else if(info.get(0).equals(1)){
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
+        }
+        
 
     }
     public assign(int lineNumber, AbstractSymbol a1, Expression a2) {
@@ -806,6 +819,16 @@ class loop extends Expression {
       * @param a1 initial value for body
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
+        int label_index_0=CgenSupport.newlabel();
+        int label_index_1 = CgenSupport.newlabel();
+        CgenSupport.emitLabelDef(label_index_0, str);
+        pred.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
+        str.println(CgenSupport.BEQ + CgenSupport.ACC + " " + CgenSupport.ZERO + " label" + label_index_1);
+        body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        str.println(CgenSupport.BRANCH + "label"+label_index_0);
+        CgenSupport.emitLabelDef(label_index_1, str);
+        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.ZERO);
 
     }
     public loop(int lineNumber, Expression a1, Expression a2) {
@@ -905,6 +928,10 @@ class block extends Expression {
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, CgenNode c, PrintStream str){
 
+        for (Enumeration<Expression> e = body.getElements(); e.hasMoreElements(); ) {
+            Expression exp = e.nextElement();
+            exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), c, str);
+        }
     }
     public block(int lineNumber, Expressions a1) {
         super(lineNumber);
