@@ -61,6 +61,9 @@ class StringSymbol extends AbstractSymbol {
     /** Emits a reference to this string constant.
      * @param s the output stream
      * */
+    public int getIndex(){
+        return index;
+    }
     public void codeRef(PrintStream s) {
 	s.print(CgenSupport.STRCONST_PREFIX + index);
     }

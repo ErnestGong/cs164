@@ -25,6 +25,8 @@ import java.io.PrintStream;
 import java.util.Vector;
 import java.util.Enumeration;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 /** This class is used for representing the inheritance tree during code
     generation. You will need to fill in some of its methods and
@@ -41,6 +43,9 @@ class CgenClassTable extends SymbolTable {
     private int stringclasstag;
     private int intclasstag;
     private int boolclasstag;
+
+    //environment
+    HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment = new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>();
 
 
     // The following methods emit code for constants and global
@@ -401,6 +406,33 @@ class CgenClassTable extends SymbolTable {
 
     /** This method is the meat of the code generator.  It is to be
         filled in programming assignment 5 */
+    public void push(String reg, PrintStream str){
+        str.println(CgenSupport.SW + " " + reg + " " + "0(" + CgenSupport.SP + ")");
+        str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
+    }
+    public void pop(PrintStream str){
+        str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
+    }
+
+    public void in_method(PrintStream str){
+    	str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " -12");
+		str.println(CgenSupport.SW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.SW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.SW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.ADDIU + CgenSupport.FP + " " + CgenSupport.SP + " 16");
+		str.println(CgenSupport.MOVE + CgenSupport.SELF + " " + CgenSupport.ACC);
+    }
+
+    public void out_method(PrintStream str){
+    	str.println(CgenSupport.LW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.LW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.LW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");	
+		str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " 12");	
+		str.println(CgenSupport.RET);
+    }
+
+
+
     public void code() {
 	if (Flags.cgen_debug) System.out.println("coding global data");
 	codeGlobalData();
@@ -485,9 +517,42 @@ class CgenClassTable extends SymbolTable {
 	//                   - object initializer
 	//                   - the class methods
 	//                   - etc...
-    }
+    
+    // for object initializier
+    for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		CgenNode cnode = (CgenNode)e.nextElement();
+		CgenNode c_parent = cnode;
+		
+		String class_name=(cnode).getName().toString();
+		in_method(str);
+		
+		str.println(CgenSupport.JAL + (c_parent.getParent()) +"_init");
 
-    void printParentMethods(CgenNode node){
+		Features features = cnode.getFeatures();
+        for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
+            Feature fe = f.nextElement();
+            if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
+            	push(CgenSupport.ACC, str);
+            	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
+            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), cnode, str);
+            	if(info.get(0) == 0){
+            		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
+            	}
+            	else if(info.get(1) == 1){
+            		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
+            	}
+
+            	pop(str);
+            }
+
+        }
+		str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
+		out_method(str);
+
+	}
+	}
+
+    public void printParentMethods(CgenNode node){
     	if(node.getParentNd() != null){
     		printParentMethods(node.getParentNd());
     	}

@@ -17,12 +17,12 @@ Your directory should now contain the following files:
  Flags.java           [DO NOT MODIFY]
  IdSymbol.java        [DO NOT MODIFY]
  IdTable.java         [DO NOT MODIFY]
- IntSymbol.java
+ IntSymbol.java       // getid
  IntTable.java        [DO NOT MODIFY]
  ListNode.java        [DO NOT MODIFY]
  build.xml            [DO NOT MODIFY]
  README
- StringSymbol.java
+ StringSymbol.java    // getid
  StringTable.java     [DO NOT MODIFY]
  SymbolTable.java     [DO NOT MODIFY]
  SymtabExample.java   [DO NOT MODIFY]
