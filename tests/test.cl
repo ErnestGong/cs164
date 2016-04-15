@@ -14,7 +14,7 @@ class Main inherits IO {
 
 
   main():Object {
-    a + b + a
+    a + 3
   };
 };
 

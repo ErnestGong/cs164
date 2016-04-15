@@ -1018,7 +1018,10 @@ class plus extends Expression {
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
-        str.println(CgenSupport.ADD + CgenSupport.ACC + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.ADD + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
+        str.println(CgenSupport.JAL + "Object.copy");
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
         pop(str);
     }
     public TreeNode copy() {
@@ -1070,7 +1073,10 @@ class sub extends Expression {
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
-        str.println(CgenSupport.ADD + CgenSupport.ACC + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.SUB + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
+        str.println(CgenSupport.JAL + "Object.copy");
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
         pop(str);
     }
     public sub(int lineNumber, Expression a1, Expression a2) {
@@ -1127,7 +1133,10 @@ class mul extends Expression {
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
-        str.println(CgenSupport.ADD + CgenSupport.ACC + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.MUL + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
+        str.println(CgenSupport.JAL + "Object.copy");
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
         pop(str);
     }
     public mul(int lineNumber, Expression a1, Expression a2) {
@@ -1183,7 +1192,10 @@ class divide extends Expression {
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
-        str.println(CgenSupport.ADD + CgenSupport.ACC + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.DIV + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.ACC);
+        str.println(CgenSupport.LW + CgenSupport.ACC + " " + "4(" + CgenSupport.SP + ")");
+        str.println(CgenSupport.JAL + "Object.copy");
+        str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")")
         pop(str);
     }
     public divide(int lineNumber, Expression a1, Expression a2) {
