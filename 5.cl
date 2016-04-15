@@ -10,7 +10,7 @@ class Main inherits IO
   main() : Object
   {
   	{
-  		1+1<3;
+  		1+1;
     let thing : Object <- self in
       case thing of
 	i : Int => out_string( "int\n" );

@@ -26,22 +26,6 @@ class StringTable extends AbstractTable {
      * 
      * @see StringSymbol
      * */
-    public int getID(String s) {
-    int len = s.length();
-    AbstractSymbol sym = null;
-    for (int i = 0; i < tbl.size(); i++) {
-        try {
-        sym = (AbstractSymbol)tbl.elementAt(i);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-        Utilities.fatalError("Unexpected exception: " + ex);
-        }
-        if (sym.equalString(s, len)) {
-        return i;
-        }
-    }
-    Utilities.fatalError("String table lookup failed on string: " + s);
-    return -1;
-    }
    
 
 

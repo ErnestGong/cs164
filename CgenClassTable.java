@@ -27,6 +27,7 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /** This class is used for representing the inheritance tree during code
     generation. You will need to fill in some of its methods and
     potentially extend it in other useful ways. */
@@ -47,6 +48,9 @@ class CgenClassTable extends SymbolTable {
     private int boolclasstag;
     private int ioclasstag;
     private int mainclasstag;
+
+    //environment
+    // HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment = new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>();
 
 
     // The following methods emit code for constants and global
@@ -488,6 +492,33 @@ class CgenClassTable extends SymbolTable {
 
     /** This method is the meat of the code generator.  It is to be
         filled in programming assignment 5 */
+    public void push(String reg, PrintStream str){
+        str.println(CgenSupport.SW + " " + reg + " " + "0(" + CgenSupport.SP + ")");
+        str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
+    }
+    public void pop(PrintStream str){
+        str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
+    }
+
+    public void in_method(PrintStream str){
+    	str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " -12");
+		str.println(CgenSupport.SW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.SW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.SW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.ADDIU + CgenSupport.FP + " " + CgenSupport.SP + " 16");
+		str.println(CgenSupport.MOVE + CgenSupport.SELF + " " + CgenSupport.ACC);
+    }
+
+    public void out_method(PrintStream str){
+    	str.println(CgenSupport.LW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.LW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
+		str.println(CgenSupport.LW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");	
+		str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " 12");	
+		str.println(CgenSupport.RET);
+    }
+
+
+
     public void code() {
 	if (Flags.cgen_debug) System.out.println("coding global data");
 	codeGlobalData();
@@ -502,7 +533,7 @@ class CgenClassTable extends SymbolTable {
 	// 	    + ((Flags.cgen_Memmgr_Test == Flags.GC_TEST) ? "1" : "0"));
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		String class_name=((CgenNode)e.nextElement()).getName().toString();
-		int class_str_id=AbstractTable.stringtable.getID(class_name);
+		int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
 	  str.println(CgenSupport.WORD +"str_const"+class_str_id);
 	}
 
@@ -539,7 +570,7 @@ class CgenClassTable extends SymbolTable {
 	if (Flags.cgen_debug) System.out.println("coding global text");
 	codeGlobalText();
 	System.out.println("prototype");
-	codePrototype();
+	// codePrototype();
 	int i=0;
 	environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> ();
 
@@ -576,11 +607,11 @@ class CgenClassTable extends SymbolTable {
 			offset.add(1);
 			offset.add(12+4*k);
 			offset_table.put(attr_name,offset);
-			System.out.print(cnode.getName());
-			System.out.print("  ");
-			System.out.print(attr_name);
-			System.out.print("  ");
-			System.out.println(k);
+			// System.out.print(cnode.getName());
+			// System.out.print("  ");
+			// System.out.print(attr_name);
+			// System.out.print("  ");
+			// System.out.println(k);
 		
 			str.print(CgenSupport.WORD);
 			if(!x.toString().equals("Int") &&!x.toString().equals("Bool") &&!x.toString().equals("String")  )
@@ -622,9 +653,76 @@ class CgenClassTable extends SymbolTable {
 	//                   - object initializer
 	//                   - the class methods
 	//                   - etc...
-    }
+    
+    // for object initializier
+    for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 
-    void printParentMethods(CgenNode node){
+		CgenNode cnode = (CgenNode)e.nextElement();
+		CgenNode c_parent = cnode;
+		
+		String class_name=(cnode).getName().toString();
+		str.println(class_name+"_init:");
+		in_method(str);
+		// str.println()
+		str.println(CgenSupport.JAL + (c_parent.getParent()) +"_init");
+
+		Features features = cnode.getFeatures();
+        for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
+            Feature fe = f.nextElement();
+            if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
+            	push(CgenSupport.ACC, str);
+            	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
+            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), cnode, str);
+            	if(info.get(0) == 0){
+            		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
+            	}
+            	else if(info.get(1) == 1){
+            		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
+            	}
+
+            	pop(str);
+            }
+
+        }
+		str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
+		out_method(str);
+
+	}
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+
+		CgenNode cnode = (CgenNode)e.nextElement();
+		CgenNode c_parent = cnode;
+		
+		String class_name=(cnode).getName().toString();
+		if (class_name.equals("Main")){
+			str.print("Main.");
+		}
+		else{
+			continue;
+		}
+		Features features = cnode.getFeatures();
+        for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
+        	Feature fe=f.nextElement();
+        	if(fe instanceof method){
+        		method fm=method.class.cast(fe);
+        		str.println(fm.getName()+":");
+        		in_method(str);
+        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), cnode, str);
+        		out_method(str);
+
+
+
+
+        	}
+        }
+	}
+
+
+
+
+	}
+
+    public void printParentMethods(CgenNode node){
     	if(node.getParentNd() != null){
     		printParentMethods(node.getParentNd());
     	}
