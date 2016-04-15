@@ -670,17 +670,17 @@ class CgenClassTable extends SymbolTable {
         for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
             Feature fe = f.nextElement();
             if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
-            	push(CgenSupport.ACC, str);
+            	
             	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
             	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), cnode, str);
-            	if(info.get(0) == 0){
+            	if(info.get(0).equals(0)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
             	}
-            	else if(info.get(1) == 1){
+            	else if(info.get(0).equals(1)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
             	}
 
-            	pop(str);
+            
             }
 
         }

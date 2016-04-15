@@ -2,6 +2,6 @@ class Main inherits IO {
 	a:Main;
 	b:Main;
   main():Object {
-    1=2
+    while 1<2 loop 1 pool
       };
 };
