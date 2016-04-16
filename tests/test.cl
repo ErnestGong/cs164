@@ -13,10 +13,14 @@ class Main inherits IO {
   l : Bool <- k;
   m : Bool <- false;
 
+  test(a : Int, b : Int) : Int{
+    123
+  };
 
   main():Object {
     {
-      while k loop a pool;
+      out_int(2);
+      test(a, b);
     }
   };
 };

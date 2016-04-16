@@ -38,6 +38,7 @@ class CgenClassTable extends SymbolTable {
     // private Hashma <String,Vector> disptr;
     private HashMap<String,Integer> classtagmap;
     private HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment;
+    private HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment;
     /** This is the stream to which assembly instructions are output */
     private PrintStream str;
     private int classtagindex;
@@ -552,27 +553,34 @@ class CgenClassTable extends SymbolTable {
 	//                   - class_nameTab
 	//                   - dispatch tables
 	// for dispatch table
+	method_environment = new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>();
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		CgenNode cnode = (CgenNode)e.nextElement();
 		CgenNode c_parent = cnode;
 		ArrayList<AbstractSymbol> method_lst = cnode.getMethods();
 		String class_name=(cnode).getName().toString();
 		str.println(class_name+"_dispTab:");
+		method_environment.put(cnode.getName(), new HashMap<AbstractSymbol, Integer>());
+		Integer counter = 0;
 
-		printParentMethods(cnode.getParentNd());
+		printParentMethods(cnode.getName(), cnode.getParentNd(), counter);
 
 	  	for (AbstractSymbol method_name: method_lst) {
-	  		str.println(CgenSupport.WORD + cnode.getName() + "_" + method_name);
+	  		str.println(CgenSupport.WORD + cnode.getName() + "." + method_name);
+	  		method_environment.get(cnode.getName()).put(method_name, counter);
+	  		counter += 1;
+
 	  	}
 	}
 
 
 	if (Flags.cgen_debug) System.out.println("coding global text");
-	codeGlobalText();
-	System.out.println("prototype");
+	
+	// System.out.println("prototype");
 	// codePrototype();
 	int i=0;
 	environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> ();
+	
 
 
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
@@ -645,6 +653,7 @@ class CgenClassTable extends SymbolTable {
 
 
 	}
+	codeGlobalText();
 	
 
 
@@ -664,15 +673,19 @@ class CgenClassTable extends SymbolTable {
 		str.println(class_name+"_init:");
 		in_method(str);
 		// str.println()
-		str.println(CgenSupport.JAL + (c_parent.getParent()) +"_init");
+		if(!(c_parent.getParent().equals(AbstractTable.idtable.addString("_no_class")))){
+			str.println(CgenSupport.JAL + (c_parent.getParent()) +"_init");
+		}
+		
 
 		Features features = cnode.getFeatures();
         for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
             Feature fe = f.nextElement();
+
             if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
             	
             	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
-            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), cnode, str);
+            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), cnode, str);
             	if(info.get(0).equals(0)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
             	}
@@ -707,7 +720,7 @@ class CgenClassTable extends SymbolTable {
         		method fm=method.class.cast(fe);
         		str.println(fm.getName()+":");
         		in_method(str);
-        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), cnode, str);
+        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), cnode, str);
         		out_method(str);
 
 
@@ -722,14 +735,16 @@ class CgenClassTable extends SymbolTable {
 
 	}
 
-    public void printParentMethods(CgenNode node){
+    public void printParentMethods(AbstractSymbol name, CgenNode node, Integer counter){
     	if(node.getParentNd() != null){
-    		printParentMethods(node.getParentNd());
+    		printParentMethods(name, node.getParentNd(), counter);
     	}
     	ArrayList<AbstractSymbol> method_lst = node.getMethods();
 
 	  	for (AbstractSymbol method_name: method_lst) {
-	  		str.println(CgenSupport.WORD + node.getName() + "_" + method_name);
+	  		str.println(CgenSupport.WORD + node.getName() + "." + method_name);
+	  		method_environment.get(name).put(method_name, counter);
+	  		counter += 1;
 	  	}
     }
 

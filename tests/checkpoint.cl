@@ -12,8 +12,6 @@ class Main inherits IO {
   k : Bool <- true;
   l : Bool <- k;
 
-
-
   main():Object {
 
     out_int(
@@ -25,19 +23,4 @@ class Main inherits IO {
 		fi)+2
 	 )
   };
-};
-
-
-class B inherits Main{
-	gg : Int <- 132;
-	abc(x : Int) : Int{
-		{
-		x <- 4;
-		x <- x + gg;
-		}
-		
-	};
-	cba(x : Int) : Int{
-		gg <- 4
-	};
 };
