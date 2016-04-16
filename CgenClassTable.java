@@ -609,6 +609,8 @@ class CgenClassTable extends SymbolTable {
 
 
 		environment.put(cnode.getName(),offset_table);
+
+
 		for(AbstractSymbol x :attr_type){
 			AbstractSymbol attr_name=attrs.get(k);
 			ArrayList<Integer> offset=new ArrayList<Integer>();
@@ -644,6 +646,24 @@ class CgenClassTable extends SymbolTable {
 			k++;
 			// cnode.getName().toString()+"	" +x.toString());
 		}
+
+		// Features all_fea = cnode.getFeatures();
+		// for(Enumeration<Feature> feas = all_fea.getElements(); feas.hasMoreElements();){
+		// 	Feature fea = feas.nextElement();
+		// 	if(fea instanceof method){
+		// 		Formals f_mals = method.class.cast(fea).getFormals();
+		// 		int for_counter = 0;
+		// 		for(Enumeration<formalc> f_all = f_mals.getElements(); f_all.hasMoreElements();){
+		// 			formalc fc = f_all.nextElement();
+		// 			fc.getName();
+		// 			ArrayList<Integer> offset=new ArrayList<Integer>();
+		// 			offset.add(0);
+		// 			offset.add(12+4*for_counter);
+		// 			offset_table.put(attr_name,offset);
+		// 			for_counter += 1;
+		// 		}
+		// 	}
+		// }
 
 
 

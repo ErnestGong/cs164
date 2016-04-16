@@ -125,10 +125,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	8
+	.word	9
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"moduletest/+.cl"
+	.ascii	"./moduletest//+.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -136,7 +136,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	15
+	.word	18
 	.word	-1
 int_const8:
 	.word	3
@@ -394,17 +394,21 @@ Main.main:
 	move	$s0 $a0
 	la	$a0 int_const0
 	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t2 12($a0)
+	lw	$t1 4($sp)
 	add	$t1 $t1 $t2
 	sw	 $t1 0($sp)
-	addi	 $sp $sp -4
+	addiu	 $sp $sp -4
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
-	addi	 $sp $sp 4
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
-	addi	 $sp $sp -4
+	addiu	 $sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label0
 	la	$a0 str_const0

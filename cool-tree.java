@@ -502,6 +502,7 @@ class formalc extends Formal {
       * @param a0 initial value for name
       * @param a1 initial value for type_decl
       */
+    public AbstractSymbol getName() { return name; }
     public formalc(int lineNumber, AbstractSymbol a1, AbstractSymbol a2) {
         super(lineNumber);
         name = a1;
@@ -648,7 +649,40 @@ class static_dispatch extends Expression {
       * @param a2 initial value for name
       * @param a3 initial value for actual
       */
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment,HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
+
+        for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
+            Expression expr = e.nextElement();
+            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
+            push(CgenSupport.ACC, str);
+
+        }
+
+        if(expr.get_type().equals(AbstractTable.idtable.addString("SELF_TYPE"))){
+            str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
+        }
+        else{
+            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
+        }
+        int label_index_0 = CgenSupport.newlabel();
+        str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
+        str.println(CgenSupport.LA + CgenSupport.ACC + " str_const0");
+        str.println(CgenSupport.LI + CgenSupport.T1 + " " + getLineNumber());
+        str.println(CgenSupport.JAL + " _dispatch_abort");
+        CgenSupport.emitLabelDef(label_index_0,str);
+        str.println(CgenSupport.LA + CgenSupport.T2 + " " + type_name +"_dispTab");
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + CgenSupport.T2);
+        // System.out.println(c.getName());
+        // System.out.println(name);
+        HashMap<AbstractSymbol, Integer> obj_to_find = method_environment.get(type_name);
+        
+
+        // System.out.println("test");
+        // System.out.println(method_environment.get(c.getName()).get(name));
+
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + (obj_to_find.get(name) * 4) + "(" + CgenSupport.T1 + ")");
+        str.println(CgenSupport.JALR + CgenSupport.T1);
+
 
     }
     public static_dispatch(int lineNumber, Expression a1, AbstractSymbol a2, AbstractSymbol a3, Expressions a4) {
@@ -710,7 +744,7 @@ class dispatch extends Expression {
       * @param a2 initial value for actual
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
-
+        Boolean self_flag = false;
         for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
             Expression expr = e.nextElement();
             expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
@@ -720,10 +754,12 @@ class dispatch extends Expression {
 
         if(expr.get_type().equals(AbstractTable.idtable.addString("SELF_TYPE"))){
             str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
+            self_flag = true;
         }
         else{
             expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
         }
+        System.out.println("success");
         int label_index_0 = CgenSupport.newlabel();
         str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
         str.println(CgenSupport.LA + CgenSupport.ACC + " str_const0");
@@ -733,10 +769,18 @@ class dispatch extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "8(" + CgenSupport.ACC +")");
         // System.out.println(c.getName());
         // System.out.println(name);
-        method_environment.get(c.getName());
+        HashMap<AbstractSymbol, Integer> obj_to_find;
+        if(self_flag){
+            obj_to_find = method_environment.get(c.getName());
+        }
+        else{
+            obj_to_find = method_environment.get(expr.get_type());
+        }
+        
         // System.out.println("test");
         // System.out.println(method_environment.get(c.getName()).get(name));
-        str.println(CgenSupport.LW + CgenSupport.T1 + " " + (method_environment.get(c.getName()).get(name) * 4) + "(" + CgenSupport.T1 + ")");
+
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + (obj_to_find.get(name) * 4) + "(" + CgenSupport.T1 + ")");
         str.println(CgenSupport.JALR + CgenSupport.T1);
 
 

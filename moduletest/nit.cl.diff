@@ -8,9 +8,9 @@
 
   MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
   
-! Invalid Command Argument: moduletest/+.c.ref.s
+! Invalid Command Argument: tests/moduletest/nit.cl.ref.s
 --- 1,3 ----
 
   MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
   
-! Invalid Command Argument: moduletest/+.c.my.s
+! Invalid Command Argument: tests/moduletest/nit.cl.my.s

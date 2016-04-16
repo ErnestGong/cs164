@@ -29,7 +29,7 @@ str_const11:
 	.word	5
 	.word	5
 	.word	String_dispTab
-	.word	int_const7
+	.word	int_const5
 	.byte	0	
 	.align	2
 	.word	-1
@@ -37,7 +37,7 @@ str_const10:
 	.word	5
 	.word	6
 	.word	String_dispTab
-	.word	int_const5
+	.word	int_const6
 	.ascii	"Main"
 	.byte	0	
 	.align	2
@@ -46,7 +46,7 @@ str_const9:
 	.word	5
 	.word	6
 	.word	String_dispTab
-	.word	int_const3
+	.word	int_const1
 	.ascii	"String"
 	.byte	0	
 	.align	2
@@ -55,7 +55,7 @@ str_const8:
 	.word	5
 	.word	6
 	.word	String_dispTab
-	.word	int_const5
+	.word	int_const6
 	.ascii	"Bool"
 	.byte	0	
 	.align	2
@@ -64,7 +64,7 @@ str_const7:
 	.word	5
 	.word	5
 	.word	String_dispTab
-	.word	int_const2
+	.word	int_const4
 	.ascii	"Int"
 	.byte	0	
 	.align	2
@@ -73,7 +73,7 @@ str_const6:
 	.word	5
 	.word	5
 	.word	String_dispTab
-	.word	int_const1
+	.word	int_const3
 	.ascii	"IO"
 	.byte	0	
 	.align	2
@@ -82,7 +82,7 @@ str_const5:
 	.word	5
 	.word	6
 	.word	String_dispTab
-	.word	int_const3
+	.word	int_const1
 	.ascii	"Object"
 	.byte	0	
 	.align	2
@@ -91,7 +91,7 @@ str_const4:
 	.word	5
 	.word	7
 	.word	String_dispTab
-	.word	int_const6
+	.word	int_const7
 	.ascii	"_prim_slot"
 	.byte	0	
 	.align	2
@@ -125,10 +125,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	9
+	.word	10
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"moduletest/arith.cl"
+	.ascii	"./moduletest//arith.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -136,7 +136,7 @@ int_const10:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	19
+	.word	22
 	.word	-1
 int_const9:
 	.word	3
@@ -154,43 +154,43 @@ int_const7:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	0
+	.word	10
 	.word	-1
 int_const6:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	10
+	.word	4
 	.word	-1
 int_const5:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	4
+	.word	0
 	.word	-1
 int_const4:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	1
+	.word	3
 	.word	-1
 int_const3:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	6
+	.word	2
 	.word	-1
 int_const2:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	3
+	.word	1
 	.word	-1
 int_const1:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	2
+	.word	6
 	.word	-1
 int_const0:
 	.word	3
@@ -275,7 +275,7 @@ String_protObj:
 	.word	5
 	.word	5
 	.word	String_dispTab
-	.word	int_const7
+	.word	int_const5
 	.word	0
 	.word	-1
 Bool_protObj:
@@ -405,117 +405,30 @@ Main.main:
 	jal	Object.copy
 	lw	$t2 12($a0)
 	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	la	$a0 int_const2
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	la	$s2 int_const0
+	la	$a0 int_const3
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
 	div	$t1 $t1 $t2
 	sw	$t1 12($a0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label0
-	la	$a0 str_const0
-	li	$t1 4
-	jal	_dispatch_abort
-label0:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	la	$s1 int_const1
-	la	$a0 int_const2
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
-	mul	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label1
-	la	$a0 str_const0
-	li	$t1 5
-	jal	_dispatch_abort
-label1:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	la	$s1 int_const3
-	la	$a0 int_const2
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
-	sub	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label2
-	la	$a0 str_const0
-	li	$t1 6
-	jal	_dispatch_abort
-label2:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	la	$s1 int_const4
-	la	$a0 int_const2
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
-	add	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label3
-	la	$a0 str_const0
-	li	$t1 7
-	jal	_dispatch_abort
-label3:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	la	$s1 int_const3
-	la	$a0 int_const5
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
-	add	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label4
-	la	$a0 str_const0
-	li	$t1 8
-	jal	_dispatch_abort
-label4:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	la	$s1 int_const0
-	la	$s2 int_const6
-	la	$a0 int_const2
+	move	$s2 $a0
+	la	$a0 int_const4
 	jal	Object.copy
 	lw	$t2 12($a0)
 	lw	$t1 12($s2)
 	mul	$t1 $t1 $t2
 	sw	$t1 12($a0)
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
-	add	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label5
-	la	$a0 str_const0
-	li	$t1 9
-	jal	_dispatch_abort
-label5:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	la	$s1 int_const0
-	la	$a0 int_const3
 	jal	Object.copy
 	lw	$t2 12($a0)
 	lw	$t1 12($s1)
@@ -526,43 +439,16 @@ label5:
 	jal	Object.copy
 	lw	$t2 12($a0)
 	lw	$t1 12($s1)
-	add	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	move	$s1 $a0
-	la	$s2 int_const0
-	la	$a0 int_const1
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s2)
-	div	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	move	$s2 $a0
-	la	$a0 int_const2
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s2)
-	mul	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
-	add	$t1 $t1 $t2
-	sw	$t1 12($a0)
-	move	$s1 $a0
-	la	$a0 int_const2
-	jal	Object.copy
-	lw	$t2 12($a0)
-	lw	$t1 12($s1)
 	sub	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label6
+	bne	$a0 $zero label0
 	la	$a0 str_const0
-	li	$t1 11
+	li	$t1 4
 	jal	_dispatch_abort
-label6:
+label0:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr	$t1
