@@ -495,10 +495,10 @@ class CgenClassTable extends SymbolTable {
         filled in programming assignment 5 */
     public void push(String reg, PrintStream str){
         str.println(CgenSupport.SW + " " + reg + " " + "0(" + CgenSupport.SP + ")");
-        str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
+        str.println(CgenSupport.ADDIU + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
     }
     public void pop(PrintStream str){
-        str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
+        str.println(CgenSupport.ADDIU + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
     }
 
     public void in_method(PrintStream str){
@@ -704,6 +704,10 @@ class CgenClassTable extends SymbolTable {
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 
 		CgenNode cnode = (CgenNode)e.nextElement();
+		String filter = cnode.getName().toString();
+		if(filter.equals("IO") || filter.equals("String") || filter.equals("Object") || filter.equals("Int") || filter.equals("Bool")){
+			continue;
+		}
 		CgenNode c_parent = cnode;
 		
 		String class_name=(cnode).getName().toString();
