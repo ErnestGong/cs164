@@ -736,7 +736,7 @@ class dispatch extends Expression {
         method_environment.get(c.getName());
         // System.out.println("test");
         // System.out.println(method_environment.get(c.getName()).get(name));
-        str.println(CgenSupport.LW + CgenSupport.T1 + " " + method_environment.get(c.getName()).get(name) * 4 + "(" + CgenSupport.T1 + ")");
+        str.println(CgenSupport.LW + CgenSupport.T1 + " " + (method_environment.get(c.getName()).get(name) * 4) + "(" + CgenSupport.T1 + ")");
         str.println(CgenSupport.JALR + CgenSupport.T1);
 
 
@@ -1448,9 +1448,7 @@ class eq extends Expression {
       * @param a1 initial value for e2
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
-        if (e1 instanceof int_const)
-
-
+       
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
         push(CgenSupport.ACC, str);
 
@@ -1458,11 +1456,11 @@ class eq extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         pop(str);
         // str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
-        str.println(CgenSupport.LW + CgenSupport.T2 + " " + CgenSupport.ACC );
+        str.println(CgenSupport.MOVE + CgenSupport.T2 + " " + CgenSupport.ACC );
         int label_index_0=CgenSupport.newlabel();
         str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const1");
         str.println(CgenSupport.BEQ+CgenSupport.T1+" "+CgenSupport.T2+" "+"label"+label_index_0);
-        str.println(CgenSupport.LA+CgenSupport.ACC+" "+"bool_const0");
+        str.println(CgenSupport.LA+CgenSupport.A1+" "+"bool_const0");
         str.println(CgenSupport.JAL+"equality_test");
         CgenSupport.emitLabelDef(label_index_0, str);
 

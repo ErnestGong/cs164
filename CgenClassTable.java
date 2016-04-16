@@ -563,8 +563,8 @@ class CgenClassTable extends SymbolTable {
 		method_environment.put(cnode.getName(), new HashMap<AbstractSymbol, Integer>());
 		Integer counter = 0;
 
-		printParentMethods(cnode.getName(), cnode.getParentNd(), counter);
-
+		counter = printParentMethods(cnode.getName(), cnode.getParentNd(), counter);
+		System.out.println(counter);
 	  	for (AbstractSymbol method_name: method_lst) {
 	  		str.println(CgenSupport.WORD + cnode.getName() + "." + method_name);
 	  		method_environment.get(cnode.getName()).put(method_name, counter);
@@ -707,18 +707,12 @@ class CgenClassTable extends SymbolTable {
 		CgenNode c_parent = cnode;
 		
 		String class_name=(cnode).getName().toString();
-		if (class_name.equals("Main")){
-			str.print("Main.");
-		}
-		else{
-			continue;
-		}
 		Features features = cnode.getFeatures();
         for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
         	Feature fe=f.nextElement();
         	if(fe instanceof method){
         		method fm=method.class.cast(fe);
-        		str.println(fm.getName()+":");
+        		str.println(cnode.getName() + "." + fm.getName()+":");
         		in_method(str);
         		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), cnode, str);
         		out_method(str);
@@ -735,9 +729,9 @@ class CgenClassTable extends SymbolTable {
 
 	}
 
-    public void printParentMethods(AbstractSymbol name, CgenNode node, Integer counter){
+    public Integer printParentMethods(AbstractSymbol name, CgenNode node, Integer counter){
     	if(node.getParentNd() != null){
-    		printParentMethods(name, node.getParentNd(), counter);
+    		counter = printParentMethods(name, node.getParentNd(), counter);
     	}
     	ArrayList<AbstractSymbol> method_lst = node.getMethods();
 
@@ -746,6 +740,7 @@ class CgenClassTable extends SymbolTable {
 	  		method_environment.get(name).put(method_name, counter);
 	  		counter += 1;
 	  	}
+	  	return counter;
     }
 
     /** Gets the root of the inheritance tree */
