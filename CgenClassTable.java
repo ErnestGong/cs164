@@ -49,6 +49,7 @@ class CgenClassTable extends SymbolTable {
     private int boolclasstag;
     private int ioclasstag;
     private int mainclasstag;
+    private HashMap<Integer,Integer> spaddr2fp;
 
     //environment
     // HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment = new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>();
@@ -460,6 +461,7 @@ class CgenClassTable extends SymbolTable {
     /** Constructs a new class table and invokes the code generator */
     public CgenClassTable(Classes cls, PrintStream str) {
 	nds = new Vector();
+	spaddr2fp=new HashMap<Integer,Integer>();
 	// disptr=new HashMap<String,Vector>();
 
 	this.str = str;
@@ -493,28 +495,38 @@ class CgenClassTable extends SymbolTable {
 
     /** This method is the meat of the code generator.  It is to be
         filled in programming assignment 5 */
+        /*
     public void push(String reg, PrintStream str){
         str.println(CgenSupport.SW + " " + reg + " " + "0(" + CgenSupport.SP + ")");
         str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
+        sp-=4;
     }
     public void pop(PrintStream str){
         str.println(CgenSupport.ADDI + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
+        sp+=4;
     }
+    */
 
     public void in_method(PrintStream str){
     	str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " -12");
+    	CgenSupport.sp_v-=12;
 		str.println(CgenSupport.SW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
+		//str.println("map put "+CgenSupport.fp_v+" in "+(CgenSupport.sp_v+12));
+		spaddr2fp.put(CgenSupport.sp_v+12,CgenSupport.fp_v);
 		str.println(CgenSupport.SW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
 		str.println(CgenSupport.SW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");
 		str.println(CgenSupport.ADDIU + CgenSupport.FP + " " + CgenSupport.SP + " 16");
+		CgenSupport.fp_v=CgenSupport.sp_v+16;
 		str.println(CgenSupport.MOVE + CgenSupport.SELF + " " + CgenSupport.ACC);
     }
 
     public void out_method(PrintStream str){
     	str.println(CgenSupport.LW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
+    	CgenSupport.fp_v=spaddr2fp.get(CgenSupport.sp_v+12);
 		str.println(CgenSupport.LW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
 		str.println(CgenSupport.LW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");	
 		str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " 12");	
+		CgenSupport.sp_v+=12;
 		str.println(CgenSupport.RET);
     }
 
@@ -615,12 +627,6 @@ class CgenClassTable extends SymbolTable {
 			offset.add(1);
 			offset.add(12+4*k);
 			offset_table.put(attr_name,offset);
-			// System.out.print(cnode.getName());
-			// System.out.print("  ");
-			// System.out.print(attr_name);
-			// System.out.print("  ");
-			// System.out.println(k);
-		
 			str.print(CgenSupport.WORD);
 			if(!x.toString().equals("Int") &&!x.toString().equals("Bool") &&!x.toString().equals("String")  )
 				str.println("0");

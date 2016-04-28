@@ -117,6 +117,8 @@ class CgenSupport {
     final static String BLT     = "\tblt\t";
     final static String BGT     = "\tbgt\t";
     static int label_count=0;
+    static int sp_v=0;
+    static int fp_v=0;
 
     /** Emits an LW instruction.
      * @param dest_reg the destination register
@@ -484,6 +486,7 @@ class CgenSupport {
     static void emitPush(String reg, PrintStream s) {
 	emitStore(reg, 0, SP, s);
 	emitAddiu(SP, SP, -4, s);
+    CgenSupport.sp_v-=4;
     }
 
     /** Emits code to fetch the integer value of the Integer object.
@@ -513,6 +516,7 @@ class CgenSupport {
 	emitMove(A1, ZERO, s);
 	s.println(JAL + gcCollectNames[Flags.cgen_Memmgr]);
 	emitAddiu(SP, SP, 4, s);
+    sp_v+=4;
 	emitLoad(ACC, 0, SP, s);
     }
 
