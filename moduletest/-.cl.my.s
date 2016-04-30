@@ -206,10 +206,17 @@ bool_const1:
 class_nameTab:
 	.word	str_const5
 	.word	str_const6
+<<<<<<< HEAD
 	.word	str_const10
 	.word	str_const7
 	.word	str_const8
 	.word	str_const9
+=======
+	.word	str_const7
+	.word	str_const8
+	.word	str_const9
+	.word	str_const10
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -385,6 +392,129 @@ Main_init:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+<<<<<<< HEAD
+=======
+Object.abort:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Object.type_name:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Object.copy:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.out_string:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.out_int:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.in_string:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.in_int:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String.length:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String.concat:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String.substr:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main.main:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -393,6 +523,7 @@ Main.main:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	la	$a0 int_const0
+<<<<<<< HEAD
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
@@ -409,6 +540,21 @@ Main.main:
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
+=======
+	sw	 $a0 0($sp)
+	addi	 $sp $sp -4
+	la	$a0 int_const1
+	lw	$a0 12($a0)
+	lw	$t1 4($sp)
+	lw	$t1 12($t1)
+	sub	$t1 $t1 $a0
+	lw	$a0 4($sp)
+	jal	Object.copy
+	sw	$t1 12($a0)
+	addi	 $sp $sp 4
+	sw	 $a0 0($sp)
+	addi	 $sp $sp -4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	bne	$a0 $zero label0
 	la	$a0 str_const0

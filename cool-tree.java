@@ -166,6 +166,7 @@ abstract class Expression extends TreeNode {
     public void pop(PrintStream str){
         str.println(CgenSupport.ADDIU + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
     }
+    
     public int getLineNumber() { return lineNumber; }
 
 
@@ -1068,7 +1069,27 @@ class let extends Expression {
       * @param a3 initial value for body
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
+        //let x:Int<-1 in 112
+        init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
 
+        //str.println("SP:"+CgenSupport.sp_v+",FP:"+CgenSupport.fp_v);
+        HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> new_environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment);
+        ArrayList<Integer> al=new ArrayList<Integer>();
+        al.add(0);
+        al.add(CgenSupport.sp_v-CgenSupport.fp_v);
+        new_environment.get(c.getName()).put(identifier,al);
+        push(CgenSupport.ACC, str);
+        // str.println(environment.get(identifier).get(1));
+        body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment) ,c, str);
+        pop(str);
+        
+        
+        
+        
+        
+        
+        
+        
     }
     public let(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3, Expression a4) {
         super(lineNumber);
@@ -1080,7 +1101,7 @@ class let extends Expression {
 
 
     }
-    public TreeNode copy() {
+    public TreeNode copy() { 
         return new let(lineNumber, copy_AbstractSymbol(identifier), copy_AbstractSymbol(type_decl), (Expression)init.copy(), (Expression)body.copy());
     }
     public void dump(PrintStream out, int n) {
@@ -1823,6 +1844,10 @@ class new_ extends Expression {
       * @param a0 initial value for type_name
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
+
+        CgenSupport.emitLoadAddress(CgenSupport.ACC,type_name.toString()+"_protObj",str);
+        CgenSupport.emitJal("Object.copy",str);
+        CgenSupport.emitJal(type_name.toString()+"_protObj",str);
 
     }
     public new_(int lineNumber, AbstractSymbol a1) {

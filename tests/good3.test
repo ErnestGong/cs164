@@ -1,0 +1,26 @@
+class A {
+    foo(a:Int, b: B, c:A, d:B) : SELF_TYPE {
+       self
+    };
+  
+};
+
+class B inherits A {
+
+    moo() : SELF_TYPE {
+     self;
+    };  
+};
+
+class C inherits B {
+
+   foo:Int;
+};
+class Main { main () : Int { 
+
+
+
+6
+
+
+ }; };

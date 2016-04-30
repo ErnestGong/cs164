@@ -1,4 +1,5 @@
 class Main inherits IO {
+<<<<<<< HEAD
 	x:Int<-15;
   main():Object {
   	{
@@ -16,5 +17,10 @@ class Main inherits IO {
     if 3<x then while 2<x loop if 4<x then out_int(x<-x-1) else out_int(x<-x-2) fi pool else while 2<x loop out_int(x<-x-1) pool fi;
 
 	}
+=======
+	x:Int<-10;
+  main():Object {
+    out_int(while 2<x loop x<-x-1 pool)
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
   };
 };

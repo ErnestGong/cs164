@@ -1,0 +1,26 @@
+class B{
+	x:Int<-2;
+  	y:A<-new A;
+  	methoda():Int{
+  	6
+  	};
+};
+class A{
+  z:Int<-5;
+  
+  methoda():Int{
+  	7
+  	};
+
+};
+class C inherits A{
+	
+};
+class Main {
+
+ main () : B { new B
+
+
+
+ }; };
+

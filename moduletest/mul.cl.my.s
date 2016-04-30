@@ -37,7 +37,11 @@ str_const10:
 	.word	5
 	.word	6
 	.word	String_dispTab
+<<<<<<< HEAD
 	.word	int_const0
+=======
+	.word	int_const1
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.ascii	"Main"
 	.byte	0	
 	.align	2
@@ -55,7 +59,11 @@ str_const8:
 	.word	5
 	.word	6
 	.word	String_dispTab
+<<<<<<< HEAD
 	.word	int_const0
+=======
+	.word	int_const1
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.ascii	"Bool"
 	.byte	0	
 	.align	2
@@ -184,13 +192,21 @@ int_const1:
 	.word	3
 	.word	4
 	.word	Int_dispTab
+<<<<<<< HEAD
 	.word	5
+=======
+	.word	4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.word	-1
 int_const0:
 	.word	3
 	.word	4
 	.word	Int_dispTab
+<<<<<<< HEAD
 	.word	4
+=======
+	.word	5
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.word	-1
 bool_const0:
 	.word	4
@@ -206,10 +222,17 @@ bool_const1:
 class_nameTab:
 	.word	str_const5
 	.word	str_const6
+<<<<<<< HEAD
 	.word	str_const10
 	.word	str_const7
 	.word	str_const8
 	.word	str_const9
+=======
+	.word	str_const7
+	.word	str_const8
+	.word	str_const9
+	.word	str_const10
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -292,9 +315,14 @@ String_protObj:
 	.word	-1
 Main_protObj:
 	.word	2
+<<<<<<< HEAD
 	.word	4
 	.word	Main_dispTab
 	.word	int_const2
+=======
+	.word	3
+	.word	Main_dispTab
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.globl	heap_start
 heap_start:
 	.word	0
@@ -381,21 +409,29 @@ Main_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	jal	IO_init
+<<<<<<< HEAD
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+=======
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+<<<<<<< HEAD
 Main.foo:
+=======
+Object.abort:
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
+<<<<<<< HEAD
 	lw	$a0 12($s0)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -450,18 +486,25 @@ label2:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr	$t1
+=======
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+<<<<<<< HEAD
 Main.main:
+=======
+Object.type_name:
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
+<<<<<<< HEAD
 	move	$a0 $s0
 	bne	$a0 $zero label3
 	la	$a0 str_const0
@@ -471,8 +514,116 @@ label3:
 	lw	$t1 8($a0)
 	lw	$t1 28($t1)
 	jalr	$t1
+=======
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+<<<<<<< HEAD
+=======
+Object.copy:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.out_string:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.out_int:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.in_string:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO.in_int:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String.length:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String.concat:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String.substr:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Main.foo:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
