@@ -8,8 +8,7 @@ class A {
 class B inherits A {
 
     moo() : SELF_TYPE {
-       let b:C <- new C in
-         foo(4, b, b, b)
+     self;
     };  
 };
 
@@ -17,4 +16,11 @@ class C inherits B {
 
    foo:Int;
 };
-class Main { main () : Int { 6 }; };
+class Main { main () : Int { 
+
+
+
+6
+
+
+ }; };

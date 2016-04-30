@@ -1038,11 +1038,14 @@ class let extends Expression {
         // str.println(environment.get(identifier).get(1));
         body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment) ,c, str);
         pop(str);
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+        
+        
     }
     public let(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3, Expression a4) {
         super(lineNumber);
