@@ -532,11 +532,62 @@ class CgenClassTable extends SymbolTable {
 	str.println("class_nameTab:");
 	// str.println(CgenSupport.WORD 
 	// 	    + ((Flags.cgen_Memmgr_Test == Flags.GC_TEST) ? "1" : "0"));
+
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		String class_name=((CgenNode)e.nextElement()).getName().toString();
-		int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
-	  str.println(CgenSupport.WORD +"str_const"+class_str_id);
+		if (class_name.equals("Object")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
 	}
+
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		if (class_name.equals("IO")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		if (class_name.equals("Main")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		if (class_name.equals("Int")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		if (class_name.equals("Bool")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		if (class_name.equals("String")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+
+
 
 	str.println("class_objTab:");
 	// str.println(CgenSupport.WORD 
@@ -552,24 +603,40 @@ class CgenClassTable extends SymbolTable {
 	//                   - prototype objects
 	//                   - class_nameTab
 	//                   - dispatch tables
+
 	// for dispatch table
 	method_environment = new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>();
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		CgenNode cnode = (CgenNode)e.nextElement();
 		CgenNode c_parent = cnode;
+
+		// System.out.println("I am:" + c_parent.getName());
+		// System.out.println("my parent:" + c_parent.getParentNd().getName());
+
 		ArrayList<AbstractSymbol> method_lst = cnode.getMethods();
 		String class_name=(cnode).getName().toString();
 		str.println(class_name+"_dispTab:");
 		method_environment.put(cnode.getName(), new HashMap<AbstractSymbol, Integer>());
 		Integer counter = 0;
 
-		counter = printParentMethods(cnode.getName(), cnode.getParentNd(), counter);
-		System.out.println(counter);
+		HashMap<AbstractSymbol, AbstractSymbol> printparentmap = new HashMap<AbstractSymbol, AbstractSymbol>(); 
+		HashMap<AbstractSymbol, Integer> printedmap = new HashMap<AbstractSymbol, Integer>(); 
+	  	
 	  	for (AbstractSymbol method_name: method_lst) {
-	  		str.println(CgenSupport.WORD + cnode.getName() + "." + method_name);
-	  		method_environment.get(cnode.getName()).put(method_name, counter);
-	  		counter += 1;
+	  		if(!printparentmap.containsKey(method_name)){
+	  			printparentmap.put(method_name, cnode.getName());
+	  		}
+	  	}
 
+		counter = printParentMethods(cnode.getName(), cnode.getParentNd(), counter, printparentmap, printedmap);
+		//System.out.println(counter);
+	  	for (AbstractSymbol method_name: method_lst) {
+	  		if(!printedmap.containsKey(method_name)){
+	  			str.println(CgenSupport.WORD + printparentmap.get(method_name) + "." + method_name);
+		  		method_environment.get(cnode.getName()).put(method_name, counter);
+		  		counter += 1;
+		  		printedmap.put(method_name, 1);
+	  		}
 	  	}
 	}
 
@@ -581,7 +648,7 @@ class CgenClassTable extends SymbolTable {
 	int i=0;
 	environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> ();
 	
-
+	// for protObj
 
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		CgenNode cnode = (CgenNode)e.nextElement();
@@ -589,8 +656,6 @@ class CgenClassTable extends SymbolTable {
 		ArrayList<AbstractSymbol> attrs=cnode.getAttrs();
 
 	
-		
-		
 		String classname=cnode.getName().toString();
 		str.println(CgenSupport.WORD + "-1");
 		str.print(classname+"_protObj"+CgenSupport.LABEL); // label
@@ -606,70 +671,9 @@ class CgenClassTable extends SymbolTable {
 		HashMap<AbstractSymbol, ArrayList<Integer>> offset_table=new HashMap<AbstractSymbol, ArrayList<Integer>>();
 			
 
-
-
 		environment.put(cnode.getName(),offset_table);
 
-
-		for(AbstractSymbol x :attr_type){
-			AbstractSymbol attr_name=attrs.get(k);
-			ArrayList<Integer> offset=new ArrayList<Integer>();
-			offset.add(1);
-			offset.add(12+4*k);
-			offset_table.put(attr_name,offset);
-			// System.out.print(cnode.getName());
-			// System.out.print("  ");
-			// System.out.print(attr_name);
-			// System.out.print("  ");
-			// System.out.println(k);
-		
-			str.print(CgenSupport.WORD);
-			if(!x.toString().equals("Int") &&!x.toString().equals("Bool") &&!x.toString().equals("String")  )
-				str.println("0");
-			else if (x.toString().equals("Int")){
-
-		        int index=IntSymbol.class.cast(AbstractTable.inttable.lookup("0")).getIndex();
-
-				str.println("int_const"+index);
-			}
-			else if (x.toString().equals("String")){
-			
-				int index=StringSymbol.class.cast(AbstractTable.stringtable.lookup("")).getIndex();
-				str.println("str_const"+index);
-			}
-			else if (x.toString().equals("Bool")){
-				str.println("bool_const0");
-			}
-			else{
-				str.println("constants");
-			}
-			k++;
-			// cnode.getName().toString()+"	" +x.toString());
-		}
-
-		// Features all_fea = cnode.getFeatures();
-		// for(Enumeration<Feature> feas = all_fea.getElements(); feas.hasMoreElements();){
-		// 	Feature fea = feas.nextElement();
-		// 	if(fea instanceof method){
-		// 		Formals f_mals = method.class.cast(fea).getFormals();
-		// 		int for_counter = 0;
-		// 		for(Enumeration<formalc> f_all = f_mals.getElements(); f_all.hasMoreElements();){
-		// 			formalc fc = f_all.nextElement();
-		// 			fc.getName();
-		// 			ArrayList<Integer> offset=new ArrayList<Integer>();
-		// 			offset.add(0);
-		// 			offset.add(12+4*for_counter);
-		// 			offset_table.put(attr_name,offset);
-		// 			for_counter += 1;
-		// 		}
-		// 	}
-		// }
-
-
-
-		// str.println(CgenSupport.WORD + "0"); // integer value
-
-
+		printParentAttrs(cnode.getName(), cnode, k, offset_table);
 
 
 	}
@@ -753,18 +757,75 @@ class CgenClassTable extends SymbolTable {
 
 	}
 
-    public Integer printParentMethods(AbstractSymbol name, CgenNode node, Integer counter){
-    	if(node.getParentNd() != null){
-    		counter = printParentMethods(name, node.getParentNd(), counter);
-    	}
+    public Integer printParentMethods(AbstractSymbol name, CgenNode node, Integer counter, HashMap<AbstractSymbol, AbstractSymbol> printparentmap, HashMap<AbstractSymbol, Integer> printedmap){
+    	
     	ArrayList<AbstractSymbol> method_lst = node.getMethods();
 
+    	if(node.getParentNd() != null){
+    		for (AbstractSymbol method_name: method_lst) {
+		  		if(!printparentmap.containsKey(method_name)){
+		  			printparentmap.put(method_name, node.getName());
+		  		}
+		  	}
+    		counter = printParentMethods(name, node.getParentNd(), counter, printparentmap, printedmap);
+    	}
+    	
+
 	  	for (AbstractSymbol method_name: method_lst) {
-	  		str.println(CgenSupport.WORD + node.getName() + "." + method_name);
-	  		method_environment.get(name).put(method_name, counter);
-	  		counter += 1;
+	  		if(!printedmap.containsKey(method_name)){
+		  		str.println(CgenSupport.WORD + printparentmap.get(method_name) + "." + method_name);
+		  		method_environment.get(name).put(method_name, counter);
+		  		counter += 1;
+		  		printedmap.put(method_name, 1);
+	  		}
 	  	}
 	  	return counter;
+    }
+
+    public Integer printParentAttrs(AbstractSymbol name, CgenNode node, Integer k, HashMap<AbstractSymbol, ArrayList<Integer>> offset_table){
+
+		ArrayList<AbstractSymbol> attr_type = node.getAttrs_type();
+		ArrayList<AbstractSymbol> attrs=node.getAttrs();
+
+		if(node.getParentNd() != null){
+			k = printParentAttrs(name, node.getParentNd(), k, offset_table);
+		}
+
+		int l_count = 0;
+
+		for(AbstractSymbol x :attr_type){
+			AbstractSymbol attr_name=attrs.get(l_count);
+			ArrayList<Integer> offset=new ArrayList<Integer>();
+			offset.add(1);
+			offset.add(12+4*k);
+			offset_table.put(attr_name,offset);
+		
+			str.print(CgenSupport.WORD);
+			if(!x.toString().equals("Int") &&!x.toString().equals("Bool") &&!x.toString().equals("String")  )
+				str.println("0");
+			else if (x.toString().equals("Int")){
+
+		        int index=IntSymbol.class.cast(AbstractTable.inttable.lookup("0")).getIndex();
+
+				str.println("int_const"+index);
+			}
+			else if (x.toString().equals("String")){
+			
+				int index=StringSymbol.class.cast(AbstractTable.stringtable.lookup("")).getIndex();
+				str.println("str_const"+index);
+			}
+			else if (x.toString().equals("Bool")){
+				str.println("bool_const0");
+			}
+			else{
+				str.println("constants");
+			}
+			k++;
+			l_count++;
+			// cnode.getName().toString()+"	" +x.toString());
+		}
+
+		return k;
     }
 
     /** Gets the root of the inheritance tree */

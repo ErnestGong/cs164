@@ -215,10 +215,10 @@ bool_const1:
 class_nameTab:
 	.word	str_const6
 	.word	str_const7
+	.word	str_const11
 	.word	str_const8
 	.word	str_const9
 	.word	str_const10
-	.word	str_const11
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init

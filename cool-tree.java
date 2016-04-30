@@ -589,7 +589,7 @@ class assign extends Expression {
         // System.out.println(c.getName());
 
         ArrayList<Integer> info = environment.get(c.getName()).get(name);
-        System.out.println(info.get(1));
+        //System.out.println(info.get(1));
         if(info.get(0).equals(0)){
             str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
         }
@@ -759,7 +759,7 @@ class dispatch extends Expression {
         else{
             expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
         }
-        System.out.println("success");
+        //System.out.println("success");
         int label_index_0 = CgenSupport.newlabel();
         str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
         str.println(CgenSupport.LA + CgenSupport.ACC + " str_const0");
@@ -775,6 +775,7 @@ class dispatch extends Expression {
         }
         else{
             obj_to_find = method_environment.get(expr.get_type());
+            System.out.println("type:"+expr.get_type());
         }
         
         // System.out.println("test");

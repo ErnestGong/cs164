@@ -1,6 +1,6 @@
 class Main inherits IO {
-
-   foo(x:Int) : Object {
+  x:Int <- 4;
+   foo() : Object {
       { out_int(x);
         x <- 5;
         out_int(x);
@@ -10,7 +10,7 @@ class Main inherits IO {
    };
 
    main() : Object {
-     foo(4)
+     foo()
    };
 };
    

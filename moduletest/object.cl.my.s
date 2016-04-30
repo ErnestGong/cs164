@@ -146,7 +146,7 @@ str_const0:
 	.word	10
 	.word	String_dispTab
 	.word	int_const8
-	.ascii	"moduletest/object.cl"
+	.ascii	"./moduletest//object.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -154,7 +154,7 @@ int_const8:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	20
+	.word	23
 	.word	-1
 int_const7:
 	.word	3
@@ -218,10 +218,10 @@ bool_const1:
 class_nameTab:
 	.word	str_const7
 	.word	str_const8
+	.word	str_const12
 	.word	str_const9
 	.word	str_const10
 	.word	str_const11
-	.word	str_const12
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
