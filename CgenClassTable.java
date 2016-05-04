@@ -39,6 +39,7 @@ class CgenClassTable extends SymbolTable {
     private HashMap<String,Integer> classtagmap;
     private HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment;
     private HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment;
+    private HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment;
     /** This is the stream to which assembly instructions are output */
     private PrintStream str;
     private int classtagindex;
@@ -507,12 +508,12 @@ class CgenClassTable extends SymbolTable {
 		str.println(CgenSupport.MOVE + CgenSupport.SELF + " " + CgenSupport.ACC);
     }
 
-    public void out_method(PrintStream str){
+    public void out_method(PrintStream str, Integer offset){
     	str.println(CgenSupport.LW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
     	CgenSupport.fp_v=spaddr2fp.get(CgenSupport.sp_v+12);
 		str.println(CgenSupport.LW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
 		str.println(CgenSupport.LW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");	
-		str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " 12");	
+		str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " " + (12+offset));	
 		CgenSupport.sp_v+=12;
 		str.println(CgenSupport.RET);
     }
@@ -646,6 +647,7 @@ class CgenClassTable extends SymbolTable {
 	// codePrototype();
 	int i=0;
 	environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> ();
+	para_environment  = new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>();
 	
 	// for protObj
 
@@ -653,14 +655,14 @@ class CgenClassTable extends SymbolTable {
 		CgenNode cnode = (CgenNode)e.nextElement();
 		ArrayList<AbstractSymbol> attr_type = cnode.getAttrs_type();
 		ArrayList<AbstractSymbol> attrs=cnode.getAttrs();
-
+		int size_count = 0;
 	
 		String classname=cnode.getName().toString();
 		str.println(CgenSupport.WORD + "-1");
 		str.print(classname+"_protObj"+CgenSupport.LABEL); // label
 		str.println(CgenSupport.WORD + classtagmap.get(classname)); // tag
 		str.println(CgenSupport.WORD + (CgenSupport.DEFAULT_OBJFIELDS + 
-				      attr_type.size())); // size
+				      countAttrs(cnode, size_count))); // size
 		str.print(CgenSupport.WORD);
 
 	/* Add code to reference the dispatch table for class Int here */
@@ -671,6 +673,9 @@ class CgenClassTable extends SymbolTable {
 			
 
 		environment.put(cnode.getName(),offset_table);
+
+		//init para_environment
+		para_environment.put(cnode.getName(), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>());
 
 
 		printParentAttrs(cnode.getName(), cnode, k, offset_table);
@@ -709,11 +714,8 @@ class CgenClassTable extends SymbolTable {
             if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
             	
             	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
-            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), cnode, str);
-            	if(info.get(0).equals(0)){
-            		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SP+ ")");
-            	}
-            	else if(info.get(0).equals(1)){
+            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment),AbstractTable.idtable.addString("_no_type") , cnode, str);
+            	if(info.get(0).equals(1)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
             	}
 
@@ -722,9 +724,11 @@ class CgenClassTable extends SymbolTable {
 
         }
 		str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
-		out_method(str);
+		out_method(str, 0);
 
 	}
+
+	// generate for methods
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 
 		CgenNode cnode = (CgenNode)e.nextElement();
@@ -740,10 +744,29 @@ class CgenClassTable extends SymbolTable {
         	Feature fe=f.nextElement();
         	if(fe instanceof method){
         		method fm=method.class.cast(fe);
+
+        		//init for para_environment
+        		HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> init_method_para = para_environment.get(cnode.getName());
+        		HashMap<AbstractSymbol, Integer> para_lst = new HashMap<AbstractSymbol, Integer>();
+        		Formals formal_para = fm.getFormals();
+        		int fm_size = 0;
+        		for(Enumeration<formalc> fmc = formal_para.getElements(); fmc.hasMoreElements();){
+        			formalc fc = fmc.nextElement();
+        			fm_size ++;
+        		}
+        		for(Enumeration<formalc> fmc = formal_para.getElements(); fmc.hasMoreElements();){
+        			formalc fc = fmc.nextElement();
+        			para_lst.put(fc.getName(), (fm_size - 1) * 4);
+        			fm_size--;
+        		}
+
+        		init_method_para.put(fm.getName(), para_lst);
+        		
         		str.println(cnode.getName() + "." + fm.getName()+":");
         		in_method(str);
-        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), cnode, str);
-        		out_method(str);
+        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), fm.getName() ,cnode, str);
+        		HashMap<AbstractSymbol, Integer> tmp = para_environment.get(cnode.getName()).get(fm.getName());
+        		out_method(str, tmp.size() * 4);
 
 
 
@@ -780,6 +803,25 @@ class CgenClassTable extends SymbolTable {
 	  		}
 	  	}
 	  	return counter;
+    }
+
+    public Integer countAttrs(CgenNode node, Integer counter){
+    	
+
+		ArrayList<AbstractSymbol> attr_type = node.getAttrs_type();
+		ArrayList<AbstractSymbol> attrs=node.getAttrs();
+
+		if(node.getParentNd() != null){
+			counter = countAttrs(node.getParentNd(), counter);
+		}
+
+		int l_count = 0;
+
+		for(AbstractSymbol x :attr_type){
+			counter ++;
+		}
+
+		return counter;
     }
 
     public Integer printParentAttrs(AbstractSymbol name, CgenNode node, Integer k, HashMap<AbstractSymbol, ArrayList<Integer>> offset_table){

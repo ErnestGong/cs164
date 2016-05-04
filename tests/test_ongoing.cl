@@ -22,6 +22,7 @@ class Main inherits IO {
 
   main():Object {
     {
+      
       test_a.test(a, b);
       test_a.test_b_in(a, b);
       test_a.test_unique_b(a, b);
