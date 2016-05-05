@@ -224,27 +224,67 @@ bool_const1:
 class_nameTab:
 	.word	str_const7
 	.word	str_const8
+<<<<<<< HEAD
+	.word	str_const9
+	.word	str_const10
+	.word	str_const11
+	.word	str_const12
+=======
 	.word	str_const12
 	.word	str_const9
 	.word	str_const10
 	.word	str_const11
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
+<<<<<<< HEAD
+=======
 	.word	Main_protObj
 	.word	Main_init
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.word	Int_protObj
 	.word	Int_init
 	.word	Bool_protObj
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
+<<<<<<< HEAD
+	.word	Main_protObj
+	.word	Main_init
+=======
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
+<<<<<<< HEAD
+IO_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
+	.word	IO.out_string
+	.word	IO.out_int
+	.word	IO.in_string
+	.word	IO.in_int
+Int_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
+Bool_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
+String_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
+	.word	String.length
+	.word	String.concat
+	.word	String.substr
+=======
 String_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -268,6 +308,7 @@ IO_dispTab:
 	.word	IO.out_int
 	.word	IO.in_string
 	.word	IO.in_int
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -283,11 +324,23 @@ Object_protObj:
 	.word	3
 	.word	Object_dispTab
 	.word	-1
+<<<<<<< HEAD
+IO_protObj:
+	.word	1
+	.word	3
+	.word	IO_dispTab
+	.word	-1
+Int_protObj:
+	.word	3
+	.word	4
+	.word	Int_dispTab
+=======
 String_protObj:
 	.word	5
 	.word	5
 	.word	String_dispTab
 	.word	int_const1
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.word	0
 	.word	-1
 Bool_protObj:
@@ -296,6 +349,15 @@ Bool_protObj:
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
+<<<<<<< HEAD
+String_protObj:
+	.word	5
+	.word	5
+	.word	String_dispTab
+	.word	int_const1
+	.word	0
+	.word	-1
+=======
 Int_protObj:
 	.word	3
 	.word	4
@@ -307,6 +369,7 @@ IO_protObj:
 	.word	3
 	.word	IO_dispTab
 	.word	-1
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main_protObj:
 	.word	2
 	.word	3
@@ -332,8 +395,13 @@ Object_init:
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
+<<<<<<< HEAD
+	jr	$ra	
+IO_init:
+=======
 	jr	$ra
 String_init:
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
@@ -346,8 +414,13 @@ String_init:
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
+<<<<<<< HEAD
+	jr	$ra	
+Int_init:
+=======
 	jr	$ra
 Bool_init:
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
@@ -360,8 +433,13 @@ Bool_init:
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
+<<<<<<< HEAD
+	jr	$ra	
+Bool_init:
+=======
 	jr	$ra
 Int_init:
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
@@ -374,8 +452,13 @@ Int_init:
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
+<<<<<<< HEAD
+	jr	$ra	
+String_init:
+=======
 	jr	$ra
 IO_init:
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
@@ -388,7 +471,11 @@ IO_init:
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
+<<<<<<< HEAD
+	jr	$ra	
+=======
 	jr	$ra
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main_init:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -402,21 +489,51 @@ Main_init:
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
+<<<<<<< HEAD
+	jr	$ra	
+Main.main:
+	addiu	$sp $sp -12
+=======
 	jr	$ra
 Main.main:
 	addiu	$sp $sp -20
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
+<<<<<<< HEAD
+	la	$a0 int_const0
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+=======
 	sw	$s1 4($fp)
 	la	$s1 int_const0
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	la	$a0 int_const0
 	jal	Object.copy
 	lw	$t1 12($a0)
 	neg	$t1 $t1
 	sw	$t1 12($a0)
+<<<<<<< HEAD
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label0
+	la	$a1 bool_const0
+	jal	equality_test
+label0:
+	lw	$t1 12($a0)
+	beqz	$t1 label1
+	la	$a0 str_const1
+	b	label2
+label1:
+	la	$a0 str_const2
+label2:
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+=======
 	move	$t1 $s1
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -433,18 +550,31 @@ label0:
 label1:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	bne	$a0 $zero label3
 	la	$a0 str_const0
 	li	$t1 12
+<<<<<<< HEAD
+	jal	 _dispatch_abort
+=======
 	jal	_dispatch_abort
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 label3:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
+<<<<<<< HEAD
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+=======
 	lw	$s1 4($fp)
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
 	addiu	$sp $sp 20
 	jr	$ra
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38

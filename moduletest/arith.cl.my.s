@@ -212,10 +212,17 @@ bool_const1:
 class_nameTab:
 	.word	str_const5
 	.word	str_const6
+<<<<<<< HEAD
+	.word	str_const10
+	.word	str_const7
+	.word	str_const8
+	.word	str_const9
+=======
 	.word	str_const7
 	.word	str_const8
 	.word	str_const9
 	.word	str_const10
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -391,6 +398,8 @@ Main_init:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+<<<<<<< HEAD
+=======
 Object.abort:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -511,6 +520,7 @@ String.substr:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main.main:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -519,6 +529,94 @@ Main.main:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	la	$a0 int_const0
+<<<<<<< HEAD
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const1
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const2
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const3
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	div	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	mul	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	sub	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+=======
 	sw	 $a0 0($sp)
 	addi	 $sp $sp -4
 	la	$a0 int_const1
@@ -587,6 +685,7 @@ Main.main:
 	addi	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addi	 $sp $sp -4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	bne	$a0 $zero label0
 	la	$a0 str_const0

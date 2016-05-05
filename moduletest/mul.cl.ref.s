@@ -37,7 +37,11 @@ str_const10:
 	.word	5
 	.word	6
 	.word	String_dispTab
+<<<<<<< HEAD
+	.word	int_const0
+=======
 	.word	int_const1
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.ascii	"Main"
 	.byte	0	
 	.align	2
@@ -55,7 +59,11 @@ str_const8:
 	.word	5
 	.word	6
 	.word	String_dispTab
+<<<<<<< HEAD
+	.word	int_const0
+=======
 	.word	int_const1
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.ascii	"Bool"
 	.byte	0	
 	.align	2
@@ -184,13 +192,21 @@ int_const1:
 	.word	3
 	.word	4
 	.word	Int_dispTab
+<<<<<<< HEAD
+	.word	5
+=======
 	.word	4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.word	-1
 int_const0:
 	.word	3
 	.word	4
 	.word	Int_dispTab
+<<<<<<< HEAD
+	.word	4
+=======
 	.word	5
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.word	-1
 bool_const0:
 	.word	4
@@ -292,8 +308,14 @@ IO_protObj:
 	.word	-1
 Main_protObj:
 	.word	2
+<<<<<<< HEAD
+	.word	4
+	.word	Main_dispTab
+	.word	int_const2
+=======
 	.word	3
 	.word	Main_dispTab
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	.globl	heap_start
 heap_start:
 	.word	0
@@ -380,6 +402,11 @@ Main_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	jal	IO_init
+<<<<<<< HEAD
+	la	$a0 int_const0
+	sw	$a0 12($s0)
+=======
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -394,7 +421,11 @@ Main.foo:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+<<<<<<< HEAD
+	lw	$a0 12($s0)
+=======
 	lw	$a0 8($fp)
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
@@ -406,9 +437,15 @@ label0:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr	$t1
+<<<<<<< HEAD
+	la	$a0 int_const1
+	sw	$a0 12($s0)
+	lw	$a0 12($s0)
+=======
 	la	$a0 int_const0
 	sw	$a0 8($fp)
 	lw	$a0 8($fp)
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
@@ -420,15 +457,25 @@ label1:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr	$t1
+<<<<<<< HEAD
+	lw	$s1 12($s0)
+	lw	$a0 12($s0)
+=======
 	lw	$s1 8($fp)
 	lw	$a0 8($fp)
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	jal	Object.copy
 	lw	$t2 12($a0)
 	lw	$t1 12($s1)
 	mul	$t1 $t1 $t2
 	sw	$t1 12($a0)
+<<<<<<< HEAD
+	sw	$a0 12($s0)
+	lw	$a0 12($s0)
+=======
 	sw	$a0 8($fp)
 	lw	$a0 8($fp)
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
@@ -444,7 +491,11 @@ label2:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
+<<<<<<< HEAD
+	addiu	$sp $sp 20
+=======
 	addiu	$sp $sp 24
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	jr	$ra
 Main.main:
 	addiu	$sp $sp -12
@@ -453,9 +504,12 @@ Main.main:
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
+<<<<<<< HEAD
+=======
 	la	$a0 int_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	bne	$a0 $zero label3
 	la	$a0 str_const0

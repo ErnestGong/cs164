@@ -61,7 +61,7 @@ class CgenNode extends class_c {
 	this.basic_status = basic_status;
 	AbstractTable.stringtable.addString(name.getString());
     class_c tc = (class_c) c;
-    System.out.println(tc.getName()+" "+tc.getParent());    
+    //System.out.println(tc.getName()+" "+tc.getParent());    
     Features features = tc.getFeatures();
     for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
         Feature fe = f.nextElement();

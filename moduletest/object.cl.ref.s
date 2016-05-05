@@ -393,6 +393,8 @@ Main_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	jal	IO_init
+<<<<<<< HEAD
+=======
 	la	$a0 Main_protObj
 	jal	Object.copy
 	jal	Main_init
@@ -401,6 +403,7 @@ Main_init:
 	jal	Object.copy
 	jal	Main_init
 	sw	$a0 16($s0)
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)

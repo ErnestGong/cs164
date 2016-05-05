@@ -206,10 +206,17 @@ bool_const1:
 class_nameTab:
 	.word	str_const5
 	.word	str_const6
+<<<<<<< HEAD
+	.word	str_const10
+	.word	str_const7
+	.word	str_const8
+	.word	str_const9
+=======
 	.word	str_const7
 	.word	str_const8
 	.word	str_const9
 	.word	str_const10
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -385,6 +392,8 @@ Main_init:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+<<<<<<< HEAD
+=======
 Object.abort:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -505,6 +514,7 @@ String.substr:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main.main:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -526,7 +536,11 @@ label1:
 	la	$a0 int_const1
 label2:
 	sw	 $a0 0($sp)
+<<<<<<< HEAD
+	addiu	 $sp $sp -4
+=======
 	addi	 $sp $sp -4
+>>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	bne	$a0 $zero label3
 	la	$a0 str_const0
