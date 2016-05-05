@@ -1,0 +1,26 @@
+MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
+
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 602 column 9: "Main.main" declared global label but not defined.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 470 column 8: Symbol "Book.print" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 480 column 8: Symbol "Article.print" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 481 column 8: Symbol "Article.initArticle" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 490 column 8: Symbol "BookList.isNil" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 491 column 8: Symbol "BookList.cons" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 492 column 8: Symbol "BookList.car" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 493 column 8: Symbol "BookList.cdr" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 494 column 8: Symbol "BookList.print_list" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 503 column 8: Symbol "Cons.isNil" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 504 column 8: Symbol "BookList.cons" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 505 column 8: Symbol "Cons.car" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 506 column 8: Symbol "Cons.cdr" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 507 column 8: Symbol "Cons.print_list" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 508 column 8: Symbol "Cons.init" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 517 column 8: Symbol "Nil.isNil" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 518 column 8: Symbol "BookList.cons" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 519 column 8: Symbol "BookList.car" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 520 column 8: Symbol "BookList.cdr" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 521 column 8: Symbol "Nil.print_list" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/book_list.cl.my.s line 526 column 8: Symbol "Main.main" not found in symbol table.
+
+Processing terminated due to errors.
+

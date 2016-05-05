@@ -111,7 +111,7 @@ class B inherits C{
 };
 
 class A inherits B{
-  g : Int <- 7;
+  g : Int <- let a : Int in  let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in 3;
   h : Int <- 8;
   i : Int <- 9;
 
@@ -130,10 +130,9 @@ class A inherits B{
     }   
   };
 
-  get(a : Int, b : Int) : Int{
+  get(a : Int, b : Int) : Object{
     {
-    let a : Int <- 3 in a;
-    let b : Int <- 3 in b + let c : Int <- 3, d : Int <- 5 in c;
+    let a : A in let f : Object in let g : A in  let g : A in  let g : A in  let g : A in  let g : A in  let g : A in  let g : A <- new A in  let b : Int <- 3 in let c : Bool in let d : IO in let e : String in g <- new A;
     }
   };
   special_b(b : Int, c : Int, d : Int, spec : A, g : Int) : Object{
@@ -141,7 +140,7 @@ class A inherits B{
     out_int(b);
     out_int(c);
     out_int(g);
-    out_int(spec.get(2, 4));
+    (* out_int(spec.get(2, 4)); *)
     }
 
   };

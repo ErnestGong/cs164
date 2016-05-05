@@ -27,6 +27,7 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.ArrayList;
 
 
 /** This class is used for representing the inheritance tree during code
@@ -752,21 +753,51 @@ class CgenClassTable extends SymbolTable {
 		
 		String class_name=(cnode).getName().toString();
 		str.println(class_name+"_init:");
-		in_method(str, 0);
+
+		int let_max = 0;
+		int case_max = 0;
+		Features features = cnode.getFeatures();
+
+		
+        for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
+            Feature fe = f.nextElement();
+
+            if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
+            	
+            	int let_temp = attr.class.cast(fe).getLet(0);
+            	int case_temp = attr.class.cast(fe).getCase(0);
+            	if(let_temp > let_max){
+            		let_max = let_temp;
+            	}
+            	if(case_temp > case_max){
+            		case_max = case_temp;
+            	}
+
+            }
+
+        }
+
+		in_method(str, (let_max + case_max) * 4);
 		// str.println()
 		if(!(c_parent.getParent().equals(AbstractTable.idtable.addString("_no_class")))){
 			str.println(CgenSupport.JAL + (c_parent.getParent()) +"_init");
 		}
 		
 
-		Features features = cnode.getFeatures();
+
         for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
             Feature fe = f.nextElement();
 
             if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
             	
             	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
-            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment),AbstractTable.idtable.addString("_no_type") , cnode, str);
+
+            	ArrayList<HashMap<String, Integer>> let_lst = new ArrayList<HashMap<String, Integer>>();
+				let_lst.add(0, new HashMap<String, Integer>());
+				let_lst.get(0).put("offset", 0);
+
+            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment),AbstractTable.idtable.addString("_no_type") , let_lst, cnode, str);
+            	
             	if(info.get(0).equals(1)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
             	}
@@ -776,9 +807,11 @@ class CgenClassTable extends SymbolTable {
 
         }
 		str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
-		out_method(str, 0);
+		out_method(str, (let_max + case_max) * 4);
 
 	}
+
+
 
 	// generate for methods
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
@@ -792,6 +825,7 @@ class CgenClassTable extends SymbolTable {
 		
 		String class_name=(cnode).getName().toString();
 		Features features = cnode.getFeatures();
+
         for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
         	Feature fe=f.nextElement();
         	if(fe instanceof method){
@@ -817,8 +851,16 @@ class CgenClassTable extends SymbolTable {
         		str.println(cnode.getName() + "." + fm.getName()+":");
         		int case_num = fm.getExpr().getCase(0);
         		int let_num = fm.getExpr().getLet(0);
+
         		in_method(str, (case_num + let_num) * 4);
-        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), fm.getName() ,cnode, str);
+
+
+				ArrayList<HashMap<String, Integer>> let_lst = new ArrayList<HashMap<String, Integer>>();
+				let_lst.add(0, new HashMap<String, Integer>());
+				let_lst.get(0).put("offset", 0);
+
+        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), fm.getName() , let_lst, cnode, str);
+        		
         		HashMap<AbstractSymbol, Integer> tmp = para_environment.get(cnode.getName()).get(fm.getName());
         		out_method(str, tmp.size() * 4 + (case_num + let_num) * 4);
 

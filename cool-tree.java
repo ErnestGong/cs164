@@ -13,7 +13,8 @@ import java.io.PrintStream;
 import java.util.Vector;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Stack;
+
+
 
 
 /** Defines simple phylum Program */
@@ -159,7 +160,7 @@ abstract class Expression extends TreeNode {
             { out.println(Utilities.pad(n) + ": _no_type"); }
     }
     public abstract void code(PrintStream s);
-    public abstract void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str);
+    public abstract void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str);
     public void push(String reg, PrintStream str){
         str.println(CgenSupport.SW + " " + reg + " " + "0(" + CgenSupport.SP + ")");
         str.println(CgenSupport.ADDIU + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
@@ -460,6 +461,14 @@ class attr extends Feature {
       * @param a1 initial value for type_decl
       * @param a2 initial value for init
       */
+
+    public int getCase(int num){
+        return init.getCase(num);
+    }
+
+    public int getLet(int num){
+        return init.getLet(num);
+    } 
     public Expression getInit(){ return init; }
     public AbstractSymbol getName() { return name; }
     public attr(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3) {
@@ -556,8 +565,8 @@ class branch extends Case {
         return expr.getLet(num);
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
     }
     public branch(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3) {
         super(lineNumber);
@@ -605,8 +614,8 @@ class assign extends Expression {
       * @param a1 initial value for expr
       */
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         // System.out.println(name);
         // System.out.println(c.getName());
         if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
@@ -714,11 +723,11 @@ class static_dispatch extends Expression {
         }
         return max;
     }   
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
 
         for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
             Expression ex = e.nextElement();
-            ex.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            ex.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
             push(CgenSupport.ACC, str);
 
         }
@@ -727,7 +736,7 @@ class static_dispatch extends Expression {
             str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
         }
         else{
-            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         }
         int label_index_0 = CgenSupport.newlabel();
         str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
@@ -841,11 +850,11 @@ class dispatch extends Expression {
         }
         return max;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         Boolean self_flag = false;
         for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
             Expression expr = e.nextElement();
-            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
             push(CgenSupport.ACC, str);
 
         }
@@ -855,7 +864,7 @@ class dispatch extends Expression {
             self_flag = true;
         }
         else{
-            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         }
         //System.out.println("success");
         int label_index_0 = CgenSupport.newlabel();
@@ -976,16 +985,16 @@ class cond extends Expression {
         return max;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-    pred.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+    pred.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
     CgenSupport.emitLoad(CgenSupport.T1,3,CgenSupport.ACC,str);
     int label_index_0=CgenSupport.newlabel();
     int label_index_1=CgenSupport.newlabel();
     CgenSupport.emitBeqz(CgenSupport.T1,label_index_0,str);
-    then_exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    then_exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
     CgenSupport.emitBranch(label_index_1,str);
     CgenSupport.emitLabelDef(label_index_0,str);
-    else_exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    else_exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
     CgenSupport.emitLabelDef(label_index_1,str);
 
     }
@@ -1067,14 +1076,14 @@ class loop extends Expression {
         return max;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         int label_index_0=CgenSupport.newlabel();
         int label_index_1 = CgenSupport.newlabel();
         CgenSupport.emitLabelDef(label_index_0, str);
-        pred.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        pred.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.ACC + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.BEQ + CgenSupport.ACC + " " + CgenSupport.ZERO + " label" + label_index_1);
-        body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.BRANCH + "label"+label_index_0);
         CgenSupport.emitLabelDef(label_index_1, str);
         str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.ZERO);
@@ -1156,8 +1165,8 @@ class typcase extends Expression {
         return max;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-         expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+         expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
    
      
         int cl=cases.getLength();
@@ -1190,7 +1199,7 @@ class typcase extends Expression {
             
             str.println("");
             //CgenSupport.emitLabelDef(lables[i++],str);
-            te.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            te.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
    
             CgenSupport.emitBranch(lables[0],str);
         }
@@ -1279,11 +1288,11 @@ class block extends Expression {
         }
         return max;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
 
         for (Enumeration<Expression> e = body.getElements(); e.hasMoreElements(); ) {
             Expression exp = e.nextElement();
-            exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            exp.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         }
     }
     public block(int lineNumber, Expressions a1) {
@@ -1346,9 +1355,9 @@ class let extends Expression {
         return body.getLet(temp);
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         //let x:Int<-1 in 112
-        // init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        // init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
 
         // //str.println("SP:"+CgenSupport.sp_v+",FP:"+CgenSupport.fp_v);
         // HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> new_environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment);
@@ -1358,16 +1367,41 @@ class let extends Expression {
         // new_environment.get(c.getName()).put(identifier,al);
         // push(CgenSupport.ACC, str);
         // // str.println(environment.get(identifier).get(1));
-        // body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        // body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         // pop(str);
 
         // let x : Int <- 1 in 112
 
+        // init the place
+        Integer offset_from = let_lst.get(0).get("offset");
+        if(type_decl.toString().equals("Int")){
+            int index=IntSymbol.class.cast(AbstractTable.inttable.lookup("0")).getIndex();
+            str.println(CgenSupport.LA + CgenSupport.ACC + " " + "int_const" + index);
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset_from + "(" + CgenSupport.FP + ")");
+        }
+        else if(type_decl.toString().equals("Bool")){
+            str.println(CgenSupport.LA + CgenSupport.ACC + " " + "bool_const0");
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset_from + "(" + CgenSupport.FP + ")");
+        }
+        else if(type_decl.toString().equals("String")){
+            int index=StringSymbol.class.cast(AbstractTable.stringtable.lookup("")).getIndex();
+            str.println(CgenSupport.LA + CgenSupport.ACC + " " + "str_const" + index);
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset_from + "(" + CgenSupport.FP + ")");
+        }
+        else{
+            str.println(CgenSupport.SW + CgenSupport.ZERO + " " + offset_from + "(" + CgenSupport.FP + ")");
+        }
+        if(!(init instanceof no_expr)){
+            init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset_from + "(" + CgenSupport.FP + ")");
+        }
+        ArrayList<HashMap<String, Integer>> new_let_lst = new ArrayList<HashMap<String, Integer>>(let_lst);
+        new_let_lst.get(0).put("offset", offset_from + 4);
+        HashMap<String, Integer> tmp = new HashMap<String, Integer>();
+        tmp.put(identifier.toString(), offset_from);
+        new_let_lst.add(1, tmp);
+        body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new_let_lst, c, str);
         
-        
-        
-        
-
     }
     public let(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3, Expression a4) {
         super(lineNumber);
@@ -1459,11 +1493,11 @@ class plus extends Expression {
         e1 = a1;
         e2 = a2;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         push(CgenSupport.T1, str);
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T2 + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.ADD + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
@@ -1545,11 +1579,11 @@ class sub extends Expression {
         return max;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         push(CgenSupport.T1, str);
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T2 + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.SUB + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
@@ -1635,11 +1669,11 @@ class mul extends Expression {
 
         return max;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         push(CgenSupport.T1, str);
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T2 + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.MUL + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
@@ -1726,11 +1760,11 @@ class divide extends Expression {
 
         return max;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         push(CgenSupport.T1, str);
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T2 + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.DIV + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
@@ -1793,8 +1827,8 @@ class neg extends Expression {
     public int getLet(int num){
         return e1.getLet(num);
     }   
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-    e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+    e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
     str.println(CgenSupport.JAL +"Object.copy");
     // str.println(CgenSupport.LW +CgenSupport.T1+"Object.copy");
     str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1875,11 +1909,11 @@ class lt extends Expression {
 
         return max;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         push(CgenSupport.ACC, str);
 
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         pop(str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
@@ -1984,12 +2018,12 @@ class eq extends Expression {
         return max;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
        
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         push(CgenSupport.ACC, str);
 
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         pop(str);
         // str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
@@ -2081,12 +2115,12 @@ class leq extends Expression {
 
         return max;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
 
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         push(CgenSupport.ACC, str);
 
-        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e2.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         pop(str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.T1 + ")");
@@ -2152,9 +2186,9 @@ class comp extends Expression {
     public int getLet(int num){
         return e1.getLet(num);
     } 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         int label_index_0=CgenSupport.newlabel();
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
         str.println(CgenSupport.LA+ CgenSupport.ACC + " " + "bool_const1");
         str.println(CgenSupport.BEQZ + CgenSupport.T1 + " " + "label"+label_index_0);
@@ -2218,7 +2252,7 @@ class int_const extends Expression {
         token = a1;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         str.println(CgenSupport.LA + CgenSupport.ACC + " " + "int_const" + IntSymbol.class.cast(token).getIndex());
     }
 
@@ -2272,7 +2306,7 @@ class bool_const extends Expression {
         val = a1;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         str.println(CgenSupport.LA + CgenSupport.ACC + " " + "bool_const" + (val ? "1" : "0"));
     }
 
@@ -2324,7 +2358,7 @@ class string_const extends Expression {
         super(lineNumber);
         token = a1;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         str.println(CgenSupport.LA + CgenSupport.ACC + " " + "str_const" + StringSymbol.class.cast(token).getIndex());
     }
 
@@ -2375,7 +2409,7 @@ class new_ extends Expression {
     public int getLet(int num){
         return num;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
 
         CgenSupport.emitLoadAddress(CgenSupport.ACC,type_name.toString()+"_protObj",str);
         CgenSupport.emitJal("Object.copy",str);
@@ -2431,9 +2465,9 @@ class isvoid extends Expression {
     public int getLet(int num){
         return e1.getLet(num);
     } 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
         int label_index_0=CgenSupport.newlabel();
-        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         CgenSupport.emitMove(CgenSupport.T1,CgenSupport.ACC,str);
         CgenSupport.emitLoadAddress(CgenSupport.ACC,"bool_const1",str);
         CgenSupport.emitBeqz(CgenSupport.T1,label_index_0,str);
@@ -2489,7 +2523,7 @@ class no_expr extends Expression {
     public int getLet(int num){
         return num;
     }
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
 
     }
     public no_expr(int lineNumber) {
@@ -2543,8 +2577,23 @@ class object extends Expression {
         name = a1;
     }
 
-    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
-        if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, CgenNode c, PrintStream str){
+        Boolean find_in_let = false;
+        Integer offset = 0;
+        for(HashMap<String, Integer> x : let_lst){
+            if(x.containsKey("offset")){
+                continue;
+            }
+            if(x.containsKey(name.toString())){
+                find_in_let = true;
+                offset = x.get(name.toString());
+                break;
+            }
+        }
+        if(find_in_let){
+            str.println(CgenSupport.LW + CgenSupport.ACC + " " + offset + "(" + CgenSupport.FP + ")");
+        }
+        else if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
             str.println(CgenSupport.LW + CgenSupport.ACC + " " + para_environment.get(c.getName()).get(func).get(name) + "(" + CgenSupport.FP + ")");
         }
         else{

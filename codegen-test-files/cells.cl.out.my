@@ -1,0 +1,14 @@
+MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
+
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 388 column 9: "Main.main" declared global label but not defined.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 327 column 8: Symbol "CellularAutomaton.print" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 328 column 8: Symbol "CellularAutomaton.num_cells" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 329 column 8: Symbol "CellularAutomaton.cell" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 330 column 8: Symbol "CellularAutomaton.cell_left_neighbor" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 331 column 8: Symbol "CellularAutomaton.cell_right_neighbor" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 332 column 8: Symbol "CellularAutomaton.cell_at_next_evolution" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 333 column 8: Symbol "CellularAutomaton.evolve" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/cells.cl.my.s line 338 column 8: Symbol "Main.main" not found in symbol table.
+
+Processing terminated due to errors.
+

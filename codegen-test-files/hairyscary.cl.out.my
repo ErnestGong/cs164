@@ -1,0 +1,20 @@
+MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
+
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 437 column 9: "Main_init" declared global label but not defined.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 441 column 9: "Main.main" declared global label but not defined.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 272 column 8: Symbol "Bar_init" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 274 column 8: Symbol "Razz_init" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 276 column 8: Symbol "Bazz_init" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 278 column 8: Symbol "Main_init" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 314 column 8: Symbol "Bazz.printh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 315 column 8: Symbol "Foo.doh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 324 column 8: Symbol "Bazz.printh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 325 column 8: Symbol "Foo.doh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 334 column 8: Symbol "Bazz.printh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 335 column 8: Symbol "Foo.doh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 344 column 8: Symbol "Bazz.printh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 345 column 8: Symbol "Bazz.doh" not found in symbol table.
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/hairyscary.cl.my.s line 350 column 8: Symbol "Main.main" not found in symbol table.
+
+Processing terminated due to errors.
+
