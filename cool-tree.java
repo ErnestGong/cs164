@@ -13,6 +13,7 @@ import java.io.PrintStream;
 import java.util.Vector;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 /** Defines simple phylum Program */
@@ -168,6 +169,8 @@ abstract class Expression extends TreeNode {
     }
     
     public int getLineNumber() { return lineNumber; }
+    public abstract int getCase(int num);
+    public abstract int getLet(int num);  
 
 
 }
@@ -543,6 +546,14 @@ class branch extends Case {
       * @param a1 initial value for type_decl
       * @param a2 initial value for expr
       */
+    public int getCase(int num){
+        num = num + 1;
+        return expr.getCase(num);
+    }
+
+    public int getLet(int num){
+        return expr.getLet(num);
+    }
     public branch(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3) {
         super(lineNumber);
         name = a1;
@@ -567,6 +578,8 @@ class branch extends Case {
         dump_AbstractSymbol(out, n + 2, type_decl);
 	expr.dump_with_types(out, n + 2);
     }
+
+
 
 }
 
@@ -602,6 +615,14 @@ class assign extends Expression {
         
 
     }
+
+    public int getCase(int num){
+        return expr.getCase(num);
+    }
+    public int getLet(int num){
+        return expr.getLet(num);
+    }   
+
     public assign(int lineNumber, AbstractSymbol a1, Expression a2) {
         super(lineNumber);
         name = a1;
@@ -652,11 +673,44 @@ class static_dispatch extends Expression {
       * @param a2 initial value for name
       * @param a3 initial value for actual
       */
+
+    public int getCase(int num){
+        int max = 0;
+        int temp = 0;
+        temp = expr.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
+            Expression ex = e.nextElement();
+            temp = ex.getCase(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
+    public int getLet(int num){
+        int max = 0;
+        int temp = 0;
+        temp = expr.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
+            Expression ex = e.nextElement();
+            temp = ex.getLet(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }   
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
 
         for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
-            Expression expr = e.nextElement();
-            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+            Expression ex = e.nextElement();
+            ex.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
             push(CgenSupport.ACC, str);
 
         }
@@ -746,6 +800,39 @@ class dispatch extends Expression {
       * @param a1 initial value for name
       * @param a2 initial value for actual
       */
+
+    public int getCase(int num){
+        int max = 0;
+        int temp = 0;
+        temp = expr.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
+            Expression ex = e.nextElement();
+            temp = ex.getCase(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
+    public int getLet(int num){
+        int max = 0;
+        int temp = 0;
+        temp = expr.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
+            Expression ex = e.nextElement();
+            temp = ex.getLet(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         Boolean self_flag = false;
         for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
@@ -844,6 +931,43 @@ class cond extends Expression {
       * @param a1 initial value for then_exp
       * @param a2 initial value for else_exp
       */
+
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = pred.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = then_exp.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = else_exp.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = pred.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = then_exp.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = else_exp.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        return max;
+    }
+
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
     pred.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
     CgenSupport.emitLoad(CgenSupport.T1,3,CgenSupport.ACC,str);
@@ -906,6 +1030,35 @@ class loop extends Expression {
       * @param a0 initial value for pred
       * @param a1 initial value for body
       */
+
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = pred.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = body.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = pred.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = body.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        return max;
+    }
+
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         int label_index_0=CgenSupport.newlabel();
         int label_index_1 = CgenSupport.newlabel();
@@ -965,6 +1118,35 @@ class typcase extends Expression {
       * @param a0 initial value for expr
       * @param a1 initial value for cases
       */
+
+    public int getCase(int num){
+        num = expr.getCase(num + 1);
+        int max = num;
+        int temp = 0;
+        for(Enumeration<branch> b = cases.getElements(); b.hasMoreElements(); ){
+            branch bran = b.nextElement();
+            temp = bran.getCase(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+
+    }
+
+    public int getLet(int num){
+        num = expr.getLet(num);
+        int max = num;
+        int temp = 0;
+        for(Enumeration<branch> b = cases.getElements(); b.hasMoreElements(); ){
+            branch bran = b.nextElement();
+            temp = bran.getLet(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
 
     }
@@ -1014,6 +1196,32 @@ class block extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for body
       */
+
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        for(Enumeration<Expression> e = body.getElements(); e.hasMoreElements(); ){
+            Expression exp = e.nextElement();
+            temp = exp.getCase(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        for(Enumeration<Expression> e = body.getElements(); e.hasMoreElements(); ){
+            Expression exp = e.nextElement();
+            temp = exp.getLet(num);
+            if(temp > max){
+                max = temp;
+            }
+        }
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
 
         for (Enumeration<Expression> e = body.getElements(); e.hasMoreElements(); ) {
@@ -1070,20 +1278,34 @@ class let extends Expression {
       * @param a2 initial value for init
       * @param a3 initial value for body
       */
+
+    public int getCase(int num){
+        int temp = init.getCase(num);
+        return body.getCase(temp);
+    }
+
+    public int getLet(int num){
+        int temp = init.getLet(num + 1);
+        return body.getLet(temp);
+    }
+
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         //let x:Int<-1 in 112
-        init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        // init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
 
-        //str.println("SP:"+CgenSupport.sp_v+",FP:"+CgenSupport.fp_v);
-        HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> new_environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment);
-        ArrayList<Integer> al=new ArrayList<Integer>();
-        al.add(0);
-        al.add(CgenSupport.sp_v-CgenSupport.fp_v);
-        new_environment.get(c.getName()).put(identifier,al);
-        push(CgenSupport.ACC, str);
-        // str.println(environment.get(identifier).get(1));
-        body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
-        pop(str);
+        // //str.println("SP:"+CgenSupport.sp_v+",FP:"+CgenSupport.fp_v);
+        // HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> new_environment=new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment);
+        // ArrayList<Integer> al=new ArrayList<Integer>();
+        // al.add(0);
+        // al.add(CgenSupport.sp_v-CgenSupport.fp_v);
+        // new_environment.get(c.getName()).put(identifier,al);
+        // push(CgenSupport.ACC, str);
+        // // str.println(environment.get(identifier).get(1));
+        // body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
+        // pop(str);
+
+        // let x : Int <- 1 in 112
+
         
         
         
@@ -1148,6 +1370,35 @@ class plus extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
 
     public plus(int lineNumber, Expression a1, Expression a2) {
         super(lineNumber);
@@ -1210,6 +1461,35 @@ class sub extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
 
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
@@ -1272,7 +1552,35 @@ class mul extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
 
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1334,6 +1642,36 @@ class divide extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1393,6 +1731,14 @@ class neg extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for e1
       */
+
+    public int getCase(int num){
+        return e1.getCase(num);
+    }
+
+    public int getLet(int num){
+        return e1.getLet(num);
+    }   
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
     e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
     str.println(CgenSupport.JAL +"Object.copy");
@@ -1445,6 +1791,36 @@ class lt extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
         push(CgenSupport.ACC, str);
@@ -1523,6 +1899,37 @@ class eq extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
        
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
@@ -1591,6 +1998,35 @@ class leq extends Expression {
       * @param a0 initial value for e1
       * @param a1 initial value for e2
       */
+    public int getCase(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getCase(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
+
+    public int getLet(int num){
+        int temp = 0;
+        int max = 0;
+        temp = e1.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+        temp = e2.getLet(num);
+        if(temp > max){
+            max = temp;
+        }
+
+        return max;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
 
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
@@ -1654,6 +2090,14 @@ class comp extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for e1
       */
+
+    public int getCase(int num){
+        return e1.getCase(num);
+    }
+
+    public int getLet(int num){
+        return e1.getLet(num);
+    } 
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         int label_index_0=CgenSupport.newlabel();
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
@@ -1707,6 +2151,14 @@ class int_const extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for token
       */
+
+    public int getCase(int num){
+        return num;
+    }
+
+    public int getLet(int num){
+        return num;
+    }
     public int_const(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);
         token = a1;
@@ -1753,6 +2205,14 @@ class bool_const extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for val
       */
+
+    public int getCase(int num){
+        return num;
+    }
+
+    public int getLet(int num){
+        return num;
+    }
     public bool_const(int lineNumber, Boolean a1) {
         super(lineNumber);
         val = a1;
@@ -1798,6 +2258,14 @@ class string_const extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for token
       */
+
+    public int getCase(int num){
+        return num;
+    }
+
+    public int getLet(int num){
+        return num;
+    }
     public string_const(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);
         token = a1;
@@ -1845,6 +2313,14 @@ class new_ extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for type_name
       */
+
+    public int getCase(int num){
+        return num;
+    }
+
+    public int getLet(int num){
+        return num;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
 
         CgenSupport.emitLoadAddress(CgenSupport.ACC,type_name.toString()+"_protObj",str);
@@ -1893,6 +2369,14 @@ class isvoid extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for e1
       */
+
+    public int getCase(int num){
+        return e1.getCase(num);
+    }
+
+    public int getLet(int num){
+        return e1.getLet(num);
+    } 
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
         int label_index_0=CgenSupport.newlabel();
         e1.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, c, str);
@@ -1944,6 +2428,13 @@ class no_expr extends Expression {
       *
       * @param lineNumber the line in the source file from which this node came.
       */
+    public int getCase(int num){
+        return num;
+    }
+
+    public int getLet(int num){
+        return num;
+    }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , CgenNode c, PrintStream str){
 
     }
@@ -1985,7 +2476,13 @@ class object extends Expression {
       * @param lineNumber the line in the source file from which this node came.
       * @param a0 initial value for name
       */
+    public int getCase(int num){
+        return num;
+    }
 
+    public int getLet(int num){
+        return num;
+    }
     public AbstractSymbol getName() { return name; }
     public object(int lineNumber, AbstractSymbol a1) {
         super(lineNumber);

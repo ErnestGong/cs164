@@ -132,8 +132,8 @@ class A inherits B{
 
   get(a : Int, b : Int) : Int{
     {
-    let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in let a : Int <- 3 in a;
-    h;
+    let a : Int <- 3 in a;
+    let b : Int <- 3 in b + let c : Int <- 3, d : Int <- 5 in c;
     }
   };
   special_b(b : Int, c : Int, d : Int, spec : A, g : Int) : Object{

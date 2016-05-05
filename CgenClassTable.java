@@ -26,6 +26,7 @@ import java.util.Vector;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 
 /** This class is used for representing the inheritance tree during code
@@ -495,8 +496,8 @@ class CgenClassTable extends SymbolTable {
     }
 
 
-    public void in_method(PrintStream str){
-    	str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " -12");
+    public void in_method(PrintStream str, Integer offset){
+    	str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " -" + (12 + offset));
     	CgenSupport.sp_v-=12;
 		str.println(CgenSupport.SW + CgenSupport.FP + " " + "12(" + CgenSupport.SP + ")");
 		//str.println("map put "+CgenSupport.fp_v+" in "+(CgenSupport.sp_v+12));
@@ -700,7 +701,7 @@ class CgenClassTable extends SymbolTable {
 		
 		String class_name=(cnode).getName().toString();
 		str.println(class_name+"_init:");
-		in_method(str);
+		in_method(str, 0);
 		// str.println()
 		if(!(c_parent.getParent().equals(AbstractTable.idtable.addString("_no_class")))){
 			str.println(CgenSupport.JAL + (c_parent.getParent()) +"_init");
@@ -763,10 +764,12 @@ class CgenClassTable extends SymbolTable {
         		init_method_para.put(fm.getName(), para_lst);
         		
         		str.println(cnode.getName() + "." + fm.getName()+":");
-        		in_method(str);
+        		int case_num = fm.getExpr().getCase(0);
+        		int let_num = fm.getExpr().getLet(0);
+        		in_method(str, (case_num + let_num) * 4);
         		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), fm.getName() ,cnode, str);
         		HashMap<AbstractSymbol, Integer> tmp = para_environment.get(cnode.getName()).get(fm.getName());
-        		out_method(str, tmp.size() * 4);
+        		out_method(str, tmp.size() * 4 + (case_num + let_num) * 4);
 
 
 
