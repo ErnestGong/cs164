@@ -543,11 +543,20 @@ class branch extends Case {
       * @param a1 initial value for type_decl
       * @param a2 initial value for expr
       */
+    public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
+
+
+
+    }
     public branch(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3) {
         super(lineNumber);
         name = a1;
         type_decl = a2;
         expr = a3;
+    }
+    public AbstractSymbol gettype(){
+        return type_decl;
     }
     public TreeNode copy() {
         return new branch(lineNumber, copy_AbstractSymbol(name), copy_AbstractSymbol(type_decl), (Expression)expr.copy());
@@ -920,7 +929,55 @@ class typcase extends Expression {
       * @param a1 initial value for cases
       */
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, CgenNode c, PrintStream str){
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
+        
+        
+     
+        int cl=cases.getLength();
+        int[] lables=new int[cl+2];
+       
+        for(int i=0;i<cl+2;i++){
+             lables[i]=CgenSupport.newlabel();
+             // System.out.println("i:"+i);
+        }
+        CgenSupport.emitBne(CgenSupport.ACC,CgenSupport.ZERO,lables[1],str);
+        CgenSupport.emitLoadAddress(CgenSupport.ACC,"str_const0",str);
+        CgenSupport.emitLoadImm(CgenSupport.T1,19,str);
+        CgenSupport.emitJal("_case_abort2",str);
+        int i=1;
+        
 
+   
+        for (Enumeration<branch> e = cases.getElements(); e.hasMoreElements();){
+            CgenSupport.emitLabelDef(lables[i],str);
+            if(i==1){
+                CgenSupport.emitLoad(CgenSupport.T2,0,CgenSupport.ACC,str);
+                }
+            i+=1;
+            branch te=e.nextElement();
+            String typename=te.gettype().toString();
+
+
+            CgenSupport.emitBlti(CgenSupport.T2,CgenSupport.start_c.get(typename),i,str);
+            CgenSupport.emitBgti(CgenSupport.T2,CgenSupport.end_c.get(typename),i,str);
+            
+            str.println("");
+            //CgenSupport.emitLabelDef(lables[i++],str);
+            te.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), c, str);
+            CgenSupport.emitBranch(lables[0],str);
+        }
+        CgenSupport.emitLabelDef(lables[i],str);
+        CgenSupport.emitJal("_case_abort",str);
+        CgenSupport.emitLabelDef(lables[0],str);
+
+
+
+       
+        // System.out.println("cl:"+cl);
+
+        // for (Enumeration e = cases.getElements(); e.hasMoreElements(); ) {
+        // ((Class_)e.nextElement()).dump_with_types(out, n + 2);
+        // }
     }
     public typcase(int lineNumber, Expression a1, Cases a2) {
         super(lineNumber);
@@ -1038,14 +1095,14 @@ class let extends Expression {
         // str.println(environment.get(identifier).get(1));
         body.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment) ,c, str);
         pop(str);
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
     }
     public let(int lineNumber, AbstractSymbol a1, AbstractSymbol a2, Expression a3, Expression a4) {
         super(lineNumber);

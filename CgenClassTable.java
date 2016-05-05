@@ -26,6 +26,7 @@ import java.util.Vector;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 
 /** This class is used for representing the inheritance tree during code
@@ -37,6 +38,9 @@ class CgenClassTable extends SymbolTable {
     private Vector nds;
     // private Hashma <String,Vector> disptr;
     private HashMap<String,Integer> classtagmap;
+    private ArrayList<CgenNode> nodes;
+    private HashMap<String,Integer> start_c;
+	private HashMap<String,Integer> end_c;
     private HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment;
     private HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment;
     /** This is the stream to which assembly instructions are output */
@@ -431,7 +435,9 @@ class CgenClassTable extends SymbolTable {
 	AbstractSymbol name = nd.getName();
 	if (!classtagmap.containsKey(name.toString())){
 			classtagmap.put(name.toString(),classtagindex++);
+			nodes.add(nd);
 	}
+
 	if (probe(name) != null) return;
 		nds.addElement(nd);
 
@@ -457,11 +463,21 @@ class CgenClassTable extends SymbolTable {
 	nd.setParentNd(parent);
 	parent.addChild(nd);
     }
+    private int nodetagdfs(CgenNode nd,int tagindex){
+    	CgenSupport.start_c.put(nd.getName().toString(),tagindex);
+    	for (Enumeration e = nd.getChildren(); e.hasMoreElements(); ) {
+			tagindex=nodetagdfs(((CgenNode)e.nextElement()),tagindex+1);
+		}
+		CgenSupport.end_c.put(nd.getName().toString(),tagindex);
+		return tagindex;
+
+    }
 
     /** Constructs a new class table and invokes the code generator */
     public CgenClassTable(Classes cls, PrintStream str) {
 	nds = new Vector();
 	spaddr2fp=new HashMap<Integer,Integer>();
+	nodes=new ArrayList<CgenNode>();
 	// disptr=new HashMap<String,Vector>();
 
 	this.str = str;
@@ -487,6 +503,42 @@ class CgenClassTable extends SymbolTable {
 	installBasicClasses();
 	installClasses(cls);
 	buildInheritanceTree();
+	System.out.println("Start printing classname");
+	CgenNode root=null;
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		CgenNode x=(CgenNode)e.nextElement();
+		if(x.getName().toString().equals("Object")){
+			root=x;
+			System.out.println("Object found");
+		}
+	    // System.out.println(((CgenNode)e.nextElement()).getName());
+	}
+	Stack<CgenNode> dfse=new Stack<CgenNode>();
+	// start_c=new HashMap<String,Integer>();
+	// end_c=new HashMap<String,Integer>();
+	nodetagdfs(root,0);
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String x=((CgenNode)e.nextElement()).getName().toString();
+		System.out.println(x+" "+CgenSupport.start_c.get(x)+" "+CgenSupport.end_c.get(x));
+	    // System.out.println(((CgenNode)e.nextElement()).getName());
+	}
+	
+	// dfse.push(root);
+	// int t=0;
+	// while(!dfse.empty()){
+	// 	CgenNode x=dfse.pop();
+	// 	System.out.println(x);
+	// 	sc.put(x.getName().toString(),t++);
+	// 	for (Enumeration e = x.getChildren(); e.hasMoreElements(); ) {
+	// 		dfse.push((CgenNode)e.nextElement());
+	// 	}
+	// }
+
+
+	System.out.println("End printing classname");
+	// Collections
+
+	
 
 	code();
 
