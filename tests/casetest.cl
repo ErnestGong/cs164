@@ -1,21 +1,30 @@
 -- Case branches are tested from most specific to most generic.
 
 
+class B{
+  
+};
+class A inherits B{
+
+};
 class Main inherits IO
 {
 	x:Int<-3;
 	y:Main;
 	b:Bool;
 	z:String;
-  thing:Bool;
+  thing:B;
   main() : Object
   {
   	{
-  		1+1<3;
+  		
     
       case thing of
-	i : Int => out_string( "int\n" );
-	b : Bool => out_string( "bool\n" );
+	i : Int => 1;
+	bi : Bool => 1;
+  ai:A=>2;
+  bbi:B=>4;
+
       esac;
   }
   };

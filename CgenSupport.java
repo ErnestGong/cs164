@@ -22,6 +22,7 @@ PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 // This is a project skeleton file
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 /** This class aggregates all kinds of support routines and constants
     for the code generator; all routines are statics, so no instance of
@@ -40,6 +41,8 @@ class CgenSupport {
     final static int MAXINT = 100000000;
     final static int WORD_SIZE = 4;
     final static int LOG_WORD_SIZE = 2;     // for logical shifts
+    final static HashMap<String,Integer> start_c=new HashMap<String,Integer>();
+    final static HashMap<String,Integer> end_c=new HashMap<String,Integer>();
 
     // Global names
     final static String CLASSNAMETAB = "class_nameTab";
