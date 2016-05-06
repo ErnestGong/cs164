@@ -2478,7 +2478,13 @@ class new_ extends Expression {
         }
         
         CgenSupport.emitJal("Object.copy",str);
-        CgenSupport.emitJal(type_name.toString()+"_init",str);
+        
+        if(type_name.toString().equals("SELF_TYPE")){
+            CgenSupport.emitJal(c.getName().toString()+"_init",str);
+        }
+        else{
+            CgenSupport.emitJal(type_name.toString()+"_init",str);
+        }
 
     }
     public new_(int lineNumber, AbstractSymbol a1) {
