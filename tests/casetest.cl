@@ -19,11 +19,12 @@ class Main inherits IO
   	{
   		
     
-      case 1 of
+      case self of
 	i : Int => 1;
 	bi : Bool => 1;
   ai:A=>2;
   bbi:B=>4;
+
 
       esac;
   }
