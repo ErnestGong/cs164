@@ -556,7 +556,7 @@ Main.main:
 	jal	 _dispatch_abort
 label2:
 	la	$t2 Base_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$zero 0($fp)
@@ -571,7 +571,7 @@ label2:
 	jal	 _dispatch_abort
 label3:
 	la	$t2 Base_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$zero 0($fp)
@@ -586,7 +586,7 @@ label3:
 	jal	 _dispatch_abort
 label4:
 	la	$t2 Base_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	lw	$a0 0($fp)
@@ -596,7 +596,7 @@ label4:
 	jal	 _dispatch_abort
 label5:
 	la	$t2 Derived_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	lw	$fp 12($sp)

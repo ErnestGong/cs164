@@ -215,17 +215,10 @@ bool_const1:
 class_nameTab:
 	.word	str_const6
 	.word	str_const7
-<<<<<<< HEAD
 	.word	str_const11
 	.word	str_const8
 	.word	str_const9
 	.word	str_const10
-=======
-	.word	str_const8
-	.word	str_const9
-	.word	str_const10
-	.word	str_const11
->>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -404,129 +397,6 @@ Main_init:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
-<<<<<<< HEAD
-=======
-Object.abort:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-Object.type_name:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-Object.copy:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-IO.out_string:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-IO.out_int:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-IO.in_string:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-IO.in_int:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-String.length:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-String.concat:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-String.substr:
-	addiu	$sp $sp -12
-	sw	$fp 12($sp)
-	sw	$s0 8($sp)
-	sw	$ra 4($sp)
-	addiu	$fp $sp 16
-	move	$s0 $a0
-	lw	$fp 12($sp)
-	lw	$s0 8($sp)
-	lw	$ra 4($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
->>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 Main.main:
 	addiu	$sp $sp -12
 	sw	$fp 12($sp)
@@ -539,11 +409,7 @@ Main.main:
 	beqz	$t1 label0
 	la	$a0 str_const1
 	sw	 $a0 0($sp)
-<<<<<<< HEAD
 	addiu	 $sp $sp -4
-=======
-	addi	 $sp $sp -4
->>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 	move	$a0 $s0
 	bne	$a0 $zero label2
 	la	$a0 str_const0

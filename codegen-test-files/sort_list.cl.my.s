@@ -580,7 +580,7 @@ List.cons:
 	jal	Object.copy
 	jal	Cons_init
 	sw	$a0 0($fp)
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	move	$a0 $s0
@@ -1156,7 +1156,7 @@ label26:
 	lw	$a0 0($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	lw	$t1 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)

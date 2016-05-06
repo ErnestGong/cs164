@@ -1438,7 +1438,7 @@ label0:
 	jal	 _dispatch_abort
 label1:
 	la	$t2 Blah_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 16($t1)
 	jalr	$t1
 	la	$a0 str_const1
@@ -1782,7 +1782,7 @@ Blah.caller:
 	jal	 _dispatch_abort
 label6:
 	la	$t2 Blah_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 48($t1)
 	jalr	$t1
 	lw	$t1 12($a0)
@@ -1801,7 +1801,7 @@ label6:
 	jal	 _dispatch_abort
 label7:
 	la	$t2 Blah_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 48($t1)
 	jalr	$t1
 	lw	$t2 12($a0)
@@ -2073,7 +2073,7 @@ Blah.doThemAll:
 	jal	 _dispatch_abort
 label22:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	move	$a0 $s0
@@ -2227,7 +2227,7 @@ label37:
 	jal	 _dispatch_abort
 label38:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	move	$a0 $s0
@@ -2340,7 +2340,7 @@ label47:
 	jal	 _dispatch_abort
 label52:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 	b	label51
@@ -2356,7 +2356,7 @@ label48:
 	jal	 _dispatch_abort
 label53:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 label49:
@@ -2370,7 +2370,7 @@ label49:
 	jal	 _dispatch_abort
 label56:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 	b	label55
@@ -2385,7 +2385,7 @@ label54:
 	jal	 _dispatch_abort
 label59:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 	b	label58
@@ -2409,7 +2409,7 @@ label62:
 	jal	 _dispatch_abort
 label64:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 label63:
@@ -2422,7 +2422,7 @@ label60:
 	jal	 _dispatch_abort
 label65:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 label61:
@@ -2436,7 +2436,7 @@ label61:
 	jal	 _dispatch_abort
 label68:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 	b	label67
@@ -2454,7 +2454,7 @@ label69:
 	jal	 _dispatch_abort
 label71:
 	la	$t2 Object_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 0($t1)
 	jalr	$t1
 label70:
@@ -6410,7 +6410,7 @@ Main.main:
 	jal	 _dispatch_abort
 label366:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	la	$a0 str_const20
@@ -6435,7 +6435,7 @@ label367:
 	jal	 _dispatch_abort
 label368:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	la	$a0 int_const2
@@ -6452,7 +6452,7 @@ label368:
 	jal	 _dispatch_abort
 label369:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	lw	$a0 8($fp)
@@ -6465,7 +6465,7 @@ label369:
 	jal	 _dispatch_abort
 label370:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 16($t1)
 	jalr	$t1
 	la	$a0 str_const8
@@ -6478,7 +6478,7 @@ label370:
 	jal	 _dispatch_abort
 label371:
 	la	$t2 IO_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	la	$a0 str_const23

@@ -639,7 +639,7 @@ class assign extends Expression {
             str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset + "(" + CgenSupport.FP + ")");
         }
         else if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
-            str.println(CgenSupport.SW + CgenSupport.ACC + " " + para_environment.get(c.getName()).get(func).get(name) + "(" + CgenSupport.FP+ ")");
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + (para_environment.get(c.getName()).get(func).get(name) + (let_lst.size() - 1) * 4 ) + "(" + CgenSupport.FP+ ")");
         }
 
         else{
@@ -765,7 +765,7 @@ class static_dispatch extends Expression {
         str.println(CgenSupport.JAL + " _dispatch_abort");
         CgenSupport.emitLabelDef(label_index_0,str);
         str.println(CgenSupport.LA + CgenSupport.T2 + " " + type_name +"_dispTab");
-        str.println(CgenSupport.LW + CgenSupport.T1 + " " + CgenSupport.T2);
+        str.println(CgenSupport.MOVE + CgenSupport.T1 + " " + CgenSupport.T2);
         // System.out.println(c.getName());
         // System.out.println(name);
         HashMap<AbstractSymbol, Integer> obj_to_find = method_environment.get(type_name);
@@ -1559,7 +1559,6 @@ class plus extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.ADD + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
-        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1646,7 +1645,6 @@ class sub extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.SUB + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
-        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1737,7 +1735,6 @@ class mul extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.MUL + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
-        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1829,7 +1826,6 @@ class divide extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.DIV + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
-        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -2659,7 +2655,7 @@ class object extends Expression {
             str.println(CgenSupport.LW + CgenSupport.ACC + " " + offset + "(" + CgenSupport.FP + ")");
         }
         else if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
-            str.println(CgenSupport.LW + CgenSupport.ACC + " " + para_environment.get(c.getName()).get(func).get(name) + "(" + CgenSupport.FP + ")");
+            str.println(CgenSupport.LW + CgenSupport.ACC + " " + (para_environment.get(c.getName()).get(func).get(name) + (let_lst.size() - 1) * 4 ) + "(" + CgenSupport.FP + ")");
         }
         else{
             ArrayList<Integer> info = environment.get(c.getName()).get(name);

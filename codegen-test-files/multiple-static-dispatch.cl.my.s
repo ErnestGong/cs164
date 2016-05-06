@@ -692,7 +692,7 @@ label6:
 	jal	 _dispatch_abort
 label7:
 	la	$t2 A_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	bne	$a0 $zero label8
@@ -709,7 +709,7 @@ label8:
 	jal	 _dispatch_abort
 label9:
 	la	$t2 A_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 32($t1)
 	jalr	$t1
 	lw	$fp 12($sp)

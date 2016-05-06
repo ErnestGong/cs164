@@ -703,7 +703,7 @@ label11:
 	jal	 _dispatch_abort
 label15:
 	la	$t2 Bazz_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 32($t1)
 	jalr	$t1
 	lw	$t1 12($a0)

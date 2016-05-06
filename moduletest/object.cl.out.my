@@ -1,6 +1,85 @@
 MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
 
-whassup?!
-COOL program successfully executed
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 221 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 226 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 231 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 231 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 403 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 404 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 407 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 407 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 414 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 415 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 536 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 536 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 546 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 551 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 556 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 556 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 571 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 573 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 575 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 575 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 221 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 226 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 231 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 231 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 403 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 404 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 407 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 407 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 414 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 415 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 536 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 536 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 546 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 551 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 556 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 556 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 571 column 1: <<<<<<< HEAD
+Invalid language element: <<<<<<<
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 573 column 1: =======
+Invalid language element: =======
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 575 column 1: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: >>>>>>>
+Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./moduletest/object.cl.my.s line 575 column 9: >>>>>>> 2d67bf78338546a6f6b8a461cf579ca829bf4e38
+Invalid language element: 2d67bf78338546a6f6b8a461cf579ca829bf4e38
 
+Processing terminated due to errors.
 

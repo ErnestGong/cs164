@@ -816,7 +816,7 @@ label15:
 	jal	 _dispatch_abort
 label16:
 	la	$t2 A_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -837,7 +837,7 @@ label17:
 	jal	 _dispatch_abort
 label18:
 	la	$t2 A_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 16($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -858,7 +858,7 @@ label19:
 	jal	 _dispatch_abort
 label20:
 	la	$t2 A_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -879,7 +879,7 @@ label21:
 	jal	 _dispatch_abort
 label22:
 	la	$t2 A_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 16($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -900,7 +900,7 @@ label23:
 	jal	 _dispatch_abort
 label24:
 	la	$t2 B_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -921,7 +921,7 @@ label25:
 	jal	 _dispatch_abort
 label26:
 	la	$t2 B_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 16($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -942,7 +942,7 @@ label27:
 	jal	 _dispatch_abort
 label28:
 	la	$t2 C_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 12($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
@@ -963,7 +963,7 @@ label29:
 	jal	 _dispatch_abort
 label30:
 	la	$t2 C_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 16($t1)
 	jalr	$t1
 	sw	 $a0 0($sp)
