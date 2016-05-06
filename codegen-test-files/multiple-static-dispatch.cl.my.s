@@ -334,38 +334,38 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	5
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	6
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	7
 	.word	5
 	.word	String_dispTab
 	.word	int_const5
 	.word	0
 	.word	-1
 A_protObj:
-	.word	6
+	.word	2
 	.word	4
 	.word	A_dispTab
 	.word	int_const5
 	.word	-1
 B_protObj:
-	.word	7
+	.word	3
 	.word	4
 	.word	B_dispTab
 	.word	int_const5
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	4
 	.word	4
 	.word	Main_dispTab
 	.word	0
@@ -542,3 +542,178 @@ label1:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+A.g:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 12($s0)
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	sub	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	$a0 12($s0)
+	lw	$a0 12($s0)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label2
+	la	$a0 str_const0
+	li	$t1 11
+	jal	 _dispatch_abort
+label2:
+	lw	$t1 8($a0)
+	lw	$t1 16($t1)
+	jalr	$t1
+	la	$a0 str_const1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label3
+	la	$a0 str_const0
+	li	$t1 12
+	jal	 _dispatch_abort
+label3:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+B.f:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 12($s0)
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	mul	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	$a0 12($s0)
+	lw	$a0 12($s0)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label4
+	la	$a0 str_const0
+	li	$t1 20
+	jal	 _dispatch_abort
+label4:
+	lw	$t1 8($a0)
+	lw	$t1 16($t1)
+	jalr	$t1
+	la	$a0 str_const1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label5
+	la	$a0 str_const0
+	li	$t1 21
+	jal	 _dispatch_abort
+label5:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+Main.main:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 int_const4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const3
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const2
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const1
+	jal	Object.copy
+	lw	$t1 12($a0)
+	neg	$t1 $t1
+	sw	$t1 12($a0)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 12($s0)
+	bne	$a0 $zero label6
+	la	$a0 str_const0
+	li	$t1 29
+	jal	 _dispatch_abort
+label6:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	bne	$a0 $zero label7
+	la	$a0 str_const0
+	li	$t1 29
+	jal	 _dispatch_abort
+label7:
+	la	$t2 A_dispTab
+	lw	$t1 $t2
+	lw	$t1 28($t1)
+	jalr	$t1
+	bne	$a0 $zero label8
+	la	$a0 str_const0
+	li	$t1 29
+	jal	 _dispatch_abort
+label8:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	bne	$a0 $zero label9
+	la	$a0 str_const0
+	li	$t1 30
+	jal	 _dispatch_abort
+label9:
+	la	$t2 A_dispTab
+	lw	$t1 $t2
+	lw	$t1 32($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	

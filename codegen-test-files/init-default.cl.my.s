@@ -366,7 +366,7 @@ String_protObj:
 	.word	0
 	.word	-1
 A_protObj:
-	.word	6
+	.word	2
 	.word	7
 	.word	A_dispTab
 	.word	int_const3
@@ -375,7 +375,7 @@ A_protObj:
 	.word	int_const3
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	6
 	.word	4
 	.word	Main_dispTab
 	.word	0

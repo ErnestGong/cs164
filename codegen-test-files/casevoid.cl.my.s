@@ -261,26 +261,26 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	3
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	4
 	.word	5
 	.word	String_dispTab
 	.word	int_const0
 	.word	0
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	5
 	.word	4
 	.word	Main_dispTab
 	.word	0
@@ -386,13 +386,13 @@ Main.main:
 	lw	$a0 12($s0)
 	bne	$a0 $zero label1
 	la	$a0 str_const0
-	li	$t1 19
+	li	$t1 3
 	jal	_case_abort2
 label1:
 	lw	$t2 0($a0)
 	blt	$t2 5 label2
 	bgt	$t2 5 label2
-
+	sw	$a0 0($fp)
 	la	$a0 int_const0
 	b	label0
 label2:

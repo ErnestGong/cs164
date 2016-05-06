@@ -130,9 +130,10 @@ class A inherits B{
     }   
   };
 
-  get(a : Int, b : Int) : Object{
+  get(a : Int, b : Int) : SELF_TYPE{
     {
     let a : A in let f : Object in let g : A in  let g : A in  let g : A in  let g : A in  let g : A in  let g : A in  let g : A <- new A in  let b : Int <- 3 in let c : Bool in let d : IO in let e : String in g <- new A;
+    self;
     }
   };
   special_b(b : Int, c : Int, d : Int, spec : A, g : Int) : Object{
@@ -144,4 +145,8 @@ class A inherits B{
     }
 
   };
+};
+
+class AAA{
+  x : SELF_TYPE;
 };
