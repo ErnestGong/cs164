@@ -3082,10 +3082,10 @@ label91:
 	jalr	$t1
 	sw	$a0 0($fp)
 	sw	$zero 4($fp)
-	lw	$a0 4($fp)
+	lw	$a0 8($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	lw	$a0 16($s0)
@@ -3273,7 +3273,7 @@ Term.var:
 	jal	Object.copy
 	jal	Variable_init
 	sw	$a0 0($fp)
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	lw	$a0 0($fp)
@@ -3302,10 +3302,10 @@ Term.lam:
 	jal	Object.copy
 	jal	Lambda_init
 	sw	$a0 0($fp)
-	lw	$a0 4($fp)
+	lw	$a0 8($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	lw	$a0 0($fp)
@@ -3334,10 +3334,10 @@ Term.app:
 	jal	Object.copy
 	jal	App_init
 	sw	$a0 0($fp)
-	lw	$a0 4($fp)
+	lw	$a0 8($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	lw	$a0 0($fp)
@@ -3645,7 +3645,7 @@ label124:
 label126:
 	lw	$a0 12($a0)
 	beq	$a0 $zero label125
-	lw	$a0 0($fp)
+	lw	$a0 8($fp)
 	bne	$a0 $zero label127
 	la	$a0 str_const0
 	li	$t1 394
@@ -3658,7 +3658,7 @@ label127:
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
-	lw	$a0 0($fp)
+	lw	$a0 8($fp)
 	lw	$t1 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
@@ -3674,7 +3674,7 @@ label128:
 	b	label130
 label129:
 	lw	$a0 4($fp)
-	sw	$a0 0($fp)
+	sw	$a0 8($fp)
 	la	$a0 str_const39
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -3687,7 +3687,7 @@ label131:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
-	lw	$a0 0($fp)
+	lw	$a0 8($fp)
 	bne	$a0 $zero label132
 	la	$a0 str_const0
 	li	$t1 401
@@ -3712,7 +3712,7 @@ label133:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
-	lw	$a0 0($fp)
+	lw	$a0 8($fp)
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
@@ -3906,7 +3906,7 @@ label146:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	bne	$a0 $zero label147
 	la	$a0 str_const0
 	li	$t1 437
@@ -3989,7 +3989,7 @@ label153:
 	lw	$a0 0($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	bne	$a0 $zero label154
 	la	$a0 str_const0
 	li	$t1 444

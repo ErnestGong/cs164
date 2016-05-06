@@ -650,7 +650,7 @@ label6:
 	jal	 _dispatch_abort
 label7:
 	la	$t2 Base_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	lw	$fp 12($sp)

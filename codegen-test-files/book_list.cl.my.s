@@ -851,7 +851,7 @@ Article.print:
 	jal	 _dispatch_abort
 label3:
 	la	$t2 Book_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 32($t1)
 	jalr	$t1
 	la	$a0 str_const2
@@ -906,7 +906,7 @@ BookList.cons:
 	jal	Object.copy
 	jal	Cons_init
 	sw	$a0 0($fp)
-	lw	$a0 0($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	move	$a0 $s0

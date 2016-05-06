@@ -428,7 +428,7 @@ Main.main:
 	jal	 _dispatch_abort
 label1:
 	la	$t2 Main_dispTab
-	lw	$t1 $t2
+	move	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
 	lw	$fp 12($sp)

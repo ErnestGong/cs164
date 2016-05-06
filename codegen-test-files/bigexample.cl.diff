@@ -27,27 +27,10 @@
 ! looks ok!
 ! COOL program successfully executed
   
---- 1,22 ----
+--- 1,5 ----
 
   MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
   
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 1441 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 1785 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 1804 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2076 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2230 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2343 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2359 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2373 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2388 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2412 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2425 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2439 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2457 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 6413 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 6438 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 6455 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 6468 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
-! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 6481 column 2: "lw": Too few or incorrectly formatted operands. Expected: lw $t1,-100($t2)
+! Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/bigexample.cl.my.s line 2051 column 9: Symbol "SELF_TYPE_protObj" not found in symbol table.
   
 + Processing terminated due to errors.

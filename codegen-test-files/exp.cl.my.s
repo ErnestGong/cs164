@@ -134,10 +134,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	11
+	.word	12
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"codegen-test-files/exp.cl"
+	.ascii	"./codegen-test-files//exp.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const11:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	25
+	.word	28
 	.word	-1
 int_const10:
 	.word	3
@@ -448,7 +448,6 @@ label1:
 	div	$t1 $t1 $t2
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
-	move	$a0 $t1
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
@@ -459,7 +458,6 @@ label1:
 	mul	$t1 $t1 $t2
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
-	move	$a0 $t1
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
@@ -490,7 +488,6 @@ label3:
 	div	$t1 $t1 $t2
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
-	move	$a0 $t1
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
@@ -518,7 +515,6 @@ label6:
 	mul	$t1 $t1 $t2
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
-	move	$a0 $t1
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
@@ -543,7 +539,6 @@ label4:
 	sub	$t1 $t1 $t2
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
-	move	$a0 $t1
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
@@ -565,7 +560,6 @@ label7:
 	mul	$t1 $t1 $t2
 	sw	 $t1 0($sp)
 	addiu	 $sp $sp -4
-	move	$a0 $t1
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
