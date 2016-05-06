@@ -339,36 +339,36 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	4
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	5
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	6
 	.word	5
 	.word	String_dispTab
 	.word	int_const0
 	.word	0
 	.word	-1
 Base_protObj:
-	.word	6
+	.word	2
 	.word	3
 	.word	Base_dispTab
 	.word	-1
 Derived_protObj:
-	.word	7
+	.word	3
 	.word	3
 	.word	Derived_dispTab
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	7
 	.word	3
 	.word	Main_dispTab
 	.globl	heap_start

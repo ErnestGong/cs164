@@ -536,33 +536,33 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	7
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	8
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	9
 	.word	5
 	.word	String_dispTab
 	.word	int_const1
 	.word	0
 	.word	-1
 Book_protObj:
-	.word	6
+	.word	2
 	.word	5
 	.word	Book_dispTab
 	.word	str_const27
 	.word	str_const27
 	.word	-1
 Article_protObj:
-	.word	7
+	.word	3
 	.word	6
 	.word	Article_dispTab
 	.word	str_const27
@@ -570,24 +570,24 @@ Article_protObj:
 	.word	str_const27
 	.word	-1
 BookList_protObj:
-	.word	8
+	.word	4
 	.word	3
 	.word	BookList_dispTab
 	.word	-1
 Cons_protObj:
-	.word	9
+	.word	5
 	.word	5
 	.word	Cons_dispTab
 	.word	0
 	.word	0
 	.word	-1
 Nil_protObj:
-	.word	10
+	.word	6
 	.word	3
 	.word	Nil_dispTab
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	10
 	.word	4
 	.word	Main_dispTab
 	.word	0
@@ -764,3 +764,476 @@ Book.initBook:
 	sw	$a0 12($s0)
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 20
+	jr	$ra	
+Book.print:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 str_const2
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label0
+	la	$a0 str_const0
+	li	$t1 17
+	jal	 _dispatch_abort
+label0:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	la	$a0 str_const2
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label1
+	la	$a0 str_const0
+	li	$t1 18
+	jal	 _dispatch_abort
+label1:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Article.initArticle:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 8($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 4($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label2
+	la	$a0 str_const0
+	li	$t1 30
+	jal	 _dispatch_abort
+label2:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	lw	$a0 0($fp)
+	sw	$a0 20($s0)
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 24
+	jr	$ra	
+Article.print:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	move	$a0 $s0
+	bne	$a0 $zero label3
+	la	$a0 str_const0
+	li	$t1 38
+	jal	 _dispatch_abort
+label3:
+	la	$t2 Book_dispTab
+	lw	$t1 $t2
+	lw	$t1 32($t1)
+	jalr	$t1
+	la	$a0 str_const2
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label4
+	la	$a0 str_const0
+	li	$t1 39
+	jal	 _dispatch_abort
+label4:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+BookList.isNil:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	move	$a0 $s0
+	bne	$a0 $zero label5
+	la	$a0 str_const0
+	li	$t1 50
+	jal	 _dispatch_abort
+label5:
+	lw	$t1 8($a0)
+	lw	$t1 0($t1)
+	jalr	$t1
+	la	$a0 bool_const1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+BookList.cons:
+	addiu	$sp $sp -16
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	sw	$zero 0($fp)
+	la	$a0 Cons_protObj
+	jal	Object.copy
+	jal	Cons_init
+	sw	$a0 0($fp)
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	bne	$a0 $zero label6
+	la	$a0 str_const0
+	li	$t1 55
+	jal	 _dispatch_abort
+label6:
+	lw	$t1 8($a0)
+	lw	$t1 48($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 20
+	jr	$ra	
+BookList.car:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	move	$a0 $s0
+	bne	$a0 $zero label7
+	la	$a0 str_const0
+	li	$t1 62
+	jal	 _dispatch_abort
+label7:
+	lw	$t1 8($a0)
+	lw	$t1 0($t1)
+	jalr	$t1
+	la	$a0 Book_protObj
+	jal	Object.copy
+	jal	Book_init
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+BookList.cdr:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	move	$a0 $s0
+	bne	$a0 $zero label8
+	la	$a0 str_const0
+	li	$t1 68
+	jal	 _dispatch_abort
+label8:
+	lw	$t1 8($a0)
+	lw	$t1 0($t1)
+	jalr	$t1
+	la	$a0 BookList_protObj
+	jal	Object.copy
+	jal	BookList_init
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+BookList.print_list:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	move	$a0 $s0
+	bne	$a0 $zero label9
+	la	$a0 str_const0
+	li	$t1 70
+	jal	 _dispatch_abort
+label9:
+	lw	$t1 8($a0)
+	lw	$t1 0($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Cons.isNil:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 bool_const0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Cons.init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 4($fp)
+	sw	$a0 12($s0)
+	lw	$a0 0($fp)
+	sw	$a0 16($s0)
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 20
+	jr	$ra	
+Cons.car:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 12($s0)
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Cons.cdr:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 16($s0)
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Cons.print_list:
+	addiu	$sp $sp -20
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 12($s0)
+	bne	$a0 $zero label10
+	la	$a0 str_const0
+	li	$t1 95
+	jal	 _dispatch_abort
+label10:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	bne	$a0 $zero label12
+	la	$a0 str_const0
+	li	$t1 98
+	jal	_case_abort2
+label12:
+	lw	$t2 0($a0)
+	blt	$t2 2 label2
+	bgt	$t2 3 label2
+	sw	$a0 0($fp)
+	la	$a0 str_const5
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label15
+	la	$a0 str_const0
+	li	$t1 96
+	jal	 _dispatch_abort
+label15:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	b	label11
+label13:
+	blt	$t2 3 label3
+	bgt	$t2 3 label3
+	sw	$a0 0($fp)
+	la	$a0 str_const6
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label16
+	la	$a0 str_const0
+	li	$t1 97
+	jal	 _dispatch_abort
+label16:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	b	label11
+label14:
+	jal	_case_abort
+label11:
+	lw	$a0 16($s0)
+	bne	$a0 $zero label17
+	la	$a0 str_const0
+	li	$t1 99
+	jal	 _dispatch_abort
+label17:
+	lw	$t1 8($a0)
+	lw	$t1 44($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 20
+	jr	$ra	
+Nil.isNil:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 bool_const1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Nil.print_list:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 bool_const1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Main.main:
+	addiu	$sp $sp -20
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	sw	$zero 0($fp)
+	la	$a0 str_const7
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 str_const8
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 Book_protObj
+	jal	Object.copy
+	jal	Book_init
+	bne	$a0 $zero label18
+	la	$a0 str_const0
+	li	$t1 119
+	jal	 _dispatch_abort
+label18:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	sw	$a0 0($fp)
+	sw	$zero 4($fp)
+	la	$a0 str_const9
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 str_const10
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 str_const11
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 Article_protObj
+	jal	Object.copy
+	jal	Article_init
+	bne	$a0 $zero label19
+	la	$a0 str_const0
+	li	$t1 124
+	jal	 _dispatch_abort
+label19:
+	lw	$t1 8($a0)
+	lw	$t1 36($t1)
+	jalr	$t1
+	sw	$a0 4($fp)
+	lw	$a0 4($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 Nil_protObj
+	jal	Object.copy
+	jal	Nil_init
+	bne	$a0 $zero label20
+	la	$a0 str_const0
+	li	$t1 126
+	jal	 _dispatch_abort
+label20:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	bne	$a0 $zero label21
+	la	$a0 str_const0
+	li	$t1 126
+	jal	 _dispatch_abort
+label21:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	sw	$a0 12($s0)
+	lw	$a0 12($s0)
+	bne	$a0 $zero label22
+	la	$a0 str_const0
+	li	$t1 127
+	jal	 _dispatch_abort
+label22:
+	lw	$t1 8($a0)
+	lw	$t1 44($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 20
+	jr	$ra	

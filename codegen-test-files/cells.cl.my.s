@@ -367,13 +367,13 @@ String_protObj:
 	.word	0
 	.word	-1
 CellularAutomaton_protObj:
-	.word	6
+	.word	2
 	.word	4
 	.word	CellularAutomaton_dispTab
 	.word	str_const16
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	6
 	.word	4
 	.word	Main_dispTab
 	.word	0
@@ -492,3 +492,599 @@ CellularAutomaton.init:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+CellularAutomaton.print:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 str_const1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 12($s0)
+	bne	$a0 $zero label0
+	la	$a0 str_const0
+	li	$t1 17
+	jal	 _dispatch_abort
+label0:
+	lw	$t1 8($a0)
+	lw	$t1 16($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label1
+	la	$a0 str_const0
+	li	$t1 17
+	jal	 _dispatch_abort
+label1:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+CellularAutomaton.num_cells:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 12($s0)
+	bne	$a0 $zero label2
+	la	$a0 str_const0
+	li	$t1 24
+	jal	 _dispatch_abort
+label2:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+CellularAutomaton.cell:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 12($s0)
+	bne	$a0 $zero label3
+	la	$a0 str_const0
+	li	$t1 28
+	jal	 _dispatch_abort
+label3:
+	lw	$t1 8($a0)
+	lw	$t1 20($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+CellularAutomaton.cell_left_neighbor:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const1
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label4
+	la	$a1 bool_const0
+	jal	equality_test
+label4:
+	lw	$t1 12($a0)
+	beqz	$t1 label5
+	move	$a0 $s0
+	bne	$a0 $zero label7
+	la	$a0 str_const0
+	li	$t1 32
+	jal	 _dispatch_abort
+label7:
+	lw	$t1 8($a0)
+	lw	$t1 36($t1)
+	jalr	$t1
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	sub	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label8
+	la	$a0 str_const0
+	li	$t1 33
+	jal	 _dispatch_abort
+label8:
+	lw	$t1 8($a0)
+	lw	$t1 40($t1)
+	jalr	$t1
+	b	label6
+label5:
+	lw	$a0 0($fp)
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	sub	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label9
+	la	$a0 str_const0
+	li	$t1 35
+	jal	 _dispatch_abort
+label9:
+	lw	$t1 8($a0)
+	lw	$t1 40($t1)
+	jalr	$t1
+label6:
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+CellularAutomaton.cell_right_neighbor:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label10
+	la	$a0 str_const0
+	li	$t1 39
+	jal	 _dispatch_abort
+label10:
+	lw	$t1 8($a0)
+	lw	$t1 36($t1)
+	jalr	$t1
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	sub	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label11
+	la	$a1 bool_const0
+	jal	equality_test
+label11:
+	lw	$t1 12($a0)
+	beqz	$t1 label12
+	la	$a0 int_const1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label14
+	la	$a0 str_const0
+	li	$t1 41
+	jal	 _dispatch_abort
+label14:
+	lw	$t1 8($a0)
+	lw	$t1 40($t1)
+	jalr	$t1
+	b	label13
+label12:
+	lw	$a0 0($fp)
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label15
+	la	$a0 str_const0
+	li	$t1 43
+	jal	 _dispatch_abort
+label15:
+	lw	$t1 8($a0)
+	lw	$t1 40($t1)
+	jalr	$t1
+label13:
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+CellularAutomaton.cell_at_next_evolution:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label16
+	la	$a0 str_const0
+	li	$t1 49
+	jal	 _dispatch_abort
+label16:
+	lw	$t1 8($a0)
+	lw	$t1 40($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 str_const2
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label17
+	la	$a1 bool_const0
+	jal	equality_test
+label17:
+	lw	$t1 12($a0)
+	beqz	$t1 label18
+	la	$a0 int_const0
+	b	label19
+label18:
+	la	$a0 int_const1
+label19:
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label20
+	la	$a0 str_const0
+	li	$t1 50
+	jal	 _dispatch_abort
+label20:
+	lw	$t1 8($a0)
+	lw	$t1 44($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 str_const2
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label21
+	la	$a1 bool_const0
+	jal	equality_test
+label21:
+	lw	$t1 12($a0)
+	beqz	$t1 label22
+	la	$a0 int_const0
+	b	label23
+label22:
+	la	$a0 int_const1
+label23:
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label24
+	la	$a0 str_const0
+	li	$t1 51
+	jal	 _dispatch_abort
+label24:
+	lw	$t1 8($a0)
+	lw	$t1 48($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 str_const2
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label25
+	la	$a1 bool_const0
+	jal	equality_test
+label25:
+	lw	$t1 12($a0)
+	beqz	$t1 label26
+	la	$a0 int_const0
+	b	label27
+label26:
+	la	$a0 int_const1
+label27:
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label28
+	la	$a1 bool_const0
+	jal	equality_test
+label28:
+	lw	$t1 12($a0)
+	beqz	$t1 label29
+	la	$a0 str_const2
+	b	label30
+label29:
+	la	$a0 str_const3
+label30:
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	
+CellularAutomaton.evolve:
+	addiu	$sp $sp -24
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 int_const1
+	sw	$a0 0($fp)
+	la	$a0 int_const1
+	sw	$a0 4($fp)
+	move	$a0 $s0
+	bne	$a0 $zero label31
+	la	$a0 str_const0
+	li	$t1 62
+	jal	 _dispatch_abort
+label31:
+	lw	$t1 8($a0)
+	lw	$t1 36($t1)
+	jalr	$t1
+	sw	$a0 4($fp)
+	la	$a0 str_const16
+	sw	$a0 8($fp)
+label32:
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 4($fp)
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t1 12($t1)
+	lw	$t2 12($a0)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label34
+	la	$a0 bool_const0
+label34:
+	lw	$a0 12($a0)
+	beq	$a0 $zero label33
+	lw	$a0 0($fp)
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label35
+	la	$a0 str_const0
+	li	$t1 67
+	jal	 _dispatch_abort
+label35:
+	lw	$t1 8($a0)
+	lw	$t1 52($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 8($fp)
+	bne	$a0 $zero label36
+	la	$a0 str_const0
+	li	$t1 67
+	jal	 _dispatch_abort
+label36:
+	lw	$t1 8($a0)
+	lw	$t1 16($t1)
+	jalr	$t1
+	sw	$a0 8($fp)
+	lw	$a0 0($fp)
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	$a0 0($fp)
+	b	label32
+label33:
+	move	$a0 $zero
+	lw	$a0 8($fp)
+	sw	$a0 12($s0)
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 24
+	jr	$ra	
+Main.main:
+	addiu	$sp $sp -16
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 str_const4
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 CellularAutomaton_protObj
+	jal	Object.copy
+	jal	CellularAutomaton_init
+	bne	$a0 $zero label37
+	la	$a0 str_const0
+	li	$t1 83
+	jal	 _dispatch_abort
+label37:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	sw	$a0 12($s0)
+	lw	$a0 12($s0)
+	bne	$a0 $zero label38
+	la	$a0 str_const0
+	li	$t1 84
+	jal	 _dispatch_abort
+label38:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	la	$a0 int_const1
+	sw	$a0 0($fp)
+	la	$a0 int_const2
+	sw	$a0 0($fp)
+label39:
+	la	$a0 int_const1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($fp)
+	lw	$t1 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t1 12($t1)
+	lw	$t2 12($a0)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label41
+	la	$a0 bool_const0
+label41:
+	lw	$a0 12($a0)
+	beq	$a0 $zero label40
+	lw	$a0 12($s0)
+	bne	$a0 $zero label42
+	la	$a0 str_const0
+	li	$t1 88
+	jal	 _dispatch_abort
+label42:
+	lw	$t1 8($a0)
+	lw	$t1 56($t1)
+	jalr	$t1
+	lw	$a0 12($s0)
+	bne	$a0 $zero label43
+	la	$a0 str_const0
+	li	$t1 89
+	jal	 _dispatch_abort
+label43:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	lw	$a0 0($fp)
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const0
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	sub	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	addiu	 $sp $sp 4
+	addiu	 $sp $sp 4
+	sw	$a0 0($fp)
+	b	label39
+label40:
+	move	$a0 $zero
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 16
+	jr	$ra	

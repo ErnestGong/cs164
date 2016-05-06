@@ -322,33 +322,33 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	4
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	5
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	6
 	.word	5
 	.word	String_dispTab
 	.word	int_const4
 	.word	0
 	.word	-1
 Bob_protObj:
-	.word	6
+	.word	2
 	.word	5
 	.word	Bob_dispTab
 	.word	int_const4
 	.word	int_const4
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	3
 	.word	6
 	.word	Main_dispTab
 	.word	int_const4
@@ -518,7 +518,7 @@ label0:
 	addiu	 $sp $sp 4
 	sw	$a0 16($s0)
 	la	$a0 int_const4
-	sw	$a0 4($fp)
+	sw	$a0 0($fp)
 	lw	$a0 0($fp)
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -534,8 +534,8 @@ label0:
 	sw	$t1 12($a0)
 	addiu	 $sp $sp 4
 	addiu	 $sp $sp 4
-	sw	$a0 4($fp)
-	lw	$a0 4($fp)
+	sw	$a0 0($fp)
+	lw	$a0 0($fp)
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)

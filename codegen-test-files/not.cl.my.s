@@ -273,26 +273,26 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	3
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	4
 	.word	5
 	.word	String_dispTab
 	.word	int_const0
 	.word	0
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	5
 	.word	3
 	.word	Main_dispTab
 	.globl	heap_start
@@ -765,3 +765,28 @@ label62:
 	sw	$t1 12($a0)
 	addiu	 $sp $sp 4
 	addiu	 $sp $sp 4
+	sw	$a0 0($fp)
+	b	label0
+label1:
+	move	$a0 $zero
+	lw	$a0 4($fp)
+	lw	$t1 12($a0)
+	beqz	$t1 label63
+	move	$a0 $s0
+	bne	$a0 $zero label65
+	la	$a0 str_const0
+	li	$t1 18
+	jal	 _dispatch_abort
+label65:
+	lw	$t1 8($a0)
+	lw	$t1 0($t1)
+	jalr	$t1
+	b	label64
+label63:
+	la	$a0 int_const0
+label64:
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 20
+	jr	$ra	

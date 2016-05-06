@@ -422,18 +422,18 @@ Main.main:
 	la	$a0 str_const1
 	bne	$a0 $zero label1
 	la	$a0 str_const0
-	li	$t1 19
+	li	$t1 13
 	jal	_case_abort2
 label1:
 	lw	$t2 0($a0)
 	blt	$t2 5 label2
 	bgt	$t2 5 label2
-
+	sw	$a0 0($fp)
 	la	$a0 str_const14
-	sw	$a0 0($fp)
+	sw	$a0 4($fp)
 	la	$a0 str_const2
-	sw	$a0 0($fp)
-	lw	$a0 0($fp)
+	sw	$a0 4($fp)
+	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	move	$a0 $s0

@@ -337,36 +337,36 @@ IO_protObj:
 	.word	IO_dispTab
 	.word	-1
 Int_protObj:
-	.word	3
+	.word	4
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 Bool_protObj:
-	.word	4
+	.word	5
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 String_protObj:
-	.word	5
+	.word	6
 	.word	5
 	.word	String_dispTab
 	.word	int_const0
 	.word	0
 	.word	-1
 Base_protObj:
-	.word	6
+	.word	2
 	.word	3
 	.word	Base_dispTab
 	.word	-1
 Derived_protObj:
-	.word	7
+	.word	3
 	.word	3
 	.word	Derived_dispTab
 	.word	-1
 Main_protObj:
-	.word	2
+	.word	7
 	.word	3
 	.word	Main_dispTab
 	.globl	heap_start
@@ -607,12 +607,12 @@ label6:
 	lw	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
-	sw	$zero 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 Derived_protObj
 	jal	Object.copy
 	jal	Derived_init
-	sw	$a0 4($fp)
-	lw	$a0 4($fp)
+	sw	$a0 0($fp)
+	lw	$a0 0($fp)
 	bne	$a0 $zero label7
 	la	$a0 str_const0
 	li	$t1 35
@@ -622,12 +622,12 @@ label7:
 	lw	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
-	sw	$zero 8($fp)
+	sw	$zero 0($fp)
 	la	$a0 Derived_protObj
 	jal	Object.copy
 	jal	Derived_init
-	sw	$a0 8($fp)
-	lw	$a0 8($fp)
+	sw	$a0 0($fp)
+	lw	$a0 0($fp)
 	bne	$a0 $zero label8
 	la	$a0 str_const0
 	li	$t1 39
@@ -637,7 +637,7 @@ label8:
 	lw	$t1 $t2
 	lw	$t1 28($t1)
 	jalr	$t1
-	lw	$a0 8($fp)
+	lw	$a0 0($fp)
 	bne	$a0 $zero label9
 	la	$a0 str_const0
 	li	$t1 40

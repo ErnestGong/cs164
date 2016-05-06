@@ -621,7 +621,24 @@ class assign extends Expression {
         expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
         // System.out.println(name);
         // System.out.println(c.getName());
-        if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
+
+
+        Boolean find_in_let = false;
+        Integer offset = 0;
+        for(HashMap<String, Integer> x : let_lst){
+            if(x.containsKey("offset")){
+                continue;
+            }
+            if(x.containsKey(name.toString())){
+                find_in_let = true;
+                offset = x.get(name.toString());
+                break;
+            }
+        }
+        if(find_in_let){
+            str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset + "(" + CgenSupport.FP + ")");
+        }
+        else if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){
             str.println(CgenSupport.SW + CgenSupport.ACC + " " + para_environment.get(c.getName()).get(func).get(name) + "(" + CgenSupport.FP+ ")");
         }
 
@@ -1542,6 +1559,7 @@ class plus extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.ADD + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
+        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1628,6 +1646,7 @@ class sub extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.SUB + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
+        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1718,6 +1737,7 @@ class mul extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.MUL + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
+        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -1809,6 +1829,7 @@ class divide extends Expression {
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");
         str.println(CgenSupport.DIV + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
         push(CgenSupport.T1, str);
+        str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.T1);
         str.println(CgenSupport.JAL + "Object.copy");
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "4(" + CgenSupport.SP + ")");        
         str.println(CgenSupport.SW + CgenSupport.T1 + " " + "12(" + CgenSupport.ACC + ")");
@@ -2630,7 +2651,11 @@ class object extends Expression {
                 break;
             }
         }
-        if(find_in_let){
+        if(name.toString().equals("self")){
+            //move    $a0 $s0
+            str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
+        }
+        else if(find_in_let){
             str.println(CgenSupport.LW + CgenSupport.ACC + " " + offset + "(" + CgenSupport.FP + ")");
         }
         else if(!func.toString().equals("_no_type") && para_environment.get(c.getName()).get(func).containsKey(name)){

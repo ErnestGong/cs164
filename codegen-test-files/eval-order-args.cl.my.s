@@ -439,3 +439,72 @@ Main.disregard:
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 24
+	jr	$ra	
+Main.main:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 16
+	move	$s0 $a0
+	la	$a0 int_const0
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label2
+	la	$a0 str_const0
+	li	$t1 21
+	jal	 _dispatch_abort
+label2:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label3
+	la	$a0 str_const0
+	li	$t1 21
+	jal	 _dispatch_abort
+label3:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const2
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label4
+	la	$a0 str_const0
+	li	$t1 21
+	jal	 _dispatch_abort
+label4:
+	lw	$t1 8($a0)
+	lw	$t1 28($t1)
+	jalr	$t1
+	sw	 $a0 0($sp)
+	addiu	 $sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label5
+	la	$a0 str_const0
+	li	$t1 22
+	jal	 _dispatch_abort
+label5:
+	lw	$t1 8($a0)
+	lw	$t1 32($t1)
+	jalr	$t1
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	

@@ -1,0 +1,22 @@
+*** The reference
+
+--- Yours
+
+***************
+
+*** 2,7 ****
+
+  
+  Bool
+  1
+! String
+  COOL program successfully executed
+  
+--- 2,7 ----
+
+  
+  Bool
+  1
+! Bool
+  COOL program successfully executed
+  
