@@ -468,6 +468,7 @@ class CgenClassTable extends SymbolTable {
     private int nodetagdfs(CgenNode nd,int tagindex){
     	CgenSupport.start_c.put(nd.getName().toString(),tagindex);
     	classtagmap.put(nd.getName().toString(),tagindex);
+    	
     	for (Enumeration e = nd.getChildren(); e.hasMoreElements(); ) {
 			tagindex=nodetagdfs(((CgenNode)e.nextElement()),tagindex+1);
 		}
@@ -485,21 +486,11 @@ class CgenClassTable extends SymbolTable {
 
 	this.str = str;
 
-	stringclasstag = 5 /* Change to your String class tag here */;
-	intclasstag =    3 /* Change to your Int class tag here */;
-	boolclasstag =   4 /* Change to your Bool class tag here */;
-	objectclasstag=0;
-	ioclasstag=1;
-	mainclasstag=2;
+	
 
 	classtagmap=new HashMap<String,Integer>();
-	classtagmap.put("String",stringclasstag);
-	classtagmap.put("Int",intclasstag);
-	classtagmap.put("Bool",boolclasstag);
-	classtagmap.put("Object",objectclasstag);
-	classtagmap.put("IO",ioclasstag);
-	classtagmap.put("Main",mainclasstag);
-	classtagindex=6;
+	
+	
 	enterScope();
 	if (Flags.cgen_debug) System.out.println("Building CgenClassTable");
 	
@@ -512,7 +503,7 @@ class CgenClassTable extends SymbolTable {
 		CgenNode x=(CgenNode)e.nextElement();
 		if(x.getName().toString().equals("Object")){
 			root=x;
-			System.out.println("Object found");
+			// System.out.println("Object found");
 		}
 	    // System.out.println(((CgenNode)e.nextElement()).getName());
 	}
