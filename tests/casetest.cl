@@ -19,7 +19,7 @@ class Main inherits IO
   	{
   		
     
-      case thing of
+      case 1 of
 	i : Int => 1;
 	bi : Bool => 1;
   ai:A=>2;

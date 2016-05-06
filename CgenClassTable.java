@@ -467,6 +467,7 @@ class CgenClassTable extends SymbolTable {
     }
     private int nodetagdfs(CgenNode nd,int tagindex){
     	CgenSupport.start_c.put(nd.getName().toString(),tagindex);
+    	classtagmap.put(nd.getName().toString(),tagindex);
     	for (Enumeration e = nd.getChildren(); e.hasMoreElements(); ) {
 			tagindex=nodetagdfs(((CgenNode)e.nextElement()),tagindex+1);
 		}

@@ -560,6 +560,9 @@ class branch extends Case {
         num = num + 1;
         return expr.getCase(num);
     }
+    public AbstractSymbol getVName(){
+        return name;
+    }
 
     public int getLet(int num){
         return expr.getLet(num);
@@ -1178,7 +1181,7 @@ class typcase extends Expression {
         }
         CgenSupport.emitBne(CgenSupport.ACC,CgenSupport.ZERO,lables[1],str);
         CgenSupport.emitLoadAddress(CgenSupport.ACC,"str_const0",str);
-        CgenSupport.emitLoadImm(CgenSupport.T1,19,str);
+        CgenSupport.emitLoadImm(CgenSupport.T1,lineNumber,str);
         CgenSupport.emitJal("_case_abort2",str);
         int i=1;
         
@@ -1192,14 +1195,43 @@ class typcase extends Expression {
             i+=1;
             branch te=e.nextElement();
             String typename=te.gettype().toString();
+            String varname=te.getVName().toString();
 
 
             CgenSupport.emitBlti(CgenSupport.T2,CgenSupport.start_c.get(typename),i,str);
             CgenSupport.emitBgti(CgenSupport.T2,CgenSupport.end_c.get(typename),i,str);
+             // System.out.println();
+
+            Integer offset_from = let_lst.get(0).get("offset");
+            // System.out.println("offset"+offset_from);
+            CgenSupport.emitStore(CgenSupport.ACC, offset_from,CgenSupport.FP,str);
+            // System.out.println(offset);
+            ArrayList<HashMap<String, Integer>> new_let_lst = new ArrayList<HashMap<String, Integer>>();
+            for(HashMap<String,Integer> let_e:let_lst){
+                new_let_lst.add(new HashMap<String,Integer>(let_e));
+            }
+            //System.out.println("before:let_lst:"+let_lst.get(0).get("offset"));
+            new_let_lst.get(0).put("offset", offset_from + 4);
+            //System.out.println("after:let_lst:"+let_lst.get(0).get("offset"));
+
+        HashMap<String, Integer> tmp = new HashMap<String, Integer>();
+        
+
+
+            // System.out.println(tmp.get("1"));
+            tmp.put(varname.toString(), offset_from);
+            new_let_lst.add(1, tmp);
+       
+            // for(String x:let_lst.get(1).keySet()){
+            //     System.out.println();
+            // }
+
+            // System.out.println(let_lst.get(0).get(te.getVName().toString())); 
             
-            str.println("");
+            // str.println("");
             //CgenSupport.emitLabelDef(lables[i++],str);
-            te.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
+
+            te.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(new_let_lst), c, str);
    
             CgenSupport.emitBranch(lables[0],str);
         }
