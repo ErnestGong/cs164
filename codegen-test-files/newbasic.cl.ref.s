@@ -134,10 +134,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	4
-	.word	13
+	.word	12
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"./codegen-test-files//newbasic.cl"
+	.ascii	"codegen-test-files/newbasic.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const9:
 	.word	2
 	.word	4
 	.word	Int_dispTab
-	.word	33
+	.word	30
 	.word	-1
 int_const8:
 	.word	2

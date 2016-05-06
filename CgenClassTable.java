@@ -822,7 +822,7 @@ class CgenClassTable extends SymbolTable {
 				let_lst.add(0, new HashMap<String, Integer>());
 				let_lst.get(0).put("offset", 0);
 
-            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment),AbstractTable.idtable.addString("_no_type") , let_lst, cnode, str);
+            	attr.class.cast(fe).getInit().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment),AbstractTable.idtable.addString("_no_type") , let_lst, (let_max + case_max), cnode, str);
             	
             	if(info.get(0).equals(1)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
@@ -885,7 +885,7 @@ class CgenClassTable extends SymbolTable {
 				let_lst.add(0, new HashMap<String, Integer>());
 				let_lst.get(0).put("offset", 0);
 
-        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), fm.getName() , let_lst, cnode, str);
+        		fm.getExpr().cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), fm.getName() , let_lst, (case_num + let_num), cnode, str);
         		
         		HashMap<AbstractSymbol, Integer> tmp = para_environment.get(cnode.getName()).get(fm.getName());
         		out_method(str, tmp.size() * 4 + (case_num + let_num) * 4);

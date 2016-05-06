@@ -2059,7 +2059,7 @@ Blah.useNew:
 	la	$a0 Main_protObj
 	jal	Object.copy
 	jal	Main_init
-	la	$a0 SELF_TYPE_protObj
+	la	$a0 Blah_protObj
 	jal	Object.copy
 	jal	SELF_TYPE_init
 	lw	$fp 12($sp)
