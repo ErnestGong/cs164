@@ -486,11 +486,16 @@ class CgenClassTable extends SymbolTable {
 
 	this.str = str;
 
-	
+	// stringclasstag = 5 /* Change to your String class tag here */;
+	// intclasstag =    3  Change to your Int class tag here ;
+	// boolclasstag =   4 /* Change to your Bool class tag here */;
+	// objectclasstag=0;
+	// ioclasstag=1;
+	// mainclasstag=2;
 
 	classtagmap=new HashMap<String,Integer>();
 	
-	
+	// classtagindex=6;
 	enterScope();
 	if (Flags.cgen_debug) System.out.println("Building CgenClassTable");
 	
@@ -511,6 +516,12 @@ class CgenClassTable extends SymbolTable {
 	// start_c=new HashMap<String,Integer>();
 	// end_c=new HashMap<String,Integer>();
 	nodetagdfs(root,0);
+	stringclasstag = classtagmap.get("String"); /* Change to your String class tag here */;
+	intclasstag =  classtagmap.get("Int");  /*Change to your Int class tag here ;*/
+	boolclasstag =    classtagmap.get("Bool");   /* Change to your Bool class tag here */;
+	objectclasstag=classtagmap.get("Object"); 
+	ioclasstag=classtagmap.get("IO"); ;
+	mainclasstag=classtagmap.get("Main"); 
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		String x=((CgenNode)e.nextElement()).getName().toString();
 		System.out.println(x+" "+CgenSupport.start_c.get(x)+" "+CgenSupport.end_c.get(x));
@@ -577,6 +588,29 @@ class CgenClassTable extends SymbolTable {
 	str.println("class_nameTab:");
 	// str.println(CgenSupport.WORD 
 	// 	    + ((Flags.cgen_Memmgr_Test == Flags.GC_TEST) ? "1" : "0"));
+	System.out.println(classtagmap.size());
+	int clth=classtagmap.size();
+	String[] classnameorder=new String[clth];
+	for(String x:classtagmap.keySet()){
+		System.out.println(x+" "+classtagmap.get(x));
+		classnameorder[classtagmap.get(x)]=x;
+
+
+	}
+	for(int i=0;i<clth;i++){
+
+
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		
+		if (class_name.equals(classnameorder[i])){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+}
+/*
 
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		String class_name=((CgenNode)e.nextElement()).getName().toString();
@@ -596,14 +630,6 @@ class CgenClassTable extends SymbolTable {
 		}
 	}
 
-	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
-		String class_name=((CgenNode)e.nextElement()).getName().toString();
-		if (class_name.equals("Main")){
-			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
-	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
-	  		break;
-		}
-	}
 
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		String class_name=((CgenNode)e.nextElement()).getName().toString();
@@ -631,6 +657,15 @@ class CgenClassTable extends SymbolTable {
 	  		break;
 		}
 	}
+	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
+		String class_name=((CgenNode)e.nextElement()).getName().toString();
+		if (class_name.equals("Main")){
+			int class_str_id=StringSymbol.class.cast(AbstractTable.stringtable.lookup(class_name)).getIndex();
+	  		str.println(CgenSupport.WORD +"str_const"+class_str_id);
+	  		break;
+		}
+	}
+	*/
 
 
 
@@ -779,7 +814,6 @@ class CgenClassTable extends SymbolTable {
 
         for (Enumeration<Feature> f = features.getElements(); f.hasMoreElements();){
             Feature fe = f.nextElement();
-
             if(fe instanceof attr && !(attr.class.cast(fe).getInit() instanceof no_expr)){
             	
             	ArrayList<Integer> info = environment.get(cnode.getName()).get(attr.class.cast(fe).getName());
