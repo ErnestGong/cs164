@@ -891,7 +891,7 @@ class dispatch extends Expression {
         str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
         str.println(CgenSupport.LA + CgenSupport.ACC + " str_const0");
         str.println(CgenSupport.LI + CgenSupport.T1 + " " + getLineNumber());
-        str.println(CgenSupport.JAL + " _dispatch_abort");
+        str.println(CgenSupport.JAL + "_dispatch_abort");
         CgenSupport.emitLabelDef(label_index_0,str);
         str.println(CgenSupport.LW + CgenSupport.T1 + " " + "8(" + CgenSupport.ACC +")");
         // System.out.println(c.getName());
