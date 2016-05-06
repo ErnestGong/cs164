@@ -885,7 +885,7 @@ class dispatch extends Expression {
         }
         else{
             obj_to_find = method_environment.get(expr.get_type());
-            System.out.println("type:"+expr.get_type());
+            //System.out.println("type:"+expr.get_type());
         }
         
         // System.out.println("test");
@@ -1427,8 +1427,16 @@ class let extends Expression {
             init.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), c, str);
             str.println(CgenSupport.SW + CgenSupport.ACC + " " + offset_from + "(" + CgenSupport.FP + ")");
         }
-        ArrayList<HashMap<String, Integer>> new_let_lst = new ArrayList<HashMap<String, Integer>>(let_lst);
+        ArrayList<HashMap<String, Integer>> new_let_lst = new ArrayList<HashMap<String, Integer>>();
+        
+        for(HashMap<String,Integer> let_e:let_lst){
+            new_let_lst.add(new HashMap<String,Integer>(let_e));
+        }
+        //System.out.println("before:let_lst:"+let_lst.get(0).get("offset"));
+
         new_let_lst.get(0).put("offset", offset_from + 4);
+        //System.out.println("after:let_lst:"+let_lst.get(0).get("offset"));
+
         HashMap<String, Integer> tmp = new HashMap<String, Integer>();
         tmp.put(identifier.toString(), offset_from);
         new_let_lst.add(1, tmp);
