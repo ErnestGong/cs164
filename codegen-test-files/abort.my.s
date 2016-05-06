@@ -386,7 +386,7 @@ Main.main:
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 2
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label0:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)
