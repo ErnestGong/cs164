@@ -752,12 +752,7 @@ class static_dispatch extends Expression {
 
         }
 
-        if(expr.get_type().equals(AbstractTable.idtable.addString("SELF_TYPE"))){
-            str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
-        }
-        else{
-            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), let_case_size, c, str);
-        }
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), let_case_size, c, str);
         int label_index_0 = CgenSupport.newlabel();
         str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
         str.println(CgenSupport.LA + CgenSupport.ACC + " str_const0");
@@ -871,7 +866,7 @@ class dispatch extends Expression {
         return max;
     }
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, int let_case_size, CgenNode c, PrintStream str){
-        Boolean self_flag = false;
+        
         for(Enumeration<Expression> e = actual.getElements(); e.hasMoreElements(); ){
             Expression ex = e.nextElement();
             ex.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), let_case_size, c, str);
@@ -879,13 +874,12 @@ class dispatch extends Expression {
 
         }
 
-        if(expr.get_type().equals(AbstractTable.idtable.addString("SELF_TYPE"))){
-            str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
-            self_flag = true;
-        }
-        else{
-            expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), let_case_size, c, str);
-        }
+        // if(expr.get_type().equals(AbstractTable.idtable.addString("SELF_TYPE"))){
+        //     str.println(CgenSupport.MOVE + CgenSupport.ACC + " " + CgenSupport.SELF);
+        //     self_flag = true;
+        // }
+        expr.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(let_lst), let_case_size, c, str);
+
         //System.out.println("success");
         int label_index_0 = CgenSupport.newlabel();
         str.println(CgenSupport.BNE + CgenSupport.ACC + " " + CgenSupport.ZERO + " " + "label"+label_index_0);
@@ -897,10 +891,11 @@ class dispatch extends Expression {
         // System.out.println(c.getName());
         // System.out.println(name);
         HashMap<AbstractSymbol, Integer> obj_to_find;
-        if(self_flag){
+        if(expr.get_type().toString().equals("SELF_TYPE")){
             obj_to_find = method_environment.get(c.getName());
         }
-        else{
+        else
+        {
             obj_to_find = method_environment.get(expr.get_type());
             //System.out.println("type:"+expr.get_type());
         }
@@ -2471,20 +2466,26 @@ class new_ extends Expression {
     public void cgen(HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>> environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>> method_environment, HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>> para_environment, AbstractSymbol func , ArrayList<HashMap<String, Integer>> let_lst, int let_case_size, CgenNode c, PrintStream str){
 
         if(type_name.toString().equals("SELF_TYPE")){
-            CgenSupport.emitLoadAddress(CgenSupport.ACC,c.getName().toString()+"_protObj",str);
+            str.println(CgenSupport.LA + CgenSupport.T1 + " " + "class_objTab");
+            str.println(CgenSupport.LW + CgenSupport.T2 + " " + "0(" + CgenSupport.SELF + ")");
+            str.println(CgenSupport.SLL + CgenSupport.T2 + " " + CgenSupport.T2 + " 3");
+            str.println(CgenSupport.ADDU + CgenSupport.T1 + " " + CgenSupport.T1 + " " + CgenSupport.T2);
+            push(CgenSupport.T1, str);
+            str.println(CgenSupport.LW + CgenSupport.ACC + " " + "0(" + CgenSupport.T1 + ")");
+            CgenSupport.emitJal("Object.copy",str);
+            str.println(CgenSupport.LW + CgenSupport.T1 + " 4("+ CgenSupport.SP + ")");
+            str.println(CgenSupport.LW + CgenSupport.T1 + " 4(" + CgenSupport.T1 + ")");
+            pop(str);
+            str.println(CgenSupport.JALR + " " + CgenSupport.T1);
+            
         }
         else{
             CgenSupport.emitLoadAddress(CgenSupport.ACC,type_name.toString()+"_protObj",str);
-        }
-        
-        CgenSupport.emitJal("Object.copy",str);
-        
-        if(type_name.toString().equals("SELF_TYPE")){
-            CgenSupport.emitJal(c.getName().toString()+"_init",str);
-        }
-        else{
+            CgenSupport.emitJal("Object.copy",str);
             CgenSupport.emitJal(type_name.toString()+"_init",str);
         }
+        
+
 
     }
     public new_(int lineNumber, AbstractSymbol a1) {

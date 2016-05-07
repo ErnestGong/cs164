@@ -10,6 +10,6 @@ class Main inherits IO {
     z + x;
   } };
   main() : Object {
-    f(g(1)).f(g(2))
+    f(g(1)).f(g(g(5))).f(g(g(g(10))))
   };
 };

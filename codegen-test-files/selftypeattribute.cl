@@ -1,6 +1,6 @@
 class A {
 	x:SELF_TYPE;
-	init():Object { x <- new SELF_TYPE };
+	init():SELF_TYPE { new SELF_TYPE };
 	foo():Int { 1 };
 	getx():A { x };
 };
@@ -10,11 +10,9 @@ class B inherits A {
 };
 
 class Main inherits IO {
+	a : A <- new B;
 	main():Object {{
-		let a:A <- new B in { 
-			a.init();
-			out_int(a.getx().foo());
-		};
+		a.init().foo();
 		out_string("\n");
 	}};
 };
