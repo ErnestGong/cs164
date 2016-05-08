@@ -134,10 +134,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	15
+	.word	14
 	.word	String_dispTab
 	.word	int_const15
-	.ascii	"./codegen-test-files//eval-order-arith.cl"
+	.ascii	"codegen-test-files/eval-order-arith.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const15:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	41
+	.word	38
 	.word	-1
 int_const14:
 	.word	3

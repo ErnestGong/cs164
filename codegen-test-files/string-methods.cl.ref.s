@@ -155,7 +155,7 @@ str_const0:
 	.word	14
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./codegen-test-files//string-methods.cl"
+	.ascii	"codegen-test-files/string-methods.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -163,7 +163,7 @@ int_const11:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	39
+	.word	36
 	.word	-1
 int_const10:
 	.word	3

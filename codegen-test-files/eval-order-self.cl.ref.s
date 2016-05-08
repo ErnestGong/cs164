@@ -134,10 +134,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	15
+	.word	14
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"./codegen-test-files//eval-order-self.cl"
+	.ascii	"codegen-test-files/eval-order-self.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	40
+	.word	37
 	.word	-1
 int_const8:
 	.word	3

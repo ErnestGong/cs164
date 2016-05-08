@@ -161,10 +161,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	8
-	.word	13
+	.word	12
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"./codegen-test-files//sort_list.cl"
+	.ascii	"codegen-test-files/sort_list.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const10:
 	.word	6
 	.word	4
 	.word	Int_dispTab
-	.word	34
+	.word	31
 	.word	-1
 int_const9:
 	.word	6

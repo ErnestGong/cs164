@@ -1617,9 +1617,9 @@ label3:
 	jal	_case_abort2
 label5:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label6
+	bgt	$t2 21 label6
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -1634,9 +1634,9 @@ label8:
 	jalr	$t1
 	b	label4
 label6:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label7
+	bgt	$t2 25 label7
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label9
 	la	$a0 str_const0
@@ -1679,9 +1679,9 @@ label10:
 	jal	_case_abort2
 label12:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label13
+	bgt	$t2 21 label13
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -1696,9 +1696,9 @@ label15:
 	jalr	$t1
 	b	label11
 label13:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label14
+	bgt	$t2 25 label14
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label16
 	la	$a0 str_const0
@@ -1741,9 +1741,9 @@ label17:
 	jal	_case_abort2
 label19:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label20
+	bgt	$t2 21 label20
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -1758,9 +1758,9 @@ label22:
 	jalr	$t1
 	b	label18
 label20:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label21
+	bgt	$t2 25 label21
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label23
 	la	$a0 str_const0
@@ -1803,9 +1803,9 @@ label24:
 	jal	_case_abort2
 label26:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label27
+	bgt	$t2 21 label27
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -1820,9 +1820,9 @@ label29:
 	jalr	$t1
 	b	label25
 label27:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label28
+	bgt	$t2 25 label28
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label30
 	la	$a0 str_const0
@@ -1865,9 +1865,9 @@ label31:
 	jal	_case_abort2
 label33:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label34
+	bgt	$t2 21 label34
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -1882,9 +1882,9 @@ label36:
 	jalr	$t1
 	b	label32
 label34:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label35
+	bgt	$t2 25 label35
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label37
 	la	$a0 str_const0
@@ -1927,9 +1927,9 @@ label38:
 	jal	_case_abort2
 label40:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label41
+	bgt	$t2 21 label41
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -1944,9 +1944,9 @@ label43:
 	jalr	$t1
 	b	label39
 label41:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label42
+	bgt	$t2 25 label42
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label44
 	la	$a0 str_const0
@@ -1989,9 +1989,9 @@ label45:
 	jal	_case_abort2
 label47:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label48
+	bgt	$t2 21 label48
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2006,9 +2006,9 @@ label50:
 	jalr	$t1
 	b	label46
 label48:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label49
+	bgt	$t2 25 label49
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label51
 	la	$a0 str_const0
@@ -2051,9 +2051,9 @@ label52:
 	jal	_case_abort2
 label54:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label55
+	bgt	$t2 21 label55
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2068,9 +2068,9 @@ label57:
 	jalr	$t1
 	b	label53
 label55:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label56
+	bgt	$t2 25 label56
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label58
 	la	$a0 str_const0
@@ -2392,9 +2392,9 @@ label76:
 	jal	_case_abort2
 label78:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label79
+	bgt	$t2 21 label79
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2409,9 +2409,9 @@ label81:
 	jalr	$t1
 	b	label77
 label79:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label80
+	bgt	$t2 25 label80
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label82
 	la	$a0 str_const0
@@ -2467,9 +2467,9 @@ label85:
 	jal	_case_abort2
 label87:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 48($fp)
+	blt	$t2 3 label88
+	bgt	$t2 21 label88
+	sw	$a0 12($fp)
 	lw	$a0 8($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2484,9 +2484,9 @@ label90:
 	jalr	$t1
 	b	label86
 label88:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 48($fp)
+	blt	$t2 0 label89
+	bgt	$t2 25 label89
+	sw	$a0 12($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label91
 	la	$a0 str_const0
@@ -2511,9 +2511,9 @@ label86:
 	jal	_case_abort2
 label93:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label94
+	bgt	$t2 21 label94
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2528,9 +2528,9 @@ label96:
 	jalr	$t1
 	b	label92
 label94:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label95
+	bgt	$t2 25 label95
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label97
 	la	$a0 str_const0
@@ -2782,9 +2782,9 @@ label111:
 	jal	_case_abort2
 label113:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label114
+	bgt	$t2 21 label114
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2799,9 +2799,9 @@ label116:
 	jalr	$t1
 	b	label112
 label114:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label115
+	bgt	$t2 25 label115
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label117
 	la	$a0 str_const0
@@ -2857,9 +2857,9 @@ label120:
 	jal	_case_abort2
 label122:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 48($fp)
+	blt	$t2 3 label123
+	bgt	$t2 21 label123
+	sw	$a0 12($fp)
 	lw	$a0 8($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2874,9 +2874,9 @@ label125:
 	jalr	$t1
 	b	label121
 label123:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 48($fp)
+	blt	$t2 0 label124
+	bgt	$t2 25 label124
+	sw	$a0 12($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label126
 	la	$a0 str_const0
@@ -2901,9 +2901,9 @@ label121:
 	jal	_case_abort2
 label128:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label129
+	bgt	$t2 21 label129
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -2918,9 +2918,9 @@ label131:
 	jalr	$t1
 	b	label127
 label129:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label130
+	bgt	$t2 25 label130
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label132
 	la	$a0 str_const0
@@ -3089,9 +3089,9 @@ label141:
 	jal	_case_abort2
 label143:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label144
+	bgt	$t2 21 label144
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -3106,9 +3106,9 @@ label146:
 	jalr	$t1
 	b	label142
 label144:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label145
+	bgt	$t2 25 label145
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label147
 	la	$a0 str_const0
@@ -3164,9 +3164,9 @@ label150:
 	jal	_case_abort2
 label152:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 48($fp)
+	blt	$t2 3 label153
+	bgt	$t2 21 label153
+	sw	$a0 12($fp)
 	lw	$a0 8($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -3181,9 +3181,9 @@ label155:
 	jalr	$t1
 	b	label151
 label153:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 48($fp)
+	blt	$t2 0 label154
+	bgt	$t2 25 label154
+	sw	$a0 12($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label156
 	la	$a0 str_const0
@@ -3208,9 +3208,9 @@ label151:
 	jal	_case_abort2
 label158:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 21 label2
-	sw	$a0 32($fp)
+	blt	$t2 3 label159
+	bgt	$t2 21 label159
+	sw	$a0 8($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -3225,9 +3225,9 @@ label161:
 	jalr	$t1
 	b	label157
 label159:
-	blt	$t2 0 label3
-	bgt	$t2 25 label3
-	sw	$a0 32($fp)
+	blt	$t2 0 label160
+	bgt	$t2 25 label160
+	sw	$a0 8($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label162
 	la	$a0 str_const0

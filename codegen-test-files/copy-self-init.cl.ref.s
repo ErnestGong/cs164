@@ -173,7 +173,7 @@ str_const0:
 	.word	14
 	.word	String_dispTab
 	.word	int_const13
-	.ascii	"./codegen-test-files//copy-self-init.cl"
+	.ascii	"codegen-test-files/copy-self-init.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -181,7 +181,7 @@ int_const13:
 	.word	4
 	.word	4
 	.word	Int_dispTab
-	.word	39
+	.word	36
 	.word	-1
 int_const12:
 	.word	4

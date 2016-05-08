@@ -164,7 +164,7 @@ str_const0:
 	.word	12
 	.word	String_dispTab
 	.word	int_const13
-	.ascii	"./codegen-test-files//primes.cl"
+	.ascii	"codegen-test-files/primes.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const13:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	31
+	.word	28
 	.word	-1
 int_const12:
 	.word	3
@@ -275,14 +275,14 @@ class_objTab:
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
+	.word	Main_protObj
+	.word	Main_init
 	.word	Int_protObj
 	.word	Int_init
 	.word	Bool_protObj
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	Main_protObj
-	.word	Main_init
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -451,7 +451,7 @@ Main_init:
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 35
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label0:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -636,7 +636,7 @@ label11:
 	bne	$a0 $zero label14
 	la	$a0 str_const0
 	li	$t1 67
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label14:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
@@ -648,7 +648,7 @@ label14:
 	bne	$a0 $zero label15
 	la	$a0 str_const0
 	li	$t1 68
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label15:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -675,7 +675,7 @@ label16:
 	bne	$a0 $zero label19
 	la	$a0 str_const0
 	li	$t1 76
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label19:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)

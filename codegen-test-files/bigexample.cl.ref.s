@@ -452,7 +452,7 @@ str_const0:
 	.word	13
 	.word	String_dispTab
 	.word	int_const86
-	.ascii	"./codegen-test-files//bigexample.cl"
+	.ascii	"codegen-test-files/bigexample.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -460,7 +460,7 @@ int_const86:
 	.word	2
 	.word	4
 	.word	Int_dispTab
-	.word	35
+	.word	32
 	.word	-1
 int_const85:
 	.word	2

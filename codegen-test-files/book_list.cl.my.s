@@ -1144,16 +1144,20 @@ label16:
 	jal	_case_abort2
 label18:
 	lw	$t2 0($a0)
-	blt	$t2 2 label2
-	bgt	$t2 3 label2
+	blt	$t2 3 label19
+	bgt	$t2 3 label19
 	sw	$a0 0($fp)
-	la	$a0 str_const5
+	la	$a0 str_const6
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label21
 	la	$a0 str_const0
+<<<<<<< HEAD
 	li	$t1 96
+=======
+	li	$t1 97
+>>>>>>> 901781547205d73cd1f714f979127fae3ba102d0
 	jal	_dispatch_abort
 label21:
 	lw	$t1 8($a0)
@@ -1161,16 +1165,25 @@ label21:
 	jalr	$t1
 	b	label17
 label19:
+<<<<<<< HEAD
 	blt	$t2 3 label3
 	bgt	$t2 3 label3
+=======
+	blt	$t2 2 label20
+	bgt	$t2 3 label20
+>>>>>>> 901781547205d73cd1f714f979127fae3ba102d0
 	sw	$a0 0($fp)
-	la	$a0 str_const6
+	la	$a0 str_const5
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label22
 	la	$a0 str_const0
+<<<<<<< HEAD
 	li	$t1 97
+=======
+	li	$t1 96
+>>>>>>> 901781547205d73cd1f714f979127fae3ba102d0
 	jal	_dispatch_abort
 label22:
 	lw	$t1 8($a0)

@@ -432,7 +432,7 @@ label1:
 	lw	$t2 0($a0)
 	blt	$t2 5 label2
 	bgt	$t2 5 label2
-	sw	$a0 16($fp)
+	sw	$a0 4($fp)
 	lw	$a0 4($fp)
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4

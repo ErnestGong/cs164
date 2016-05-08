@@ -155,7 +155,7 @@ str_const0:
 	.word	15
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"./codegen-test-files//shadow-formal-case.cl"
+	.ascii	"codegen-test-files/shadow-formal-case.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -163,7 +163,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	43
+	.word	40
 	.word	-1
 int_const8:
 	.word	3

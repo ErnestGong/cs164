@@ -502,7 +502,7 @@ class CgenClassTable extends SymbolTable {
 	installBasicClasses();
 	installClasses(cls);
 	buildInheritanceTree();
-	System.out.println("Start printing classname");
+	// System.out.println("Start printing classname");
 	CgenNode root=null;
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		CgenNode x=(CgenNode)e.nextElement();
@@ -524,7 +524,7 @@ class CgenClassTable extends SymbolTable {
 	mainclasstag=classtagmap.get("Main"); 
 	for (Enumeration e = nds.elements(); e.hasMoreElements(); ) {
 		String x=((CgenNode)e.nextElement()).getName().toString();
-		System.out.println(x+" "+CgenSupport.start_c.get(x)+" "+CgenSupport.end_c.get(x));
+		// System.out.println(x+" "+CgenSupport.start_c.get(x)+" "+CgenSupport.end_c.get(x));
 	    // System.out.println(((CgenNode)e.nextElement()).getName());
 	}
 	
@@ -540,7 +540,7 @@ class CgenClassTable extends SymbolTable {
 	// }
 
 
-	System.out.println("End printing classname");
+	// System.out.println("End printing classname");
 	// Collections
 
 	
@@ -588,11 +588,11 @@ class CgenClassTable extends SymbolTable {
 	str.println("class_nameTab:");
 	// str.println(CgenSupport.WORD 
 	// 	    + ((Flags.cgen_Memmgr_Test == Flags.GC_TEST) ? "1" : "0"));
-	System.out.println(classtagmap.size());
+	// System.out.println(classtagmap.size());
 	int clth=classtagmap.size();
 	String[] classnameorder=new String[clth];
 	for(String x:classtagmap.keySet()){
-		System.out.println(x+" "+classtagmap.get(x));
+		// System.out.println(x+" "+classtagmap.get(x));
 		classnameorder[classtagmap.get(x)]=x;
 
 
@@ -670,11 +670,11 @@ class CgenClassTable extends SymbolTable {
 	str.println("class_objTab:");
 	// str.println(CgenSupport.WORD 
 	// 	    + ((Flags.cgen_Memmgr_Test == Flags.GC_TEST) ? "1" : "0"));
-	System.out.println(classtagmap.size());
+	// System.out.println(classtagmap.size());
 	clth=classtagmap.size();
 	classnameorder=new String[clth];
 	for(String x:classtagmap.keySet()){
-		System.out.println(x+" "+classtagmap.get(x));
+		// System.out.println(x+" "+classtagmap.get(x));
 		classnameorder[classtagmap.get(x)]=x;
 
 

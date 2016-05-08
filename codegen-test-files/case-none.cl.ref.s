@@ -25,7 +25,7 @@ _MemMgr_COLLECTOR:
 _MemMgr_TEST:
 	.word	0
 	.word	-1
-str_const13:
+str_const12:
 	.word	5
 	.word	5
 	.word	String_dispTab
@@ -33,7 +33,7 @@ str_const13:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const12:
+str_const11:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -42,7 +42,7 @@ str_const12:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const11:
+str_const10:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -51,7 +51,7 @@ str_const11:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const10:
+str_const9:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -60,7 +60,7 @@ str_const10:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const9:
+str_const8:
 	.word	5
 	.word	5
 	.word	String_dispTab
@@ -69,7 +69,7 @@ str_const9:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const8:
+str_const7:
 	.word	5
 	.word	5
 	.word	String_dispTab
@@ -78,7 +78,7 @@ str_const8:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const7:
+str_const6:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -87,7 +87,7 @@ str_const7:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const6:
+str_const5:
 	.word	5
 	.word	7
 	.word	String_dispTab
@@ -96,7 +96,7 @@ str_const6:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const5:
+str_const4:
 	.word	5
 	.word	7
 	.word	String_dispTab
@@ -105,7 +105,7 @@ str_const5:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const4:
+str_const3:
 	.word	5
 	.word	7
 	.word	String_dispTab
@@ -114,7 +114,7 @@ str_const4:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const3:
+str_const2:
 	.word	5
 	.word	8
 	.word	String_dispTab
@@ -123,7 +123,7 @@ str_const3:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const2:
+str_const1:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -132,21 +132,12 @@ str_const2:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const1:
-	.word	5
-	.word	6
-	.word	String_dispTab
-	.word	int_const1
-	.ascii	"int\n"
-	.byte	0	
-	.align	2
-	.word	-1
 str_const0:
 	.word	5
-	.word	13
+	.word	12
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"./codegen-test-files//case-none.cl"
+	.ascii	"codegen-test-files/case-none.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -154,7 +145,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	34
+	.word	31
 	.word	-1
 int_const8:
 	.word	3
@@ -222,12 +213,12 @@ bool_const1:
 	.word	Bool_dispTab
 	.word	1
 class_nameTab:
+	.word	str_const6
 	.word	str_const7
+	.word	str_const11
 	.word	str_const8
-	.word	str_const12
 	.word	str_const9
 	.word	str_const10
-	.word	str_const11
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -422,7 +413,7 @@ label1:
 	blt	$t2 4 label2
 	bgt	$t2 4 label2
 	move	$s2 $s1
-	la	$a0 str_const2
+	la	$a0 str_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
@@ -439,8 +430,7 @@ label2:
 	blt	$t2 3 label4
 	bgt	$t2 3 label4
 	move	$s2 $s1
-	la	$a0 str_const1
-	sw	$a0 0($sp)
+	sw	$s2 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label5
@@ -449,7 +439,7 @@ label2:
 	jal	_dispatch_abort
 label5:
 	lw	$t1 8($a0)
-	lw	$t1 12($t1)
+	lw	$t1 16($t1)
 	jalr	$t1
 	b	label0
 label4:

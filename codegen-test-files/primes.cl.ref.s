@@ -164,7 +164,7 @@ str_const0:
 	.word	12
 	.word	String_dispTab
 	.word	int_const13
-	.ascii	"./codegen-test-files//primes.cl"
+	.ascii	"codegen-test-files/primes.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const13:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	31
+	.word	28
 	.word	-1
 int_const12:
 	.word	3
