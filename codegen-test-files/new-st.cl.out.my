@@ -1,6 +1,9 @@
 MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
 
-Error in /Users/Kong/Library/Mobile Documents/com~apple~CloudDocs/Spring_2016/164/cs164/./codegen-test-files/new-st.cl.my.s line 523 column 9: Symbol "SELF_TYPE_protObj" not found in symbol table.
+x is 1
+x is 4
+x is 1
+x is 4
+COOL program successfully executed
 
-Processing terminated due to errors.
 

@@ -152,10 +152,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	15
+	.word	14
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"./codegen-test-files//selftypeattribute.cl"
+	.ascii	"codegen-test-files/selftypeattribute.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -163,7 +163,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	42
+	.word	39
 	.word	-1
 int_const8:
 	.word	3
@@ -350,8 +350,9 @@ IO_protObj:
 	.word	-1
 Main_protObj:
 	.word	2
-	.word	3
+	.word	4
 	.word	Main_dispTab
+	.word	0
 	.globl	heap_start
 heap_start:
 	.word	0
@@ -466,6 +467,10 @@ Main_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	jal	IO_init
+	la	$a0 B_protObj
+	jal	Object.copy
+	jal	B_init
+	sw	$a0 12($s0)
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -489,7 +494,6 @@ A.init:
 	jal	Object.copy
 	lw	$t1 4($s1)
 	jalr	$t1
-	sw	$a0 12($s0)
 	lw	$s1 4($fp)
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -536,18 +540,13 @@ B.foo:
 	addiu	$sp $sp 12
 	jr	$ra
 Main.main:
-	addiu	$sp $sp -20
+	addiu	$sp $sp -12
 	sw	$fp 12($sp)
 	sw	$s0 8($sp)
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
-	sw	$s1 4($fp)
-	la	$a0 B_protObj
-	jal	Object.copy
-	jal	B_init
-	move	$s1 $a0
-	move	$a0 $s1
+	lw	$a0 12($s0)
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 15
@@ -556,31 +555,11 @@ label0:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
-	move	$a0 $s1
 	bne	$a0 $zero label1
 	la	$a0 str_const0
-	li	$t1 16
+	li	$t1 15
 	jal	_dispatch_abort
 label1:
-	lw	$t1 8($a0)
-	lw	$t1 20($t1)
-	jalr	$t1
-	bne	$a0 $zero label2
-	la	$a0 str_const0
-	li	$t1 16
-	jal	_dispatch_abort
-label2:
-	lw	$t1 8($a0)
-	lw	$t1 16($t1)
-	jalr	$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label3
-	la	$a0 str_const0
-	li	$t1 16
-	jal	_dispatch_abort
-label3:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr	$t1
@@ -588,17 +567,16 @@ label3:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label4
+	bne	$a0 $zero label2
 	la	$a0 str_const0
-	li	$t1 18
+	li	$t1 16
 	jal	_dispatch_abort
-label4:
+label2:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
-	lw	$s1 4($fp)
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	addiu	$sp $sp 12
 	jr	$ra

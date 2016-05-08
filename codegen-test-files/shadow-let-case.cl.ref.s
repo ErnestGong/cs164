@@ -25,7 +25,7 @@ _MemMgr_COLLECTOR:
 _MemMgr_TEST:
 	.word	0
 	.word	-1
-str_const14:
+str_const15:
 	.word	5
 	.word	5
 	.word	String_dispTab
@@ -33,7 +33,7 @@ str_const14:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const13:
+str_const14:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -42,7 +42,7 @@ str_const13:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const12:
+str_const13:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -51,7 +51,7 @@ str_const12:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const11:
+str_const12:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -60,7 +60,7 @@ str_const11:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const10:
+str_const11:
 	.word	5
 	.word	5
 	.word	String_dispTab
@@ -69,7 +69,7 @@ str_const10:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const9:
+str_const10:
 	.word	5
 	.word	5
 	.word	String_dispTab
@@ -78,7 +78,7 @@ str_const9:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const8:
+str_const9:
 	.word	5
 	.word	6
 	.word	String_dispTab
@@ -87,7 +87,7 @@ str_const8:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const7:
+str_const8:
 	.word	5
 	.word	7
 	.word	String_dispTab
@@ -96,7 +96,7 @@ str_const7:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const6:
+str_const7:
 	.word	5
 	.word	7
 	.word	String_dispTab
@@ -105,7 +105,7 @@ str_const6:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const5:
+str_const6:
 	.word	5
 	.word	7
 	.word	String_dispTab
@@ -114,7 +114,7 @@ str_const5:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const4:
+str_const5:
 	.word	5
 	.word	8
 	.word	String_dispTab
@@ -123,12 +123,21 @@ str_const4:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const3:
+str_const4:
 	.word	5
 	.word	5
 	.word	String_dispTab
 	.word	int_const8
 	.ascii	"\n"
+	.byte	0	
+	.align	2
+	.word	-1
+str_const3:
+	.word	5
+	.word	5
+	.word	String_dispTab
+	.word	int_const3
+	.ascii	"abc"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -231,12 +240,12 @@ bool_const1:
 	.word	Bool_dispTab
 	.word	1
 class_nameTab:
-	.word	str_const8
 	.word	str_const9
-	.word	str_const13
 	.word	str_const10
+	.word	str_const14
 	.word	str_const11
 	.word	str_const12
+	.word	str_const13
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -425,7 +434,7 @@ Main.main:
 	la	$a0 str_const2
 	bne	$a0 $zero label1
 	la	$a0 str_const0
-	li	$t1 13
+	li	$t1 16
 	jal	_case_abort2
 label1:
 	lw	$t2 0($a0)
@@ -437,9 +446,21 @@ label1:
 	move	$a0 $s0
 	bne	$a0 $zero label3
 	la	$a0 str_const0
-	li	$t1 12
+	li	$t1 13
 	jal	_dispatch_abort
 label3:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	la	$a0 str_const3
+	sw	$a0 0($sp)
+	addiu	$sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label4
+	la	$a0 str_const0
+	li	$t1 14
+	jal	_dispatch_abort
+label4:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
@@ -447,15 +468,26 @@ label3:
 label2:
 	jal	_case_abort
 label0:
-	la	$a0 str_const3
+	sw	$s1 0($sp)
+	addiu	$sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label5
+	la	$a0 str_const0
+	li	$t1 17
+	jal	_dispatch_abort
+label5:
+	lw	$t1 8($a0)
+	lw	$t1 12($t1)
+	jalr	$t1
+	la	$a0 str_const4
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label4
+	bne	$a0 $zero label6
 	la	$a0 str_const0
-	li	$t1 15
+	li	$t1 20
 	jal	_dispatch_abort
-label4:
+label6:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
