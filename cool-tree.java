@@ -1201,27 +1201,47 @@ class typcase extends Expression {
         CgenSupport.emitLoadImm(CgenSupport.T1,lineNumber,str);
         CgenSupport.emitJal("_case_abort2",str);
         int i=1;
+        ArrayList<branch> brancharr=new ArrayList<branch>();
+        for (Enumeration<branch> e = cases.getElements(); e.hasMoreElements();){
+            branch t=e.nextElement();
+            int order=CgenSupport.start_c.get((t.gettype().toString()));
+            int k=0;
+            for(branch b:brancharr){
+                int order_b=CgenSupport.start_c.get((b.gettype().toString()));
+                if(order_b<order){
+                    break;
+                }
+                k+=1;
+            }
+             brancharr.add(k,t);
+        }
+    for(branch b:brancharr){
+        String typename=b.gettype().toString();
+        int order=CgenSupport.start_c.get((b.gettype().toString()));
+        // System.out.println("type:"+typename+" "+order);
+
+    }
         
 
    
-        for (Enumeration<branch> e = cases.getElements(); e.hasMoreElements();){
+        for(branch te:brancharr){
             CgenSupport.emitLabelDef(lables[i],str);
             if(i==1){
                 CgenSupport.emitLoad(CgenSupport.T2,0,CgenSupport.ACC,str);
                 }
             i+=1;
-            branch te=e.nextElement();
+            
             String typename=te.gettype().toString();
             String varname=te.getVName().toString();
 
 
-            CgenSupport.emitBlti(CgenSupport.T2,CgenSupport.start_c.get(typename),i,str);
-            CgenSupport.emitBgti(CgenSupport.T2,CgenSupport.end_c.get(typename),i,str);
+            CgenSupport.emitBlti(CgenSupport.T2,CgenSupport.start_c.get(typename),lables[i],str);
+            CgenSupport.emitBgti(CgenSupport.T2,CgenSupport.end_c.get(typename),lables[i],str);
              // System.out.println();
 
             Integer offset_from = let_lst.get(0).get("offset");
             // System.out.println("offset"+offset_from);
-            CgenSupport.emitStore(CgenSupport.ACC, offset_from,CgenSupport.FP,str);
+            CgenSupport.emitStore(CgenSupport.ACC, offset_from/4,CgenSupport.FP,str);
             // System.out.println(offset);
             ArrayList<HashMap<String, Integer>> new_let_lst = new ArrayList<HashMap<String, Integer>>();
             for(HashMap<String,Integer> let_e:let_lst){
@@ -1236,18 +1256,9 @@ class typcase extends Expression {
 
 
             // System.out.println(tmp.get("1"));
+        // str.println("WWWWW:"+varname.toString()+"  "+offset_from);
             tmp.put(varname.toString(), offset_from);
             new_let_lst.add(1, tmp);
-       
-            // for(String x:let_lst.get(1).keySet()){
-            //     System.out.println();
-            // }
-
-            // System.out.println(let_lst.get(0).get(te.getVName().toString())); 
-            
-            // str.println("");
-            //CgenSupport.emitLabelDef(lables[i++],str);
-
             te.cgen(new HashMap<AbstractSymbol, HashMap<AbstractSymbol, ArrayList<Integer>>>(environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>(method_environment), new HashMap<AbstractSymbol, HashMap<AbstractSymbol, HashMap<AbstractSymbol, Integer>>>(para_environment), func, new ArrayList<HashMap<String, Integer>>(new_let_lst), let_case_size, c, str);
    
             CgenSupport.emitBranch(lables[0],str);
