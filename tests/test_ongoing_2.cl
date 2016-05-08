@@ -114,6 +114,8 @@ class A inherits B{
   g : Int <- let a : Int in  let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in let a : Int in 3;
   h : Int <- 8;
   i : Int <- 9;
+  loop_count : Int<- 0;
+  loop_max : Int <- 70000;
 
   test() : Object{
     {
@@ -138,6 +140,8 @@ class A inherits B{
   };
   special_b(b : Int, c : Int, d : Int, spec : A, g : Int) : Object{
     {
+      loop_count <- 0;
+      while loop_count < loop_max loop { let a : A <- new A in 123; loop_count <- loop_count + 1;} pool;
     out_int(b);
     out_int(c);
     out_int(g);

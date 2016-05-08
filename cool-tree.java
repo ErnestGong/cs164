@@ -166,7 +166,11 @@ abstract class Expression extends TreeNode {
         str.println(CgenSupport.ADDIU + " " + CgenSupport.SP + " " + CgenSupport.SP + " -4");
     }
     public void pop(PrintStream str){
+        if(Flags.cgen_Memmgr > 0){
+            str.println(CgenSupport.SW + CgenSupport.ZERO + " 4(" + CgenSupport.SP +  ")");
+        }
         str.println(CgenSupport.ADDIU + " " + CgenSupport.SP + " " + CgenSupport.SP + " 4");
+
     }
     
     public int getLineNumber() { return lineNumber; }
@@ -647,6 +651,10 @@ class assign extends Expression {
             //System.out.println(info.get(1));
             if(info.get(0).equals(1)){
                 str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
+                if(Flags.cgen_Memmgr > 0){
+                    str.println(CgenSupport.ADDIU + CgenSupport.A1 + " " + CgenSupport.SELF + " " + info.get(1));
+                    str.println(CgenSupport.JAL + "_GenGC_Assign");
+                }
             }
         }
         

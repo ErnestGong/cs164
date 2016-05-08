@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const14:
 	.word	5
@@ -155,7 +155,7 @@ str_const0:
 	.word	14
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"codegen-test-files/assignment-val.cl"
+	.ascii	"./codegen-test-files/assignment-val.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -163,7 +163,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	36
+	.word	38
 	.word	-1
 int_const8:
 	.word	3
@@ -493,6 +493,7 @@ Main.main:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$s1 int_const0
 	la	$s1 int_const1
 	sw	$s1 0($sp)

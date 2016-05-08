@@ -569,7 +569,15 @@ class CgenClassTable extends SymbolTable {
     	CgenSupport.fp_v=spaddr2fp.get(CgenSupport.sp_v+12);
 		str.println(CgenSupport.LW + CgenSupport.SELF + " " + "8(" + CgenSupport.SP + ")");
 		str.println(CgenSupport.LW + CgenSupport.RA + " " + "4(" + CgenSupport.SP + ")");	
-		str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " " + (12+offset));	
+		if(Flags.cgen_Memmgr > 0){
+			for(int count = 0; count < 12+offset; count += 4){
+				str.println(CgenSupport.SW + CgenSupport.ZERO + " 4(" + CgenSupport.SP +  ")");
+				str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " " + (4));	
+			}
+		}
+		else{
+		  str.println(CgenSupport.ADDIU + CgenSupport.SP + " " + CgenSupport.SP + " " + (12+offset));	
+		}
 		CgenSupport.sp_v+=12;
 		str.println(CgenSupport.RET);
     }
@@ -837,6 +845,10 @@ class CgenClassTable extends SymbolTable {
             	
             	if(info.get(0).equals(1)){
             		str.println(CgenSupport.SW + CgenSupport.ACC + " " + info.get(1) + "(" + CgenSupport.SELF+ ")");
+            		if(Flags.cgen_Memmgr > 0){
+	            		str.println(CgenSupport.ADDIU + CgenSupport.A1 + " " + CgenSupport.SELF + " " + info.get(1));
+	            		str.println(CgenSupport.JAL + "_GenGC_Assign");
+            		}
             	}
 
             
