@@ -255,16 +255,16 @@ class_objTab:
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
+	.word	Bob_protObj
+	.word	Bob_init
+	.word	Main_protObj
+	.word	Main_init
 	.word	Int_protObj
 	.word	Int_init
 	.word	Bool_protObj
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	Bob_protObj
-	.word	Bob_init
-	.word	Main_protObj
-	.word	Main_init
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name

@@ -125,10 +125,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	13
+	.word	12
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./codegen-test-files//bigexpr.cl"
+	.ascii	"codegen-test-files/bigexpr.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -136,7 +136,7 @@ int_const11:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	32
+	.word	29
 	.word	-1
 int_const10:
 	.word	3

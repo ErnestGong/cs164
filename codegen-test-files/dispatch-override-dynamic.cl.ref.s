@@ -161,10 +161,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	6
-	.word	17
+	.word	16
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./codegen-test-files//dispatch-override-dynamic.cl"
+	.ascii	"codegen-test-files/dispatch-override-dynamic.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const11:
 	.word	4
 	.word	4
 	.word	Int_dispTab
-	.word	50
+	.word	47
 	.word	-1
 int_const10:
 	.word	4

@@ -164,7 +164,7 @@ str_const0:
 	.word	15
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./codegen-test-files//copy-self-dispatch.cl"
+	.ascii	"codegen-test-files/copy-self-dispatch.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const11:
 	.word	4
 	.word	4
 	.word	Int_dispTab
-	.word	43
+	.word	40
 	.word	-1
 int_const10:
 	.word	4

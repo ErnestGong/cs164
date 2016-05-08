@@ -521,9 +521,18 @@ A.new_st:
 	sw	$ra 4($sp)
 	addiu	$fp $sp 16
 	move	$s0 $a0
-	la	$a0 A_protObj
+	la	$t1 class_objTab
+	lw	$t2 0($s0)
+	sll	$t2 $t2 3
+	addu	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($t1)
 	jal	Object.copy
-	jal	A_init
+	lw	$t1 4($sp)
+	lw	$t1 4($t1)
+	addiu	 $sp $sp 4
+	jalr	 $t1
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)

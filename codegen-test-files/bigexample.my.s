@@ -2015,22 +2015,22 @@ Blah.useCase:
 	jal	_case_abort2
 label18:
 	lw	$t2 0($a0)
-	blt	$t2 5 label2
-	bgt	$t2 7 label2
-	sw	$a0 0($fp)
-	la	$a0 int_const0
-	b	label17
-label19:
-	blt	$t2 11 label3
-	bgt	$t2 11 label3
+	blt	$t2 11 label19
+	bgt	$t2 11 label19
 	sw	$a0 0($fp)
 	la	$a0 int_const9
 	b	label17
-label20:
-	blt	$t2 8 label4
-	bgt	$t2 8 label4
+label19:
+	blt	$t2 8 label20
+	bgt	$t2 8 label20
 	sw	$a0 0($fp)
 	la	$a0 int_const4
+	b	label17
+label20:
+	blt	$t2 5 label21
+	bgt	$t2 7 label21
+	sw	$a0 0($fp)
+	la	$a0 int_const0
 	b	label17
 label21:
 	jal	_case_abort
@@ -2059,9 +2059,18 @@ Blah.useNew:
 	la	$a0 Main_protObj
 	jal	Object.copy
 	jal	Main_init
-	la	$a0 Blah_protObj
+	la	$t1 class_objTab
+	lw	$t2 0($s0)
+	sll	$t2 $t2 3
+	addu	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	lw	$a0 0($t1)
 	jal	Object.copy
-	jal	SELF_TYPE_init
+	lw	$t1 4($sp)
+	lw	$t1 4($t1)
+	addiu	 $sp $sp 4
+	jalr	 $t1
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
@@ -5476,27 +5485,27 @@ label276:
 	jal	_case_abort2
 label278:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
+	blt	$t2 9 label279
+	bgt	$t2 11 label279
+	sw	$a0 32($fp)
 	la	$a0 int_const1
 	b	label277
 label279:
-	blt	$t2 6 label3
-	bgt	$t2 6 label3
-	sw	$a0 128($fp)
-	la	$a0 int_const3
-	b	label277
-label280:
-	blt	$t2 7 label4
-	bgt	$t2 7 label4
-	sw	$a0 128($fp)
+	blt	$t2 7 label280
+	bgt	$t2 7 label280
+	sw	$a0 32($fp)
 	la	$a0 int_const0
 	b	label277
+label280:
+	blt	$t2 6 label281
+	bgt	$t2 6 label281
+	sw	$a0 32($fp)
+	la	$a0 int_const3
+	b	label277
 label281:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label282
+	bgt	$t2 16 label282
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label277
 label282:
@@ -5538,27 +5547,27 @@ label284:
 	jal	_case_abort2
 label286:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
+	blt	$t2 9 label287
+	bgt	$t2 11 label287
+	sw	$a0 32($fp)
 	la	$a0 int_const1
 	b	label285
 label287:
-	blt	$t2 5 label3
-	bgt	$t2 7 label3
-	sw	$a0 128($fp)
-	la	$a0 int_const3
-	b	label285
-label288:
-	blt	$t2 7 label4
-	bgt	$t2 7 label4
-	sw	$a0 128($fp)
+	blt	$t2 7 label288
+	bgt	$t2 7 label288
+	sw	$a0 32($fp)
 	la	$a0 int_const0
 	b	label285
+label288:
+	blt	$t2 5 label289
+	bgt	$t2 7 label289
+	sw	$a0 32($fp)
+	la	$a0 int_const3
+	b	label285
 label289:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label290
+	bgt	$t2 16 label290
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label285
 label290:
@@ -5600,27 +5609,27 @@ label292:
 	jal	_case_abort2
 label294:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
+	blt	$t2 9 label295
+	bgt	$t2 11 label295
+	sw	$a0 32($fp)
 	la	$a0 int_const1
 	b	label293
 label295:
-	blt	$t2 5 label3
-	bgt	$t2 7 label3
-	sw	$a0 128($fp)
-	la	$a0 int_const3
-	b	label293
-label296:
-	blt	$t2 7 label4
-	bgt	$t2 7 label4
-	sw	$a0 128($fp)
+	blt	$t2 7 label296
+	bgt	$t2 7 label296
+	sw	$a0 32($fp)
 	la	$a0 int_const0
 	b	label293
+label296:
+	blt	$t2 5 label297
+	bgt	$t2 7 label297
+	sw	$a0 32($fp)
+	la	$a0 int_const3
+	b	label293
 label297:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label298
+	bgt	$t2 16 label298
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label293
 label298:
@@ -5662,27 +5671,27 @@ label300:
 	jal	_case_abort2
 label302:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
+	blt	$t2 9 label303
+	bgt	$t2 11 label303
+	sw	$a0 32($fp)
 	la	$a0 int_const1
 	b	label301
 label303:
-	blt	$t2 6 label3
-	bgt	$t2 6 label3
-	sw	$a0 128($fp)
-	la	$a0 int_const3
-	b	label301
-label304:
-	blt	$t2 7 label4
-	bgt	$t2 7 label4
-	sw	$a0 128($fp)
+	blt	$t2 7 label304
+	bgt	$t2 7 label304
+	sw	$a0 32($fp)
 	la	$a0 int_const0
 	b	label301
+label304:
+	blt	$t2 6 label305
+	bgt	$t2 6 label305
+	sw	$a0 32($fp)
+	la	$a0 int_const3
+	b	label301
 label305:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label306
+	bgt	$t2 16 label306
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label301
 label306:
@@ -5724,22 +5733,22 @@ label308:
 	jal	_case_abort2
 label310:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
-	la	$a0 int_const1
+	blt	$t2 11 label311
+	bgt	$t2 11 label311
+	sw	$a0 32($fp)
+	la	$a0 int_const0
 	b	label309
 label311:
-	blt	$t2 10 label3
-	bgt	$t2 11 label3
-	sw	$a0 128($fp)
+	blt	$t2 10 label312
+	bgt	$t2 11 label312
+	sw	$a0 32($fp)
 	la	$a0 int_const3
 	b	label309
 label312:
-	blt	$t2 11 label4
-	bgt	$t2 11 label4
-	sw	$a0 128($fp)
-	la	$a0 int_const0
+	blt	$t2 9 label313
+	bgt	$t2 11 label313
+	sw	$a0 32($fp)
+	la	$a0 int_const1
 	b	label309
 label313:
 	jal	_case_abort
@@ -5780,27 +5789,27 @@ label315:
 	jal	_case_abort2
 label317:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
-	la	$a0 int_const1
+	blt	$t2 11 label318
+	bgt	$t2 11 label318
+	sw	$a0 32($fp)
+	la	$a0 int_const0
 	b	label316
 label318:
-	blt	$t2 10 label3
-	bgt	$t2 11 label3
-	sw	$a0 128($fp)
+	blt	$t2 10 label319
+	bgt	$t2 11 label319
+	sw	$a0 32($fp)
 	la	$a0 int_const3
 	b	label316
 label319:
-	blt	$t2 11 label4
-	bgt	$t2 11 label4
-	sw	$a0 128($fp)
-	la	$a0 int_const0
+	blt	$t2 9 label320
+	bgt	$t2 11 label320
+	sw	$a0 32($fp)
+	la	$a0 int_const1
 	b	label316
 label320:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label321
+	bgt	$t2 16 label321
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label316
 label321:
@@ -5842,27 +5851,27 @@ label323:
 	jal	_case_abort2
 label325:
 	lw	$t2 0($a0)
-	blt	$t2 9 label2
-	bgt	$t2 11 label2
-	sw	$a0 128($fp)
-	la	$a0 int_const1
+	blt	$t2 11 label326
+	bgt	$t2 11 label326
+	sw	$a0 32($fp)
+	la	$a0 int_const0
 	b	label324
 label326:
-	blt	$t2 10 label3
-	bgt	$t2 11 label3
-	sw	$a0 128($fp)
+	blt	$t2 10 label327
+	bgt	$t2 11 label327
+	sw	$a0 32($fp)
 	la	$a0 int_const3
 	b	label324
 label327:
-	blt	$t2 11 label4
-	bgt	$t2 11 label4
-	sw	$a0 128($fp)
-	la	$a0 int_const0
+	blt	$t2 9 label328
+	bgt	$t2 11 label328
+	sw	$a0 32($fp)
+	la	$a0 int_const1
 	b	label324
 label328:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label329
+	bgt	$t2 16 label329
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label324
 label329:
@@ -5904,9 +5913,9 @@ label331:
 	jal	_case_abort2
 label333:
 	lw	$t2 0($a0)
-	blt	$t2 0 label2
-	bgt	$t2 16 label2
-	sw	$a0 128($fp)
+	blt	$t2 0 label334
+	bgt	$t2 16 label334
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label332
 label334:
@@ -5948,22 +5957,22 @@ label336:
 	jal	_case_abort2
 label338:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 3 label2
-	sw	$a0 128($fp)
-	la	$a0 int_const1
+	blt	$t2 11 label339
+	bgt	$t2 11 label339
+	sw	$a0 32($fp)
+	la	$a0 int_const0
 	b	label337
 label339:
-	blt	$t2 10 label3
-	bgt	$t2 11 label3
-	sw	$a0 128($fp)
+	blt	$t2 10 label340
+	bgt	$t2 11 label340
+	sw	$a0 32($fp)
 	la	$a0 int_const3
 	b	label337
 label340:
-	blt	$t2 11 label4
-	bgt	$t2 11 label4
-	sw	$a0 128($fp)
-	la	$a0 int_const0
+	blt	$t2 3 label341
+	bgt	$t2 3 label341
+	sw	$a0 32($fp)
+	la	$a0 int_const1
 	b	label337
 label341:
 	jal	_case_abort
@@ -6004,9 +6013,9 @@ label343:
 	jal	_case_abort2
 label345:
 	lw	$t2 0($a0)
-	blt	$t2 0 label2
-	bgt	$t2 16 label2
-	sw	$a0 128($fp)
+	blt	$t2 0 label346
+	bgt	$t2 16 label346
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label344
 label346:
@@ -6062,27 +6071,27 @@ label349:
 	jal	_case_abort2
 label351:
 	lw	$t2 0($a0)
-	blt	$t2 3 label2
-	bgt	$t2 3 label2
-	sw	$a0 128($fp)
-	la	$a0 int_const1
+	blt	$t2 11 label352
+	bgt	$t2 11 label352
+	sw	$a0 32($fp)
+	la	$a0 int_const0
 	b	label350
 label352:
-	blt	$t2 4 label3
-	bgt	$t2 4 label3
-	sw	$a0 128($fp)
+	blt	$t2 4 label353
+	bgt	$t2 4 label353
+	sw	$a0 32($fp)
 	la	$a0 int_const3
 	b	label350
 label353:
-	blt	$t2 11 label4
-	bgt	$t2 11 label4
-	sw	$a0 128($fp)
-	la	$a0 int_const0
+	blt	$t2 3 label354
+	bgt	$t2 3 label354
+	sw	$a0 32($fp)
+	la	$a0 int_const1
 	b	label350
 label354:
-	blt	$t2 0 label5
-	bgt	$t2 16 label5
-	sw	$a0 128($fp)
+	blt	$t2 0 label355
+	bgt	$t2 16 label355
+	sw	$a0 32($fp)
 	la	$a0 int_const9
 	b	label350
 label355:

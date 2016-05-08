@@ -134,10 +134,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	15
+	.word	14
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"./codegen-test-files//eval-order-self.cl"
+	.ascii	"codegen-test-files/eval-order-self.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	40
+	.word	37
 	.word	-1
 int_const8:
 	.word	3
@@ -224,14 +224,14 @@ class_objTab:
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
+	.word	Main_protObj
+	.word	Main_init
 	.word	Int_protObj
 	.word	Int_init
 	.word	Bool_protObj
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	Main_protObj
-	.word	Main_init
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -410,7 +410,7 @@ Main.recite:
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 9
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label0:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
@@ -422,7 +422,7 @@ label0:
 	bne	$a0 $zero label1
 	la	$a0 str_const0
 	li	$t1 10
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label1:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -460,7 +460,7 @@ Main.main:
 	bne	$a0 $zero label2
 	la	$a0 str_const0
 	li	$t1 22
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label2:
 	lw	$t1 8($a0)
 	lw	$t1 28($t1)
@@ -474,7 +474,7 @@ label2:
 	bne	$a0 $zero label3
 	la	$a0 str_const0
 	li	$t1 22
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label3:
 	lw	$t1 8($a0)
 	lw	$t1 28($t1)
@@ -482,7 +482,7 @@ label3:
 	bne	$a0 $zero label4
 	la	$a0 str_const0
 	li	$t1 23
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label4:
 	lw	$t1 8($a0)
 	lw	$t1 32($t1)

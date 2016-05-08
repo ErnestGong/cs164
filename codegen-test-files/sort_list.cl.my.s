@@ -10,11 +10,11 @@
 	.globl	_bool_tag
 	.globl	_string_tag
 _int_tag:
-	.word	3
+	.word	6
 _bool_tag:
-	.word	4
+	.word	7
 _string_tag:
-	.word	5
+	.word	8
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
 	.word	_NoGC_Init
@@ -26,7 +26,7 @@ _MemMgr_TEST:
 	.word	0
 	.word	-1
 str_const15:
-	.word	5
+	.word	8
 	.word	5
 	.word	String_dispTab
 	.word	int_const1
@@ -34,7 +34,7 @@ str_const15:
 	.align	2
 	.word	-1
 str_const14:
-	.word	5
+	.word	8
 	.word	6
 	.word	String_dispTab
 	.word	int_const3
@@ -43,7 +43,7 @@ str_const14:
 	.align	2
 	.word	-1
 str_const13:
-	.word	5
+	.word	8
 	.word	5
 	.word	String_dispTab
 	.word	int_const4
@@ -52,7 +52,7 @@ str_const13:
 	.align	2
 	.word	-1
 str_const12:
-	.word	5
+	.word	8
 	.word	6
 	.word	String_dispTab
 	.word	int_const3
@@ -61,7 +61,7 @@ str_const12:
 	.align	2
 	.word	-1
 str_const11:
-	.word	5
+	.word	8
 	.word	6
 	.word	String_dispTab
 	.word	int_const3
@@ -70,7 +70,7 @@ str_const11:
 	.align	2
 	.word	-1
 str_const10:
-	.word	5
+	.word	8
 	.word	6
 	.word	String_dispTab
 	.word	int_const5
@@ -79,7 +79,7 @@ str_const10:
 	.align	2
 	.word	-1
 str_const9:
-	.word	5
+	.word	8
 	.word	6
 	.word	String_dispTab
 	.word	int_const3
@@ -88,7 +88,7 @@ str_const9:
 	.align	2
 	.word	-1
 str_const8:
-	.word	5
+	.word	8
 	.word	5
 	.word	String_dispTab
 	.word	int_const4
@@ -97,7 +97,7 @@ str_const8:
 	.align	2
 	.word	-1
 str_const7:
-	.word	5
+	.word	8
 	.word	5
 	.word	String_dispTab
 	.word	int_const6
@@ -106,7 +106,7 @@ str_const7:
 	.align	2
 	.word	-1
 str_const6:
-	.word	5
+	.word	8
 	.word	6
 	.word	String_dispTab
 	.word	int_const5
@@ -115,7 +115,7 @@ str_const6:
 	.align	2
 	.word	-1
 str_const5:
-	.word	5
+	.word	8
 	.word	7
 	.word	String_dispTab
 	.word	int_const7
@@ -124,7 +124,7 @@ str_const5:
 	.align	2
 	.word	-1
 str_const4:
-	.word	5
+	.word	8
 	.word	7
 	.word	String_dispTab
 	.word	int_const8
@@ -133,7 +133,7 @@ str_const4:
 	.align	2
 	.word	-1
 str_const3:
-	.word	5
+	.word	8
 	.word	7
 	.word	String_dispTab
 	.word	int_const8
@@ -142,7 +142,7 @@ str_const3:
 	.align	2
 	.word	-1
 str_const2:
-	.word	5
+	.word	8
 	.word	8
 	.word	String_dispTab
 	.word	int_const9
@@ -151,7 +151,7 @@ str_const2:
 	.align	2
 	.word	-1
 str_const1:
-	.word	5
+	.word	8
 	.word	5
 	.word	String_dispTab
 	.word	int_const0
@@ -160,94 +160,97 @@ str_const1:
 	.align	2
 	.word	-1
 str_const0:
-	.word	5
-	.word	13
+	.word	8
+	.word	12
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"./codegen-test-files//sort_list.cl"
+	.ascii	"codegen-test-files/sort_list.cl"
 	.byte	0	
 	.align	2
 	.word	-1
 int_const10:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
-	.word	34
+	.word	31
 	.word	-1
 int_const9:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	13
 	.word	-1
 int_const8:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	9
 	.word	-1
 int_const7:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	10
 	.word	-1
 int_const6:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	2
 	.word	-1
 int_const5:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	6
 	.word	-1
 int_const4:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	3
 	.word	-1
 int_const3:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	4
 	.word	-1
 int_const2:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	20
 	.word	-1
 int_const1:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 int_const0:
-	.word	3
+	.word	6
 	.word	4
 	.word	Int_dispTab
 	.word	1
 	.word	-1
 bool_const0:
-	.word	4
+	.word	7
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 bool_const1:
-	.word	4
+	.word	7
 	.word	4
 	.word	Bool_dispTab
 	.word	1
 class_nameTab:
 	.word	str_const6
 	.word	str_const7
+	.word	str_const11
+	.word	str_const12
+	.word	str_const13
 	.word	str_const14
 	.word	str_const8
 	.word	str_const9
@@ -257,12 +260,6 @@ class_objTab:
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
-	.word	Int_protObj
-	.word	Int_init
-	.word	Bool_protObj
-	.word	Bool_init
-	.word	String_protObj
-	.word	String_init
 	.word	List_protObj
 	.word	List_init
 	.word	Cons_protObj
@@ -271,6 +268,12 @@ class_objTab:
 	.word	Nil_init
 	.word	Main_protObj
 	.word	Main_init
+	.word	Int_protObj
+	.word	Int_init
+	.word	Bool_protObj
+	.word	Bool_init
+	.word	String_protObj
+	.word	String_init
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -557,7 +560,7 @@ List.isNil:
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 28
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label0:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)
@@ -590,7 +593,7 @@ List.cons:
 	bne	$a0 $zero label1
 	la	$a0 str_const0
 	li	$t1 33
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label1:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
@@ -611,7 +614,7 @@ List.car:
 	bne	$a0 $zero label2
 	la	$a0 str_const0
 	li	$t1 41
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label2:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)
@@ -635,7 +638,7 @@ List.cdr:
 	bne	$a0 $zero label3
 	la	$a0 str_const0
 	li	$t1 43
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label3:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)
@@ -659,7 +662,7 @@ List.rev:
 	bne	$a0 $zero label4
 	la	$a0 str_const0
 	li	$t1 45
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label4:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -680,7 +683,7 @@ List.sort:
 	bne	$a0 $zero label5
 	la	$a0 str_const0
 	li	$t1 47
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label5:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -701,7 +704,7 @@ List.insert:
 	bne	$a0 $zero label6
 	la	$a0 str_const0
 	li	$t1 49
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label6:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -722,7 +725,7 @@ List.rcons:
 	bne	$a0 $zero label7
 	la	$a0 str_const0
 	li	$t1 51
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label7:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -743,7 +746,7 @@ List.print_list:
 	bne	$a0 $zero label8
 	la	$a0 str_const0
 	li	$t1 53
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label8:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)
@@ -823,7 +826,7 @@ Cons.rev:
 	bne	$a0 $zero label9
 	la	$a0 str_const0
 	li	$t1 76
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label9:
 	lw	$t1 8($a0)
 	lw	$t1 44($t1)
@@ -831,7 +834,7 @@ label9:
 	bne	$a0 $zero label10
 	la	$a0 str_const0
 	li	$t1 76
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label10:
 	lw	$t1 8($a0)
 	lw	$t1 56($t1)
@@ -855,7 +858,7 @@ Cons.sort:
 	bne	$a0 $zero label11
 	la	$a0 str_const0
 	li	$t1 78
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label11:
 	lw	$t1 8($a0)
 	lw	$t1 48($t1)
@@ -863,7 +866,7 @@ label11:
 	bne	$a0 $zero label12
 	la	$a0 str_const0
 	li	$t1 78
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label12:
 	lw	$t1 8($a0)
 	lw	$t1 52($t1)
@@ -906,7 +909,7 @@ label13:
 	bne	$a0 $zero label16
 	la	$a0 str_const0
 	li	$t1 83
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label16:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
@@ -923,7 +926,7 @@ label14:
 	bne	$a0 $zero label17
 	la	$a0 str_const0
 	li	$t1 84
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label17:
 	lw	$t1 8($a0)
 	lw	$t1 52($t1)
@@ -936,7 +939,7 @@ label17:
 	bne	$a0 $zero label18
 	la	$a0 str_const0
 	li	$t1 85
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label18:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
@@ -964,7 +967,7 @@ Cons.rcons:
 	bne	$a0 $zero label19
 	la	$a0 str_const0
 	li	$t1 89
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label19:
 	lw	$t1 8($a0)
 	lw	$t1 56($t1)
@@ -977,7 +980,7 @@ label19:
 	bne	$a0 $zero label20
 	la	$a0 str_const0
 	li	$t1 89
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label20:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
@@ -1001,7 +1004,7 @@ Cons.print_list:
 	bne	$a0 $zero label21
 	la	$a0 str_const0
 	li	$t1 93
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label21:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
@@ -1013,7 +1016,7 @@ label21:
 	bne	$a0 $zero label22
 	la	$a0 str_const0
 	li	$t1 94
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label22:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -1022,7 +1025,7 @@ label22:
 	bne	$a0 $zero label23
 	la	$a0 str_const0
 	li	$t1 95
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label23:
 	lw	$t1 8($a0)
 	lw	$t1 60($t1)
@@ -1085,7 +1088,7 @@ Nil.insert:
 	bne	$a0 $zero label24
 	la	$a0 str_const0
 	li	$t1 107
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label24:
 	lw	$t1 8($a0)
 	lw	$t1 56($t1)
@@ -1114,7 +1117,7 @@ Nil.rcons:
 	bne	$a0 $zero label25
 	la	$a0 str_const0
 	li	$t1 109
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label25:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
@@ -1179,7 +1182,7 @@ label28:
 	bne	$a0 $zero label29
 	la	$a0 str_const0
 	li	$t1 128
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label29:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
@@ -1224,7 +1227,7 @@ Main.main:
 	bne	$a0 $zero label30
 	la	$a0 str_const0
 	li	$t1 139
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label30:
 	lw	$t1 8($a0)
 	lw	$t1 28($t1)
@@ -1232,7 +1235,7 @@ label30:
 	bne	$a0 $zero label31
 	la	$a0 str_const0
 	li	$t1 139
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label31:
 	lw	$t1 8($a0)
 	lw	$t1 44($t1)
@@ -1240,7 +1243,7 @@ label31:
 	bne	$a0 $zero label32
 	la	$a0 str_const0
 	li	$t1 139
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label32:
 	lw	$t1 8($a0)
 	lw	$t1 48($t1)
@@ -1248,7 +1251,7 @@ label32:
 	bne	$a0 $zero label33
 	la	$a0 str_const0
 	li	$t1 139
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label33:
 	lw	$t1 8($a0)
 	lw	$t1 60($t1)

@@ -146,7 +146,7 @@ str_const0:
 	.word	13
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"./codegen-test-files//case-order.cl"
+	.ascii	"codegen-test-files/case-order.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -154,7 +154,7 @@ int_const10:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	35
+	.word	32
 	.word	-1
 int_const9:
 	.word	3

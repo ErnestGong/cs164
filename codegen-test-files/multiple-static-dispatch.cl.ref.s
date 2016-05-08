@@ -152,10 +152,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	7
-	.word	17
+	.word	16
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./codegen-test-files//multiple-static-dispatch.cl"
+	.ascii	"codegen-test-files/multiple-static-dispatch.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -163,7 +163,7 @@ int_const11:
 	.word	5
 	.word	4
 	.word	Int_dispTab
-	.word	49
+	.word	46
 	.word	-1
 int_const10:
 	.word	5

@@ -170,10 +170,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	12
+	.word	11
 	.word	String_dispTab
 	.word	int_const12
-	.ascii	"./codegen-test-files//cells.cl"
+	.ascii	"codegen-test-files/cells.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -181,7 +181,7 @@ int_const12:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	30
+	.word	27
 	.word	-1
 int_const11:
 	.word	3
@@ -269,23 +269,24 @@ bool_const1:
 class_nameTab:
 	.word	str_const9
 	.word	str_const10
-	.word	str_const15
+	.word	str_const14
 	.word	str_const11
 	.word	str_const12
 	.word	str_const13
+	.word	str_const15
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
+	.word	CellularAutomaton_protObj
+	.word	CellularAutomaton_init
 	.word	Int_protObj
 	.word	Int_init
 	.word	Bool_protObj
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	CellularAutomaton_protObj
-	.word	CellularAutomaton_init
 	.word	Main_protObj
 	.word	Main_init
 Object_dispTab:
@@ -512,7 +513,7 @@ CellularAutomaton.print:
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 17
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label0:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
@@ -523,7 +524,7 @@ label0:
 	bne	$a0 $zero label1
 	la	$a0 str_const0
 	li	$t1 17
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label1:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -545,7 +546,7 @@ CellularAutomaton.num_cells:
 	bne	$a0 $zero label2
 	la	$a0 str_const0
 	li	$t1 24
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label2:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -572,7 +573,7 @@ CellularAutomaton.cell:
 	bne	$a0 $zero label3
 	la	$a0 str_const0
 	li	$t1 28
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label3:
 	lw	$t1 8($a0)
 	lw	$t1 20($t1)
@@ -607,7 +608,7 @@ label4:
 	bne	$a0 $zero label7
 	la	$a0 str_const0
 	li	$t1 32
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label7:
 	lw	$t1 8($a0)
 	lw	$t1 36($t1)
@@ -632,7 +633,7 @@ label7:
 	bne	$a0 $zero label8
 	la	$a0 str_const0
 	li	$t1 33
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label8:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -660,7 +661,7 @@ label5:
 	bne	$a0 $zero label9
 	la	$a0 str_const0
 	li	$t1 35
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label9:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -685,7 +686,7 @@ CellularAutomaton.cell_right_neighbor:
 	bne	$a0 $zero label10
 	la	$a0 str_const0
 	li	$t1 39
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label10:
 	lw	$t1 8($a0)
 	lw	$t1 36($t1)
@@ -721,7 +722,7 @@ label11:
 	bne	$a0 $zero label14
 	la	$a0 str_const0
 	li	$t1 41
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label14:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -749,7 +750,7 @@ label12:
 	bne	$a0 $zero label15
 	la	$a0 str_const0
 	li	$t1 43
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label15:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -774,7 +775,7 @@ CellularAutomaton.cell_at_next_evolution:
 	bne	$a0 $zero label16
 	la	$a0 str_const0
 	li	$t1 49
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label16:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
@@ -807,7 +808,7 @@ label19:
 	bne	$a0 $zero label20
 	la	$a0 str_const0
 	li	$t1 50
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label20:
 	lw	$t1 8($a0)
 	lw	$t1 44($t1)
@@ -850,7 +851,7 @@ label23:
 	bne	$a0 $zero label24
 	la	$a0 str_const0
 	li	$t1 51
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label24:
 	lw	$t1 8($a0)
 	lw	$t1 48($t1)
@@ -921,7 +922,7 @@ CellularAutomaton.evolve:
 	bne	$a0 $zero label31
 	la	$a0 str_const0
 	li	$t1 62
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label31:
 	lw	$t1 8($a0)
 	lw	$t1 36($t1)
@@ -951,7 +952,7 @@ label34:
 	bne	$a0 $zero label35
 	la	$a0 str_const0
 	li	$t1 67
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label35:
 	lw	$t1 8($a0)
 	lw	$t1 52($t1)
@@ -962,7 +963,7 @@ label35:
 	bne	$a0 $zero label36
 	la	$a0 str_const0
 	li	$t1 67
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label36:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
@@ -1011,7 +1012,7 @@ Main.main:
 	bne	$a0 $zero label37
 	la	$a0 str_const0
 	li	$t1 83
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label37:
 	lw	$t1 8($a0)
 	lw	$t1 28($t1)
@@ -1021,7 +1022,7 @@ label37:
 	bne	$a0 $zero label38
 	la	$a0 str_const0
 	li	$t1 84
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label38:
 	lw	$t1 8($a0)
 	lw	$t1 32($t1)
@@ -1049,7 +1050,7 @@ label41:
 	bne	$a0 $zero label42
 	la	$a0 str_const0
 	li	$t1 88
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label42:
 	lw	$t1 8($a0)
 	lw	$t1 56($t1)
@@ -1058,7 +1059,7 @@ label42:
 	bne	$a0 $zero label43
 	la	$a0 str_const0
 	li	$t1 89
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label43:
 	lw	$t1 8($a0)
 	lw	$t1 32($t1)
