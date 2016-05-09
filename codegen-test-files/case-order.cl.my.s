@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const13:
 	.word	5
@@ -146,7 +146,7 @@ str_const0:
 	.word	13
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"codegen-test-files/case-order.cl"
+	.ascii	"./codegen-test-files/case-order.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -154,7 +154,7 @@ int_const10:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	32
+	.word	34
 	.word	-1
 int_const9:
 	.word	3
@@ -337,7 +337,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -351,7 +356,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -365,7 +375,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -379,7 +394,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -393,7 +413,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -407,7 +432,12 @@ Main_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -24
@@ -465,5 +495,16 @@ label0:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

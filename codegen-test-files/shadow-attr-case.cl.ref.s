@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const14:
 	.word	5
@@ -152,10 +152,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	14
+	.word	15
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"codegen-test-files/shadow-attr-case.cl"
+	.ascii	"./codegen-test-files/shadow-attr-case.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -163,7 +163,7 @@ int_const9:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	38
+	.word	40
 	.word	-1
 int_const8:
 	.word	3
@@ -409,6 +409,8 @@ Main_init:
 	jal	IO_init
 	la	$a0 str_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -423,6 +425,7 @@ Main.main:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 str_const2
 	bne	$a0 $zero label1
 	la	$a0 str_const0

@@ -17,13 +17,13 @@ _string_tag:
 	.word	9
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const27:
 	.word	9
@@ -269,10 +269,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	9
-	.word	12
+	.word	13
 	.word	String_dispTab
 	.word	int_const18
-	.ascii	"codegen-test-files/book_list.cl"
+	.ascii	"./codegen-test-files/book_list.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -280,7 +280,7 @@ int_const18:
 	.word	7
 	.word	4
 	.word	Int_dispTab
-	.word	31
+	.word	33
 	.word	-1
 int_const17:
 	.word	7
@@ -767,6 +767,8 @@ Main.main:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	la	$a0 str_const7
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -830,6 +832,8 @@ label3:
 	lw	$t1 32($t1)
 	jalr	$t1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	bne	$a0 $zero label4
 	la	$a0 str_const0
@@ -876,6 +880,7 @@ BookList.cons:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 Cons_protObj
 	jal	Object.copy
 	jal	Cons_init
@@ -1018,8 +1023,12 @@ Cons.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1060,6 +1069,7 @@ Cons.print_list:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	lw	$a0 12($s0)
 	bne	$a0 $zero label11
 	la	$a0 str_const0
@@ -1135,8 +1145,12 @@ Book.initBook:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1248,6 +1262,8 @@ label24:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)

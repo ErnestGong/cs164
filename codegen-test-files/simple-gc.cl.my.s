@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const11:
 	.word	5
@@ -125,10 +125,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	12
+	.word	13
 	.word	String_dispTab
 	.word	int_const12
-	.ascii	"codegen-test-files/simple-gc.cl"
+	.ascii	"./codegen-test-files/simple-gc.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -136,7 +136,7 @@ int_const12:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	31
+	.word	33
 	.word	-1
 int_const11:
 	.word	3
@@ -333,7 +333,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -347,7 +352,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -361,7 +371,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -375,7 +390,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -389,7 +409,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -403,7 +428,12 @@ Main_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.f:
 	addiu	$sp $sp -12
@@ -425,7 +455,9 @@ Main.f:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -439,7 +471,9 @@ Main.f:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -453,7 +487,9 @@ Main.f:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -467,13 +503,24 @@ Main.f:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -12
@@ -495,7 +542,9 @@ Main.main:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -509,7 +558,9 @@ Main.main:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -523,7 +574,9 @@ Main.main:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -548,9 +601,13 @@ label0:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	move	$a0 $s0
@@ -565,5 +622,10 @@ label1:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

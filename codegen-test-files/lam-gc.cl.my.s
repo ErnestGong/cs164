@@ -704,16 +704,10 @@ str_const0:
 	.word	12
 	.word	12
 	.word	String_dispTab
-	.word	int_const32
-	.ascii	"codegen-test-files/lam-gc.cl"
+	.word	int_const18
+	.ascii	"./codegen-test-files/lam-gc.cl"
 	.byte	0	
 	.align	2
-	.word	-1
-int_const32:
-	.word	10
-	.word	4
-	.word	Int_dispTab
-	.word	28
 	.word	-1
 int_const31:
 	.word	10

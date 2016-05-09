@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const16:
 	.word	5
@@ -170,10 +170,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	11
+	.word	12
 	.word	String_dispTab
 	.word	int_const12
-	.ascii	"codegen-test-files/cells.cl"
+	.ascii	"./codegen-test-files/cells.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -181,7 +181,7 @@ int_const12:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	27
+	.word	29
 	.word	-1
 int_const11:
 	.word	3
@@ -398,7 +398,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -412,7 +417,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -426,7 +436,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -440,7 +455,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -454,7 +474,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton_init:
 	addiu	$sp $sp -12
@@ -468,7 +493,12 @@ CellularAutomaton_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -482,7 +512,12 @@ Main_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.init:
 	addiu	$sp $sp -12
@@ -493,11 +528,20 @@ CellularAutomaton.init:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.print:
 	addiu	$sp $sp -12
@@ -533,7 +577,12 @@ label1:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.num_cells:
 	addiu	$sp $sp -12
@@ -554,7 +603,12 @@ label2:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.cell:
 	addiu	$sp $sp -12
@@ -581,7 +635,14 @@ label3:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.cell_left_neighbor:
 	addiu	$sp $sp -12
@@ -595,6 +656,7 @@ CellularAutomaton.cell_left_neighbor:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -625,7 +687,9 @@ label7:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -653,7 +717,9 @@ label5:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -670,7 +736,14 @@ label6:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.cell_right_neighbor:
 	addiu	$sp $sp -12
@@ -703,9 +776,12 @@ label10:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -742,7 +818,9 @@ label12:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -759,7 +837,14 @@ label13:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.cell_at_next_evolution:
 	addiu	$sp $sp -12
@@ -784,6 +869,7 @@ label16:
 	addiu	 $sp $sp -4
 	la	$a0 str_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -817,6 +903,7 @@ label20:
 	addiu	 $sp $sp -4
 	la	$a0 str_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -839,7 +926,9 @@ label23:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -860,6 +949,7 @@ label24:
 	addiu	 $sp $sp -4
 	la	$a0 str_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -882,12 +972,15 @@ label27:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -905,7 +998,14 @@ label30:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 CellularAutomaton.evolve:
 	addiu	$sp $sp -24
@@ -936,6 +1036,7 @@ label32:
 	addiu	 $sp $sp -4
 	lw	$a0 4($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -982,7 +1083,9 @@ label36:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 0($fp)
 	b	label32
@@ -990,11 +1093,24 @@ label33:
 	move	$a0 $zero
 	lw	$a0 8($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -16
@@ -1018,6 +1134,8 @@ label37:
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	bne	$a0 $zero label38
 	la	$a0 str_const0
@@ -1037,6 +1155,7 @@ label39:
 	addiu	 $sp $sp -4
 	lw	$a0 0($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -1077,7 +1196,9 @@ label43:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 0($fp)
 	b	label39
@@ -1087,5 +1208,12 @@ label40:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

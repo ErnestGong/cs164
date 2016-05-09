@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const12:
 	.word	5
@@ -137,7 +137,7 @@ str_const0:
 	.word	11
 	.word	String_dispTab
 	.word	int_const12
-	.ascii	"./moduletest//checkpoint.cl"
+	.ascii	"./moduletest/checkpoint.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const12:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	27
+	.word	26
 	.word	-1
 int_const11:
 	.word	3
@@ -418,9 +418,12 @@ Main_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	jal	IO_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$s1 12($s0)
 	la	$a0 int_const1
 	jal	Object.copy
@@ -429,20 +432,36 @@ Main_init:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	la	$a0 str_const1
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	lw	$a0 20($s0)
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	lw	$a0 28($s0)
 	sw	$a0 32($s0)
+	addiu	$a1 $s0 32
+	jal	_GenGC_Assign
 	lw	$a0 36($s0)
 	sw	$a0 40($s0)
+	addiu	$a1 $s0 40
+	jal	_GenGC_Assign
 	lw	$a0 44($s0)
 	sw	$a0 48($s0)
+	addiu	$a1 $s0 48
+	jal	_GenGC_Assign
 	la	$a0 bool_const1
 	sw	$a0 52($s0)
+	addiu	$a1 $s0 52
+	jal	_GenGC_Assign
 	lw	$a0 52($s0)
 	sw	$a0 56($s0)
+	addiu	$a1 $s0 56
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$s1 4($fp)
 	lw	$fp 12($sp)
@@ -458,6 +477,7 @@ Main.main:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$s1 int_const1
 	la	$a0 int_const3
 	jal	Object.copy

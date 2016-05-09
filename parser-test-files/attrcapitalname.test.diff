@@ -1,0 +1,16 @@
+*** The reference
+
+--- Yours
+
+***************
+
+*** 1,3 ****
+
+  MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
+  
+! Invalid/unaligned address or invalid range: ./parser-test-files//attrcapitalname.test.ref.s
+--- 1,3 ----
+
+  MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
+  
+! Invalid/unaligned address or invalid range: ./parser-test-files//attrcapitalname.test.my.s

@@ -17,13 +17,13 @@ _string_tag:
 	.word	12
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const75:
 	.word	12
@@ -704,16 +704,10 @@ str_const0:
 	.word	12
 	.word	11
 	.word	String_dispTab
-	.word	int_const32
-	.ascii	"codegen-test-files/lam.cl"
+	.word	int_const29
+	.ascii	"./codegen-test-files/lam.cl"
 	.byte	0	
 	.align	2
-	.word	-1
-int_const32:
-	.word	10
-	.word	4
-	.word	Int_dispTab
-	.word	25
 	.word	-1
 int_const31:
 	.word	10
@@ -1257,7 +1251,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -1271,7 +1270,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -1285,7 +1289,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -1299,7 +1308,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -1313,7 +1327,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarList_init:
 	addiu	$sp $sp -12
@@ -1327,7 +1346,12 @@ VarList_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarListNE_init:
 	addiu	$sp $sp -12
@@ -1341,7 +1365,12 @@ VarListNE_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList_init:
 	addiu	$sp $sp -12
@@ -1355,7 +1384,12 @@ LambdaList_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE_init:
 	addiu	$sp $sp -12
@@ -1369,7 +1403,12 @@ LambdaListNE_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef_init:
 	addiu	$sp $sp -12
@@ -1381,11 +1420,18 @@ LambdaListRef_init:
 	jal	Object_init
 	la	$a0 int_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Expr_init:
 	addiu	$sp $sp -12
@@ -1399,7 +1445,12 @@ Expr_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Variable_init:
 	addiu	$sp $sp -12
@@ -1413,7 +1464,12 @@ Variable_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda_init:
 	addiu	$sp $sp -12
@@ -1427,7 +1483,12 @@ Lambda_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 App_init:
 	addiu	$sp $sp -12
@@ -1441,7 +1502,12 @@ App_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term_init:
 	addiu	$sp $sp -12
@@ -1455,7 +1521,12 @@ Term_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -1469,7 +1540,12 @@ Main_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarList.isNil:
 	addiu	$sp $sp -12
@@ -1482,7 +1558,12 @@ VarList.isNil:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarList.head:
 	addiu	$sp $sp -12
@@ -1506,7 +1587,12 @@ label0:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarList.tail:
 	addiu	$sp $sp -12
@@ -1530,7 +1616,12 @@ label1:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarList.add:
 	addiu	$sp $sp -12
@@ -1559,7 +1650,14 @@ label2:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarList.print:
 	addiu	$sp $sp -12
@@ -1583,7 +1681,12 @@ label3:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarListNE.isNil:
 	addiu	$sp $sp -12
@@ -1596,7 +1699,12 @@ VarListNE.isNil:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarListNE.head:
 	addiu	$sp $sp -12
@@ -1609,7 +1717,12 @@ VarListNE.head:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarListNE.tail:
 	addiu	$sp $sp -12
@@ -1622,7 +1735,12 @@ VarListNE.tail:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarListNE.init:
 	addiu	$sp $sp -12
@@ -1633,13 +1751,26 @@ VarListNE.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 VarListNE.print:
 	addiu	$sp $sp -12
@@ -1682,7 +1813,12 @@ label6:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList.isNil:
 	addiu	$sp $sp -12
@@ -1695,7 +1831,12 @@ LambdaList.isNil:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList.headE:
 	addiu	$sp $sp -12
@@ -1719,7 +1860,12 @@ label7:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList.headC:
 	addiu	$sp $sp -12
@@ -1743,7 +1889,12 @@ label8:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList.headN:
 	addiu	$sp $sp -12
@@ -1765,7 +1916,12 @@ label9:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList.tail:
 	addiu	$sp $sp -12
@@ -1789,7 +1945,12 @@ label10:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaList.add:
 	addiu	$sp $sp -12
@@ -1824,7 +1985,18 @@ label11:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE.isNil:
 	addiu	$sp $sp -12
@@ -1837,7 +2009,12 @@ LambdaListNE.isNil:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE.headE:
 	addiu	$sp $sp -12
@@ -1850,7 +2027,12 @@ LambdaListNE.headE:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE.headC:
 	addiu	$sp $sp -12
@@ -1863,7 +2045,12 @@ LambdaListNE.headC:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE.headN:
 	addiu	$sp $sp -12
@@ -1876,7 +2063,12 @@ LambdaListNE.headN:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE.tail:
 	addiu	$sp $sp -12
@@ -1889,7 +2081,12 @@ LambdaListNE.tail:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListNE.init:
 	addiu	$sp $sp -12
@@ -1900,17 +2097,38 @@ LambdaListNE.init:
 	move	$s0 $a0
 	lw	$a0 12($fp)
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	lw	$a0 8($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 4($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 28
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.isNil:
 	addiu	$sp $sp -12
@@ -1931,7 +2149,12 @@ label12:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.headE:
 	addiu	$sp $sp -12
@@ -1952,7 +2175,12 @@ label13:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.headC:
 	addiu	$sp $sp -12
@@ -1973,7 +2201,12 @@ label14:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.headN:
 	addiu	$sp $sp -12
@@ -1994,7 +2227,12 @@ label15:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.reset:
 	addiu	$sp $sp -12
@@ -2005,15 +2243,24 @@ LambdaListRef.reset:
 	move	$s0 $a0
 	la	$a0 int_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	la	$a0 LambdaList_protObj
 	jal	Object.copy
 	jal	LambdaList_init
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.add:
 	addiu	$sp $sp -12
@@ -2041,6 +2288,8 @@ label16:
 	lw	$t1 32($t1)
 	jalr	$t1
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -2054,9 +2303,13 @@ label16:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -2070,12 +2323,23 @@ label16:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 LambdaListRef.removeHead:
 	addiu	$sp $sp -12
@@ -2094,11 +2358,18 @@ label17:
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Expr.print_self:
 	addiu	$sp $sp -12
@@ -2132,7 +2403,12 @@ label19:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Expr.beta:
 	addiu	$sp $sp -12
@@ -2166,7 +2442,12 @@ label21:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Expr.substitute:
 	addiu	$sp $sp -12
@@ -2200,7 +2481,16 @@ label23:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Expr.gen_code:
 	addiu	$sp $sp -12
@@ -2234,7 +2524,16 @@ label25:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Variable.init:
 	addiu	$sp $sp -12
@@ -2245,11 +2544,20 @@ Variable.init:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Variable.print_self:
 	addiu	$sp $sp -12
@@ -2273,7 +2581,12 @@ label26:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Variable.beta:
 	addiu	$sp $sp -12
@@ -2286,7 +2599,12 @@ Variable.beta:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Variable.substitute:
 	addiu	$sp $sp -12
@@ -2300,6 +2618,7 @@ Variable.substitute:
 	addiu	 $sp $sp -4
 	move	$a0 $s0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2317,7 +2636,16 @@ label29:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Variable.gen_code:
 	addiu	$sp $sp -16
@@ -2357,6 +2685,7 @@ label36:
 	addiu	 $sp $sp -4
 	move	$a0 $s0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2469,7 +2798,18 @@ label42:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.init:
 	addiu	$sp $sp -12
@@ -2480,13 +2820,26 @@ Lambda.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.print_self:
 	addiu	$sp $sp -12
@@ -2541,7 +2894,12 @@ label51:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.beta:
 	addiu	$sp $sp -12
@@ -2554,7 +2912,12 @@ Lambda.beta:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.apply:
 	addiu	$sp $sp -12
@@ -2581,7 +2944,14 @@ label52:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.substitute:
 	addiu	$sp $sp -20
@@ -2595,6 +2965,7 @@ Lambda.substitute:
 	addiu	 $sp $sp -4
 	lw	$a0 12($s0)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2648,7 +3019,20 @@ label55:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 28
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.gen_code:
 	addiu	$sp $sp -12
@@ -2749,7 +3133,16 @@ label64:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Lambda.gen_closure_code:
 	addiu	$sp $sp -12
@@ -2907,7 +3300,18 @@ label78:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 App.init:
 	addiu	$sp $sp -12
@@ -2918,13 +3322,26 @@ App.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 App.print_self:
 	addiu	$sp $sp -12
@@ -2991,7 +3408,12 @@ label83:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 App.beta:
 	addiu	$sp $sp -28
@@ -3065,7 +3487,20 @@ label84:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 28
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 App.substitute:
 	addiu	$sp $sp -24
@@ -3131,7 +3566,22 @@ label93:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 32
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 App.gen_code:
 	addiu	$sp $sp -12
@@ -3269,7 +3719,16 @@ label103:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term.var:
 	addiu	$sp $sp -16
@@ -3298,7 +3757,16 @@ label104:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term.lam:
 	addiu	$sp $sp -16
@@ -3330,7 +3798,18 @@ label105:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term.app:
 	addiu	$sp $sp -16
@@ -3362,7 +3841,18 @@ label106:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term.i:
 	addiu	$sp $sp -16
@@ -3403,7 +3893,14 @@ label108:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term.k:
 	addiu	$sp $sp -20
@@ -3472,7 +3969,16 @@ label112:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Term.s:
 	addiu	$sp $sp -24
@@ -3611,7 +4117,18 @@ label121:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.beta_reduce:
 	addiu	$sp $sp -20
@@ -3670,6 +4187,7 @@ label127:
 	addiu	 $sp $sp -4
 	lw	$a0 8($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3726,7 +4244,18 @@ label133:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.eval_class:
 	addiu	$sp $sp -12
@@ -3774,7 +4303,12 @@ label136:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.closure_class:
 	addiu	$sp $sp -12
@@ -3882,7 +4416,12 @@ label144:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.gen_code:
 	addiu	$sp $sp -28
@@ -4116,7 +4655,22 @@ label165:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 32
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -12
@@ -4820,5 +5374,10 @@ label230:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

@@ -17,13 +17,13 @@ _string_tag:
 	.word	8
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const15:
 	.word	8
@@ -161,10 +161,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	8
-	.word	12
+	.word	13
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"codegen-test-files/sort_list.cl"
+	.ascii	"./codegen-test-files/sort_list.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const10:
 	.word	6
 	.word	4
 	.word	Int_dispTab
-	.word	31
+	.word	33
 	.word	-1
 int_const9:
 	.word	6
@@ -435,7 +435,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -449,7 +454,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -463,7 +473,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -477,7 +492,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -491,7 +511,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List_init:
 	addiu	$sp $sp -12
@@ -505,7 +530,12 @@ List_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons_init:
 	addiu	$sp $sp -12
@@ -519,7 +549,12 @@ Cons_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil_init:
 	addiu	$sp $sp -12
@@ -533,7 +568,12 @@ Nil_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -547,7 +587,12 @@ Main_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.isNil:
 	addiu	$sp $sp -12
@@ -569,7 +614,12 @@ label0:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.cons:
 	addiu	$sp $sp -16
@@ -601,7 +651,16 @@ label1:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.car:
 	addiu	$sp $sp -12
@@ -625,7 +684,12 @@ label2:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.cdr:
 	addiu	$sp $sp -12
@@ -649,7 +713,12 @@ label3:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.rev:
 	addiu	$sp $sp -12
@@ -670,7 +739,12 @@ label4:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.sort:
 	addiu	$sp $sp -12
@@ -691,7 +765,12 @@ label5:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.insert:
 	addiu	$sp $sp -12
@@ -712,7 +791,14 @@ label6:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.rcons:
 	addiu	$sp $sp -12
@@ -733,7 +819,14 @@ label7:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 List.print_list:
 	addiu	$sp $sp -12
@@ -754,7 +847,12 @@ label8:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.isNil:
 	addiu	$sp $sp -12
@@ -767,7 +865,12 @@ Cons.isNil:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.init:
 	addiu	$sp $sp -12
@@ -778,13 +881,26 @@ Cons.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.car:
 	addiu	$sp $sp -12
@@ -797,7 +913,12 @@ Cons.car:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.cdr:
 	addiu	$sp $sp -12
@@ -810,7 +931,12 @@ Cons.cdr:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.rev:
 	addiu	$sp $sp -12
@@ -842,7 +968,12 @@ label10:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.sort:
 	addiu	$sp $sp -12
@@ -874,7 +1005,12 @@ label12:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.insert:
 	addiu	$sp $sp -12
@@ -888,6 +1024,7 @@ Cons.insert:
 	addiu	 $sp $sp -4
 	lw	$a0 12($s0)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -948,7 +1085,14 @@ label15:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.rcons:
 	addiu	$sp $sp -12
@@ -988,7 +1132,14 @@ label20:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Cons.print_list:
 	addiu	$sp $sp -12
@@ -1033,7 +1184,12 @@ label23:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil.isNil:
 	addiu	$sp $sp -12
@@ -1046,7 +1202,12 @@ Nil.isNil:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil.rev:
 	addiu	$sp $sp -12
@@ -1059,7 +1220,12 @@ Nil.rev:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil.sort:
 	addiu	$sp $sp -12
@@ -1072,7 +1238,12 @@ Nil.sort:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil.insert:
 	addiu	$sp $sp -12
@@ -1096,7 +1267,14 @@ label24:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil.rcons:
 	addiu	$sp $sp -12
@@ -1125,7 +1303,14 @@ label25:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Nil.print_list:
 	addiu	$sp $sp -12
@@ -1138,7 +1323,12 @@ Nil.print_list:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.iota:
 	addiu	$sp $sp -16
@@ -1151,6 +1341,8 @@ Main.iota:
 	jal	Object.copy
 	jal	Nil_init
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	la	$a0 int_const1
 	sw	$a0 0($fp)
 	la	$a0 int_const1
@@ -1161,6 +1353,7 @@ label26:
 	addiu	 $sp $sp -4
 	lw	$a0 4($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -1188,6 +1381,8 @@ label29:
 	lw	$t1 64($t1)
 	jalr	$t1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -1201,7 +1396,9 @@ label29:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 0($fp)
 	b	label26
@@ -1211,7 +1408,16 @@ label27:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -12
@@ -1259,5 +1465,10 @@ label33:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

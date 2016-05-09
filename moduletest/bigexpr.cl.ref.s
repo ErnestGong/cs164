@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const11:
 	.word	5
@@ -125,10 +125,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	11
+	.word	10
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./moduletest//bigexpr.cl"
+	.ascii	"./moduletest/bigexpr.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -136,7 +136,7 @@ int_const11:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	24
+	.word	23
 	.word	-1
 int_const10:
 	.word	3
@@ -394,6 +394,8 @@ Main_init:
 	jal	IO_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -413,8 +415,18 @@ Main.main:
 	sw	$s4 44($fp)
 	sw	$s5 48($fp)
 	sw	$s6 52($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
+	sw	$zero 24($fp)
+	sw	$zero 28($fp)
 	la	$s1 int_const1
 	sw	$s1 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$s2 12($s0)
 	la	$a0 int_const1
 	jal	Object.copy
@@ -423,6 +435,8 @@ Main.main:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$s2 $a0
 	la	$s3 int_const2
 	la	$s4 int_const3

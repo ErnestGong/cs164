@@ -17,13 +17,13 @@ _string_tag:
 	.word	24
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const49:
 	.word	24
@@ -467,10 +467,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	24
-	.word	10
+	.word	11
 	.word	String_dispTab
 	.word	int_const12
-	.ascii	"codegen-test-files/c.cl"
+	.ascii	"./codegen-test-files/c.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -478,7 +478,7 @@ int_const12:
 	.word	22
 	.word	4
 	.word	Int_dispTab
-	.word	23
+	.word	25
 	.word	-1
 int_const11:
 	.word	22
@@ -1485,6 +1485,9 @@ Main.main:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	la	$a0 Closure_protObj
 	jal	Object.copy
 	jal	Closure_init
@@ -2038,6 +2041,8 @@ Closure.init:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -2087,6 +2092,8 @@ label59:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label60
 	la	$a0 str_const0
@@ -2122,6 +2129,8 @@ label61:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label62
 	la	$a0 str_const0
@@ -2165,6 +2174,8 @@ label64:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2195,6 +2206,10 @@ Closure16.apply:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$a0 str_const15
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2209,6 +2224,8 @@ label66:
 	jalr	$t1
 	lw	$a0 32($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label67
 	la	$a0 str_const0
@@ -2428,6 +2445,8 @@ label92:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2468,6 +2487,8 @@ label94:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2498,6 +2519,10 @@ Closure14.apply:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$a0 str_const12
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2512,6 +2537,8 @@ label96:
 	jalr	$t1
 	lw	$a0 32($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label97
 	la	$a0 str_const0
@@ -2731,6 +2758,8 @@ label122:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2771,6 +2800,8 @@ label124:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2811,6 +2842,8 @@ label126:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label127
 	la	$a0 str_const0
@@ -2854,6 +2887,8 @@ label129:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2884,6 +2919,10 @@ Closure11.apply:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$a0 str_const7
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2898,6 +2937,8 @@ label131:
 	jalr	$t1
 	lw	$a0 32($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label132
 	la	$a0 str_const0
@@ -3117,6 +3158,8 @@ label157:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -3157,6 +3200,8 @@ label159:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -3197,6 +3242,8 @@ label161:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label162
 	la	$a0 str_const0
@@ -3232,6 +3279,8 @@ label163:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label164
 	la	$a0 str_const0
@@ -3275,6 +3324,8 @@ label166:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -3315,6 +3366,8 @@ label168:
 	jalr	$t1
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label169
 	la	$a0 str_const0

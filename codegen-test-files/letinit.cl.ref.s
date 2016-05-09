@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const12:
 	.word	5
@@ -137,7 +137,7 @@ str_const0:
 	.word	12
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"codegen-test-files/letinit.cl"
+	.ascii	"./codegen-test-files/letinit.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -145,7 +145,7 @@ int_const10:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	29
+	.word	31
 	.word	-1
 int_const9:
 	.word	3
@@ -411,6 +411,10 @@ Main.main:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$s1 bool_const0
 	la	$s2 int_const1
 	la	$s3 str_const12

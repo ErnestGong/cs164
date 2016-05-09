@@ -17,13 +17,13 @@ _string_tag:
 	.word	4
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const13:
 	.word	4
@@ -146,7 +146,7 @@ str_const0:
 	.word	14
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"codegen-test-files/objectequality.cl"
+	.ascii	"./codegen-test-files/objectequality.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -154,7 +154,7 @@ int_const10:
 	.word	2
 	.word	4
 	.word	Int_dispTab
-	.word	36
+	.word	38
 	.word	-1
 int_const9:
 	.word	2
@@ -387,6 +387,8 @@ A_init:
 	jal	Object_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -473,6 +475,9 @@ Main.main:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	la	$a0 B_protObj
 	jal	Object.copy
 	jal	B_init
@@ -656,6 +661,8 @@ A.foo:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)

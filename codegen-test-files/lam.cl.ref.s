@@ -17,13 +17,13 @@ _string_tag:
 	.word	12
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const75:
 	.word	12
@@ -704,16 +704,10 @@ str_const0:
 	.word	12
 	.word	11
 	.word	String_dispTab
-	.word	int_const32
-	.ascii	"codegen-test-files/lam.cl"
+	.word	int_const29
+	.ascii	"./codegen-test-files/lam.cl"
 	.byte	0	
 	.align	2
-	.word	-1
-int_const32:
-	.word	10
-	.word	4
-	.word	Int_dispTab
-	.word	25
 	.word	-1
 int_const31:
 	.word	10
@@ -1269,6 +1263,8 @@ LambdaListRef_init:
 	jal	Object_init
 	la	$a0 int_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1564,10 +1560,14 @@ LambdaListRef.reset:
 	move	$s0 $a0
 	la	$a0 int_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	la	$a0 LambdaList_protObj
 	jal	Object.copy
 	jal	LambdaList_init
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1582,6 +1582,7 @@ LambdaListRef.add:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	lw	$a0 12($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -1601,6 +1602,8 @@ label4:
 	lw	$t1 32($t1)
 	jalr	$t1
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$s1 12($s0)
 	la	$a0 int_const0
 	jal	Object.copy
@@ -1609,6 +1612,8 @@ label4:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$s1 12($s0)
 	la	$a0 int_const0
 	jal	Object.copy
@@ -1639,6 +1644,8 @@ label5:
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1861,12 +1868,20 @@ LambdaListNE.init:
 	move	$s0 $a0
 	lw	$a0 12($fp)
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	lw	$a0 8($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 4($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1881,6 +1896,7 @@ Term.var:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 Variable_protObj
 	jal	Object.copy
 	jal	Variable_init
@@ -1911,6 +1927,7 @@ Term.lam:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 Lambda_protObj
 	jal	Object.copy
 	jal	Lambda_init
@@ -1944,6 +1961,7 @@ Term.app:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 App_protObj
 	jal	Object.copy
 	jal	App_init
@@ -1977,6 +1995,7 @@ Term.i:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 str_const35
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2018,6 +2037,8 @@ Term.k:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	la	$a0 str_const35
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2087,6 +2108,9 @@ Term.s:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	la	$a0 str_const35
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2222,6 +2246,9 @@ Main.beta_reduce:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	la	$a0 str_const38
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2491,6 +2518,10 @@ Main.gen_code:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$a0 LambdaListRef_protObj
 	jal	Object.copy
 	jal	LambdaListRef_init
@@ -3562,8 +3593,12 @@ App.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -3647,6 +3682,9 @@ App.beta:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	lw	$a0 12($s0)
 	bne	$a0 $zero label152
 	la	$a0 str_const0
@@ -3724,6 +3762,9 @@ App.substitute:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	lw	$a0 28($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -3928,8 +3969,12 @@ Lambda.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -4040,6 +4085,8 @@ Lambda.substitute:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	lw	$s1 20($fp)
 	lw	$t2 12($s0)
 	move	$t1 $s1
@@ -4363,6 +4410,8 @@ Variable.init:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -4414,6 +4463,7 @@ Variable.substitute:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	lw	$s1 12($fp)
 	move	$t2 $s0
 	move	$t1 $s1
@@ -4444,6 +4494,8 @@ Variable.gen_code:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	lw	$s1 20($fp)
 label206:
 	move	$a0 $s1
@@ -4748,8 +4800,12 @@ VarListNE.init:
 	move	$s0 $a0
 	lw	$a0 4($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 0($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)

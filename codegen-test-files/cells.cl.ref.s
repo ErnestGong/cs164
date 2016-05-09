@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const16:
 	.word	5
@@ -170,10 +170,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	11
+	.word	12
 	.word	String_dispTab
 	.word	int_const12
-	.ascii	"codegen-test-files/cells.cl"
+	.ascii	"./codegen-test-files/cells.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -181,7 +181,7 @@ int_const12:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	27
+	.word	29
 	.word	-1
 int_const11:
 	.word	3
@@ -493,6 +493,8 @@ Main.main:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	la	$a0 str_const4
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -508,6 +510,8 @@ label0:
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	bne	$a0 $zero label1
 	la	$a0 str_const0
@@ -574,6 +578,8 @@ CellularAutomaton.init:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -672,6 +678,7 @@ CellularAutomaton.cell_left_neighbor:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	lw	$s1 8($fp)
 	la	$t2 int_const1
 	move	$t1 $s1
@@ -745,6 +752,8 @@ CellularAutomaton.cell_right_neighbor:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	lw	$s1 16($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label20
@@ -820,6 +829,8 @@ CellularAutomaton.cell_at_next_evolution:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	lw	$a0 16($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -946,6 +957,10 @@ CellularAutomaton.evolve:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$s1 int_const1
 	move	$a0 $s0
 	bne	$a0 $zero label38
@@ -1003,6 +1018,8 @@ label43:
 label40:
 	move	$a0 $zero
 	sw	$s3 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$s1 16($fp)
 	lw	$s2 20($fp)

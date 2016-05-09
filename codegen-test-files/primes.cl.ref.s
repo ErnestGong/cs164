@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const15:
 	.word	5
@@ -164,7 +164,7 @@ str_const0:
 	.word	12
 	.word	String_dispTab
 	.word	int_const13
-	.ascii	"codegen-test-files/primes.cl"
+	.ascii	"./codegen-test-files/primes.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const13:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	28
+	.word	30
 	.word	-1
 int_const12:
 	.word	3
@@ -446,6 +446,9 @@ Main_init:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	jal	IO_init
 	la	$a0 str_const1
 	sw	$a0 0($sp)
@@ -461,10 +464,16 @@ label0:
 	jalr	$t1
 	la	$a0 int_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	la	$a0 int_const2
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 label1:
 	la	$a0 bool_const1
 	lw	$t1 12($a0)
@@ -477,8 +486,12 @@ label1:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	la	$a0 int_const1
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 label3:
 	lw	$s1 16($s0)
 	lw	$s2 20($s0)
@@ -544,6 +557,8 @@ label6:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	b	label3
 label4:
 	move	$a0 $zero
@@ -565,6 +580,8 @@ label13:
 	beqz	$t1 label11
 	lw	$a0 16($s0)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -620,6 +637,8 @@ label17:
 label2:
 	move	$a0 $zero
 	sw	$a0 28($s0)
+	addiu	$a1 $s0 28
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$s1 12($fp)
 	lw	$s2 16($fp)

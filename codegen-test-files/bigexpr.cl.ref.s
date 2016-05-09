@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const11:
 	.word	5
@@ -128,7 +128,7 @@ str_const0:
 	.word	12
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"codegen-test-files/bigexpr.cl"
+	.ascii	"./codegen-test-files/bigexpr.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -136,7 +136,7 @@ int_const11:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	29
+	.word	31
 	.word	-1
 int_const10:
 	.word	3
@@ -410,6 +410,15 @@ Main.main:
 	sw	$s4 48($fp)
 	sw	$s5 52($fp)
 	sw	$s6 56($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
+	sw	$zero 24($fp)
+	sw	$zero 28($fp)
+	sw	$zero 32($fp)
 	la	$s1 int_const0
 	la	$s1 int_const1
 	move	$s2 $s1

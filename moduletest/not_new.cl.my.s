@@ -10,23 +10,23 @@
 	.globl	_bool_tag
 	.globl	_string_tag
 _int_tag:
-	.word	3
+	.word	2
 _bool_tag:
-	.word	4
+	.word	3
 _string_tag:
-	.word	5
+	.word	4
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const11:
-	.word	5
+	.word	4
 	.word	5
 	.word	String_dispTab
 	.word	int_const0
@@ -34,7 +34,7 @@ str_const11:
 	.align	2
 	.word	-1
 str_const10:
-	.word	5
+	.word	4
 	.word	6
 	.word	String_dispTab
 	.word	int_const3
@@ -43,7 +43,7 @@ str_const10:
 	.align	2
 	.word	-1
 str_const9:
-	.word	5
+	.word	4
 	.word	6
 	.word	String_dispTab
 	.word	int_const4
@@ -52,7 +52,7 @@ str_const9:
 	.align	2
 	.word	-1
 str_const8:
-	.word	5
+	.word	4
 	.word	6
 	.word	String_dispTab
 	.word	int_const3
@@ -61,7 +61,7 @@ str_const8:
 	.align	2
 	.word	-1
 str_const7:
-	.word	5
+	.word	4
 	.word	5
 	.word	String_dispTab
 	.word	int_const5
@@ -70,7 +70,7 @@ str_const7:
 	.align	2
 	.word	-1
 str_const6:
-	.word	5
+	.word	4
 	.word	5
 	.word	String_dispTab
 	.word	int_const6
@@ -79,7 +79,7 @@ str_const6:
 	.align	2
 	.word	-1
 str_const5:
-	.word	5
+	.word	4
 	.word	6
 	.word	String_dispTab
 	.word	int_const4
@@ -88,7 +88,7 @@ str_const5:
 	.align	2
 	.word	-1
 str_const4:
-	.word	5
+	.word	4
 	.word	7
 	.word	String_dispTab
 	.word	int_const7
@@ -97,7 +97,7 @@ str_const4:
 	.align	2
 	.word	-1
 str_const3:
-	.word	5
+	.word	4
 	.word	7
 	.word	String_dispTab
 	.word	int_const8
@@ -106,7 +106,7 @@ str_const3:
 	.align	2
 	.word	-1
 str_const2:
-	.word	5
+	.word	4
 	.word	7
 	.word	String_dispTab
 	.word	int_const8
@@ -115,7 +115,7 @@ str_const2:
 	.align	2
 	.word	-1
 str_const1:
-	.word	5
+	.word	4
 	.word	8
 	.word	String_dispTab
 	.word	int_const9
@@ -124,98 +124,98 @@ str_const1:
 	.align	2
 	.word	-1
 str_const0:
-	.word	5
-	.word	11
+	.word	4
+	.word	10
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"./moduletest//not_new.cl"
+	.ascii	"./moduletest/not_new.cl"
 	.byte	0	
 	.align	2
 	.word	-1
 int_const10:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
-	.word	24
+	.word	23
 	.word	-1
 int_const9:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	13
 	.word	-1
 int_const8:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	9
 	.word	-1
 int_const7:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	10
 	.word	-1
 int_const6:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	2
 	.word	-1
 int_const5:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	3
 	.word	-1
 int_const4:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	6
 	.word	-1
 int_const3:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	4
 	.word	-1
 int_const2:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	1
 	.word	-1
 int_const1:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	100
 	.word	-1
 int_const0:
-	.word	3
+	.word	2
 	.word	4
 	.word	Int_dispTab
 	.word	0
 	.word	-1
 bool_const0:
-	.word	4
+	.word	3
 	.word	4
 	.word	Bool_dispTab
 	.word	0
 	.word	-1
 bool_const1:
-	.word	4
+	.word	3
 	.word	4
 	.word	Bool_dispTab
 	.word	1
 class_nameTab:
 	.word	str_const5
 	.word	str_const6
-	.word	str_const10
 	.word	str_const7
 	.word	str_const8
 	.word	str_const9
+	.word	str_const10
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -317,7 +317,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -331,7 +336,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -345,7 +355,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -359,7 +374,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -373,7 +393,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -385,11 +410,18 @@ Main_init:
 	jal	Object_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -12
@@ -404,6 +436,7 @@ label0:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -473,6 +506,7 @@ label4:
 	la	$a0 bool_const0
 label3:
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -540,6 +574,7 @@ label16:
 	la	$a0 bool_const0
 label15:
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -607,6 +642,7 @@ label28:
 	la	$a0 bool_const0
 label27:
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -674,6 +710,7 @@ label40:
 	la	$a0 bool_const0
 label39:
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -741,6 +778,7 @@ label52:
 	la	$a0 bool_const0
 label51:
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -761,9 +799,13 @@ label62:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	b	label0
 label1:
 	move	$a0 $zero
@@ -774,7 +816,7 @@ label1:
 	bne	$a0 $zero label65
 	la	$a0 str_const0
 	li	$t1 17
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label65:
 	lw	$t1 8($a0)
 	lw	$t1 0($t1)
@@ -786,5 +828,10 @@ label64:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

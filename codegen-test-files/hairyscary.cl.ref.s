@@ -17,13 +17,13 @@ _string_tag:
 	.word	8
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const16:
 	.word	8
@@ -173,7 +173,7 @@ str_const0:
 	.word	13
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"codegen-test-files/hairyscary.cl"
+	.ascii	"./codegen-test-files/hairyscary.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -181,7 +181,7 @@ int_const9:
 	.word	6
 	.word	4
 	.word	Int_dispTab
-	.word	32
+	.word	34
 	.word	-1
 int_const8:
 	.word	6
@@ -468,18 +468,26 @@ Main_init:
 	jal	Object.copy
 	jal	Bazz_init
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	la	$a0 Foo_protObj
 	jal	Object.copy
 	jal	Foo_init
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	la	$a0 Razz_protObj
 	jal	Object.copy
 	jal	Razz_init
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	la	$a0 Bar_protObj
 	jal	Object.copy
 	jal	Bar_init
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -550,9 +558,12 @@ Bazz_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	jal	IO_init
 	la	$a0 int_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label1
 	la	$a0 str_const0
@@ -593,6 +604,8 @@ label5:
 	jal	_case_abort
 label0:
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label6
 	la	$a0 str_const0
@@ -603,6 +616,8 @@ label6:
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$s1 4($fp)
 	lw	$fp 12($sp)
@@ -618,6 +633,7 @@ Foo_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	jal	Bazz_init
 	move	$a0 $s0
 	bne	$a0 $zero label8
@@ -651,6 +667,8 @@ label11:
 	jal	_case_abort
 label7:
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	lw	$a0 24($s0)
 	bne	$a0 $zero label12
 	la	$a0 str_const0
@@ -706,6 +724,8 @@ label15:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 28($s0)
+	addiu	$a1 $s0 28
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$s1 4($fp)
 	lw	$fp 12($sp)
@@ -721,6 +741,7 @@ Razz_init:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	jal	Foo_init
 	move	$a0 $s0
 	bne	$a0 $zero label17
@@ -746,6 +767,8 @@ label19:
 	jal	_case_abort
 label16:
 	sw	$a0 32($s0)
+	addiu	$a1 $s0 32
+	jal	_GenGC_Assign
 	lw	$a0 24($s0)
 	bne	$a0 $zero label20
 	la	$a0 str_const0
@@ -816,6 +839,8 @@ label24:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 36($s0)
+	addiu	$a1 $s0 36
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$s1 4($fp)
 	lw	$fp 12($sp)
@@ -841,6 +866,8 @@ label25:
 	lw	$t1 32($t1)
 	jalr	$t1
 	sw	$a0 40($s0)
+	addiu	$a1 $s0 40
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label26
 	la	$a0 str_const0
@@ -851,6 +878,8 @@ label26:
 	lw	$t1 28($t1)
 	jalr	$t1
 	sw	$a0 44($s0)
+	addiu	$a1 $s0 44
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -904,6 +933,8 @@ Bazz.doh:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	lw	$s1 12($s0)
 	lw	$s2 12($s0)
 	la	$a0 int_const1
@@ -913,6 +944,8 @@ Bazz.doh:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s1
 	lw	$s1 8($fp)
 	lw	$s2 12($fp)
@@ -930,6 +963,8 @@ Foo.doh:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	lw	$s1 12($s0)
 	lw	$s2 12($s0)
 	la	$a0 int_const0
@@ -939,6 +974,8 @@ Foo.doh:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s1
 	lw	$s1 8($fp)
 	lw	$s2 12($fp)

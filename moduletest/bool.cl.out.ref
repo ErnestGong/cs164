@@ -1,9 +1,13 @@
 MARS 4.5  Copyright 2003-2014 Pete Sanderson and Kenneth Vollmar
 
+GenGC initialized in test mode.
+Garbage collecting ...
 t: Bool
 b1: Bool
 b2: String
+Garbage collecting ...
 b1: Int
+Garbage collecting ...
 b2: Int
 COOL program successfully executed
 

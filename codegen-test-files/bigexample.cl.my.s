@@ -17,13 +17,13 @@ _string_tag:
 	.word	4
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const47:
 	.word	4
@@ -451,16 +451,10 @@ str_const0:
 	.word	4
 	.word	13
 	.word	String_dispTab
-	.word	int_const86
-	.ascii	"codegen-test-files/bigexample.cl"
+	.word	int_const10
+	.ascii	"./codegen-test-files/bigexample.cl"
 	.byte	0	
 	.align	2
-	.word	-1
-int_const86:
-	.word	2
-	.word	4
-	.word	Int_dispTab
-	.word	32
 	.word	-1
 int_const85:
 	.word	2
@@ -1320,7 +1314,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -1334,7 +1333,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -1348,7 +1352,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -1362,7 +1371,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -1376,7 +1390,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 P_init:
 	addiu	$sp $sp -12
@@ -1388,11 +1407,18 @@ P_init:
 	jal	Object_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C1_init:
 	addiu	$sp $sp -12
@@ -1406,7 +1432,12 @@ C1_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C2_init:
 	addiu	$sp $sp -12
@@ -1420,7 +1451,12 @@ C2_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah_init:
 	addiu	$sp $sp -12
@@ -1440,8 +1476,12 @@ label0:
 	lw	$t1 12($t1)
 	jalr	$t1
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	la	$a0 bool_const1
 	sw	$a0 28($s0)
+	addiu	$a1 $s0 28
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label1
 	la	$a0 str_const0
@@ -1454,15 +1494,24 @@ label1:
 	jalr	$t1
 	la	$a0 str_const1
 	sw	$a0 32($s0)
+	addiu	$a1 $s0 32
+	jal	_GenGC_Assign
 	la	$a0 IO_protObj
 	jal	Object.copy
 	jal	IO_init
 	sw	$a0 36($s0)
+	addiu	$a1 $s0 36
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 A_init:
 	addiu	$sp $sp -12
@@ -1476,7 +1525,12 @@ A_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 B_init:
 	addiu	$sp $sp -12
@@ -1490,7 +1544,12 @@ B_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C_init:
 	addiu	$sp $sp -12
@@ -1504,7 +1563,12 @@ C_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Base_init:
 	addiu	$sp $sp -12
@@ -1518,7 +1582,12 @@ Base_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Grandparent_init:
 	addiu	$sp $sp -12
@@ -1532,7 +1601,12 @@ Grandparent_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Parent_init:
 	addiu	$sp $sp -12
@@ -1546,7 +1620,12 @@ Parent_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Child_init:
 	addiu	$sp $sp -12
@@ -1560,7 +1639,12 @@ Child_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -1574,7 +1658,12 @@ Main_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C2.getX:
 	addiu	$sp $sp -12
@@ -1587,7 +1676,12 @@ C2.getX:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C2.setX:
 	addiu	$sp $sp -12
@@ -1598,10 +1692,19 @@ C2.setX:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.tiny:
 	addiu	$sp $sp -12
@@ -1616,7 +1719,12 @@ Blah.tiny:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.add:
 	addiu	$sp $sp -12
@@ -1638,12 +1746,19 @@ Blah.add:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.compare:
 	addiu	$sp $sp -12
@@ -1657,6 +1772,7 @@ Blah.compare:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -1667,7 +1783,12 @@ label2:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.compareEq:
 	addiu	$sp $sp -12
@@ -1681,6 +1802,7 @@ Blah.compareEq:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -1691,7 +1813,12 @@ label3:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.isv:
 	addiu	$sp $sp -12
@@ -1709,7 +1836,12 @@ label4:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.divByZero:
 	addiu	$sp $sp -12
@@ -1731,12 +1863,19 @@ Blah.divByZero:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.cmp:
 	addiu	$sp $sp -12
@@ -1754,7 +1893,12 @@ label5:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.ng:
 	addiu	$sp $sp -12
@@ -1771,7 +1915,12 @@ Blah.ng:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.caller:
 	addiu	$sp $sp -12
@@ -1823,12 +1972,19 @@ label7:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.callee:
 	addiu	$sp $sp -12
@@ -1850,12 +2006,23 @@ Blah.callee:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.get_t:
 	addiu	$sp $sp -12
@@ -1868,7 +2035,12 @@ Blah.get_t:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.useLet:
 	addiu	$sp $sp -24
@@ -1900,7 +2072,9 @@ Blah.useLet:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -1914,12 +2088,25 @@ Blah.useLet:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.useIf:
 	addiu	$sp $sp -12
@@ -1963,7 +2150,12 @@ label10:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.useWhile:
 	addiu	$sp $sp -12
@@ -1999,7 +2191,12 @@ label14:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.useCase:
 	addiu	$sp $sp -20
@@ -2038,7 +2235,16 @@ label17:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.useNew:
 	addiu	$sp $sp -12
@@ -2069,12 +2275,18 @@ Blah.useNew:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	lw	$t1 4($t1)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	jalr	 $t1
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.doThemAll:
 	addiu	$sp $sp -12
@@ -2326,7 +2538,12 @@ label46:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigIf:
 	addiu	$sp $sp -12
@@ -2483,7 +2700,12 @@ label67:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigWhile:
 	addiu	$sp $sp -36
@@ -2518,6 +2740,7 @@ label73:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -2545,7 +2768,9 @@ label75:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 0($fp)
 	lw	$a0 4($fp)
@@ -2561,7 +2786,9 @@ label75:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 4($fp)
 	b	label73
@@ -2572,6 +2799,7 @@ label74:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2602,6 +2830,7 @@ label79:
 	addiu	 $sp $sp -4
 	la	$a0 int_const12
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2656,6 +2885,7 @@ label87:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -2673,6 +2903,7 @@ label90:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -2690,6 +2921,7 @@ label93:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -2712,7 +2944,9 @@ label95:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 8($fp)
 	lw	$a0 20($fp)
@@ -2728,7 +2962,9 @@ label95:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 20($fp)
 	b	label93
@@ -2747,7 +2983,9 @@ label94:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 4($fp)
 	lw	$a0 16($fp)
@@ -2763,7 +3001,9 @@ label94:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 16($fp)
 	b	label90
@@ -2782,7 +3022,9 @@ label91:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 0($fp)
 	lw	$a0 12($fp)
@@ -2798,7 +3040,9 @@ label91:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 12($fp)
 	b	label87
@@ -2809,6 +3053,7 @@ label88:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2835,6 +3080,7 @@ label97:
 	addiu	 $sp $sp -4
 	la	$a0 int_const14
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2861,6 +3107,7 @@ label99:
 	addiu	 $sp $sp -4
 	la	$a0 int_const16
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -2885,7 +3132,24 @@ label101:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 36
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bail:
 	addiu	$sp $sp -12
@@ -2942,7 +3206,14 @@ label105:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigMath:
 	addiu	$sp $sp -12
@@ -2964,12 +3235,15 @@ Blah.bigMath:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3012,6 +3286,7 @@ label110:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3034,12 +3309,15 @@ label111:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3062,12 +3340,15 @@ label114:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3090,12 +3371,15 @@ label117:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const20
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3118,12 +3402,15 @@ label120:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const7
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3146,7 +3433,9 @@ label123:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -3164,7 +3453,9 @@ label123:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3174,7 +3465,9 @@ label123:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -3188,12 +3481,15 @@ label123:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const7
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3216,21 +3512,9 @@ label126:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t1 12($a0)
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	la	$a0 int_const3
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	div	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -3244,21 +3528,9 @@ label126:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t1 12($a0)
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	la	$a0 int_const3
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	div	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -3272,12 +3544,47 @@ label126:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const3
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	div	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t1 12($a0)
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	la	$a0 int_const3
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	div	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3304,7 +3611,9 @@ label129:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3314,12 +3623,15 @@ label129:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const5
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3354,17 +3666,9 @@ label132:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	add	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3374,7 +3678,9 @@ label132:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3384,12 +3690,27 @@ label132:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const24
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3444,17 +3765,9 @@ label135:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	add	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3464,17 +3777,9 @@ label135:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	add	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3484,17 +3789,9 @@ label135:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	add	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3504,17 +3801,9 @@ label135:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
-	addiu	 $sp $sp 4
-	lw	$t2 12($a0)
-	lw	$t1 4($sp)
-	add	$t1 $t1 $t2
-	sw	 $t1 0($sp)
-	addiu	 $sp $sp -4
-	jal	Object.copy
-	lw	$t1 4($sp)
-	sw	$t1 12($a0)
-	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t2 12($a0)
 	lw	$t1 4($sp)
@@ -3524,12 +3813,63 @@ label135:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 4($sp)
+	add	$t1 $t1 $t2
+	sw	 $t1 0($sp)
+	addiu	 $sp $sp -4
+	jal	Object.copy
+	lw	$t1 4($sp)
+	sw	$t1 12($a0)
+	sw	$zero 4($sp)
+	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const18
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3740,6 +4080,7 @@ label155:
 	addiu	 $sp $sp -4
 	la	$a0 int_const9
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -3766,6 +4107,7 @@ label157:
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -3797,6 +4139,7 @@ label160:
 	addiu	 $sp $sp -4
 	la	$a0 int_const32
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -3823,6 +4166,7 @@ label162:
 	addiu	 $sp $sp -4
 	la	$a0 int_const31
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -3864,9 +4208,12 @@ label164:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3897,6 +4244,7 @@ label166:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($t1)
 	lw	$t2 12($a0)
@@ -3927,6 +4275,7 @@ label168:
 	addiu	 $sp $sp -4
 	la	$a0 int_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -3951,7 +4300,12 @@ label170:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.assert:
 	addiu	$sp $sp -12
@@ -4015,7 +4369,16 @@ label172:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 20
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigAssign:
 	addiu	$sp $sp -24
@@ -4047,6 +4410,7 @@ label177:
 	addiu	 $sp $sp -4
 	la	$a0 int_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4073,6 +4437,7 @@ label179:
 	addiu	 $sp $sp -4
 	la	$a0 int_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4099,6 +4464,7 @@ label181:
 	addiu	 $sp $sp -4
 	la	$a0 int_const2
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4131,6 +4497,7 @@ label183:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4157,6 +4524,7 @@ label185:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4183,6 +4551,7 @@ label187:
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4215,6 +4584,7 @@ label189:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4241,6 +4611,7 @@ label191:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4267,6 +4638,7 @@ label193:
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4296,6 +4668,7 @@ label195:
 	addiu	 $sp $sp -4
 	la	$a0 int_const5
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4322,6 +4695,7 @@ label197:
 	addiu	 $sp $sp -4
 	la	$a0 int_const5
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4348,6 +4722,7 @@ label199:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4382,7 +4757,9 @@ label201:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 0($fp)
 	lw	$a0 0($fp)
@@ -4398,7 +4775,9 @@ label201:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 4($fp)
 	lw	$a0 0($fp)
@@ -4414,7 +4793,9 @@ label201:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	lw	$t1 12($a0)
 	sw	 $t1 0($sp)
@@ -4428,7 +4809,9 @@ label201:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 8($fp)
 	lw	$a0 4($fp)
@@ -4444,7 +4827,9 @@ label201:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	$a0 4($fp)
 	lw	$a0 0($fp)
@@ -4452,6 +4837,7 @@ label201:
 	addiu	 $sp $sp -4
 	la	$a0 int_const11
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4478,6 +4864,7 @@ label203:
 	addiu	 $sp $sp -4
 	la	$a0 int_const26
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4504,6 +4891,7 @@ label205:
 	addiu	 $sp $sp -4
 	la	$a0 int_const43
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4536,6 +4924,7 @@ label207:
 	addiu	 $sp $sp -4
 	la	$a0 int_const26
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4562,6 +4951,7 @@ label209:
 	addiu	 $sp $sp -4
 	la	$a0 int_const43
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4588,6 +4978,7 @@ label211:
 	addiu	 $sp $sp -4
 	la	$a0 int_const26
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4622,12 +5013,15 @@ label213:
 	jal	Object.copy
 	lw	$t1 4($sp)
 	sw	$t1 12($a0)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
 	la	$a0 int_const48
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4654,6 +5048,7 @@ label215:
 	addiu	 $sp $sp -4
 	la	$a0 int_const26
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4680,6 +5075,7 @@ label217:
 	addiu	 $sp $sp -4
 	la	$a0 int_const43
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4704,7 +5100,18 @@ label219:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.setI:
 	addiu	$sp $sp -12
@@ -4715,10 +5122,19 @@ Blah.setI:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.getI:
 	addiu	$sp $sp -12
@@ -4731,7 +5147,12 @@ Blah.getI:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigSelf:
 	addiu	$sp $sp -24
@@ -4786,6 +5207,7 @@ label222:
 	addiu	 $sp $sp -4
 	lw	$a0 4($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4817,6 +5239,7 @@ label225:
 	addiu	 $sp $sp -4
 	lw	$a0 8($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4848,6 +5271,7 @@ label228:
 	addiu	 $sp $sp -4
 	lw	$a0 8($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4919,6 +5343,7 @@ label236:
 	lw	$t1 108($t1)
 	jalr	$t1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -4952,6 +5377,7 @@ label238:
 	addiu	 $sp $sp -4
 	lw	$a0 8($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5018,6 +5444,7 @@ label244:
 	lw	$t1 108($t1)
 	jalr	$t1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5042,7 +5469,18 @@ label246:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigStrCompare:
 	addiu	$sp $sp -32
@@ -5084,6 +5522,7 @@ label247:
 	addiu	 $sp $sp -4
 	lw	$a0 4($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5115,6 +5554,7 @@ label250:
 	addiu	 $sp $sp -4
 	la	$a0 str_const13
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5141,6 +5581,7 @@ label252:
 	addiu	 $sp $sp -4
 	la	$a0 str_const14
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5167,6 +5608,7 @@ label254:
 	addiu	 $sp $sp -4
 	lw	$a0 16($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5193,6 +5635,7 @@ label256:
 	addiu	 $sp $sp -4
 	lw	$a0 8($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5256,6 +5699,7 @@ label261:
 	addiu	 $sp $sp -4
 	lw	$a0 16($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5287,6 +5731,7 @@ label264:
 	addiu	 $sp $sp -4
 	lw	$a0 0($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5313,6 +5758,7 @@ label266:
 	addiu	 $sp $sp -4
 	lw	$a0 4($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5339,6 +5785,7 @@ label268:
 	addiu	 $sp $sp -4
 	lw	$a0 4($fp)
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5398,6 +5845,7 @@ label273:
 	lw	$t1 20($t1)
 	jalr	$t1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5422,7 +5870,22 @@ label275:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 32
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigCase:
 	addiu	$sp $sp -52
@@ -5517,6 +5980,7 @@ label277:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5579,6 +6043,7 @@ label285:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5641,6 +6106,7 @@ label293:
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5703,6 +6169,7 @@ label301:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5759,6 +6226,7 @@ label309:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5821,6 +6289,7 @@ label316:
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5883,6 +6352,7 @@ label324:
 	addiu	 $sp $sp -4
 	la	$a0 int_const9
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5927,6 +6397,7 @@ label332:
 	addiu	 $sp $sp -4
 	la	$a0 int_const9
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -5983,6 +6454,7 @@ label337:
 	addiu	 $sp $sp -4
 	la	$a0 int_const1
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -6027,6 +6499,7 @@ label344:
 	addiu	 $sp $sp -4
 	la	$a0 int_const9
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -6103,6 +6576,7 @@ label350:
 	addiu	 $sp $sp -4
 	la	$a0 int_const3
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -6127,7 +6601,32 @@ label357:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 52
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Blah.bigAttrAccess:
 	addiu	$sp $sp -16
@@ -6166,6 +6665,7 @@ label359:
 	addiu	 $sp $sp -4
 	la	$a0 int_const0
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -6212,6 +6712,7 @@ label363:
 	addiu	 $sp $sp -4
 	la	$a0 int_const4
 	lw	$t1 4($sp)
+	sw	$zero 4($sp)
 	addiu	 $sp $sp 4
 	move	$t2 $a0
 	la	$a0 bool_const1
@@ -6236,7 +6737,14 @@ label365:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 16
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 A.e:
 	addiu	$sp $sp -12
@@ -6249,7 +6757,12 @@ A.e:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 A.f:
 	addiu	$sp $sp -12
@@ -6262,7 +6775,12 @@ A.f:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 A.g:
 	addiu	$sp $sp -12
@@ -6275,7 +6793,12 @@ A.g:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 A.i:
 	addiu	$sp $sp -12
@@ -6288,7 +6811,12 @@ A.i:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 A.j:
 	addiu	$sp $sp -12
@@ -6301,7 +6829,12 @@ A.j:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 B.e:
 	addiu	$sp $sp -12
@@ -6314,7 +6847,12 @@ B.e:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 B.g:
 	addiu	$sp $sp -12
@@ -6327,7 +6865,12 @@ B.g:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 B.h:
 	addiu	$sp $sp -12
@@ -6340,7 +6883,12 @@ B.h:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 B.k:
 	addiu	$sp $sp -12
@@ -6353,7 +6901,12 @@ B.k:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C.e:
 	addiu	$sp $sp -12
@@ -6366,7 +6919,12 @@ C.e:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C.h:
 	addiu	$sp $sp -12
@@ -6379,7 +6937,12 @@ C.h:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C.i:
 	addiu	$sp $sp -12
@@ -6392,7 +6955,12 @@ C.i:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 C.ell:
 	addiu	$sp $sp -12
@@ -6405,7 +6973,12 @@ C.ell:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -24
@@ -6553,5 +7126,16 @@ label375:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 24
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	

@@ -37,8 +37,8 @@ def main(arg):
 	diff_file = "%s.diff"%(arg)
 	removeIfExists(diff_file)
 
-	out_ref = compileAndRun("coolc.py -g -t", "ref", arg).splitlines()
-	out_my = compileAndRun("mycoolc.py -g -t", "my", arg).splitlines()
+	out_ref = compileAndRun("coolc.py -g", "ref", arg).splitlines()
+	out_my = compileAndRun("mycoolc.py -g", "my", arg).splitlines()
 
 	ref_cmd = "The reference"
 	my_cmd = "Yours"

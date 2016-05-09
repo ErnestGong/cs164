@@ -17,13 +17,13 @@ _string_tag:
 	.word	4
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const47:
 	.word	4
@@ -451,16 +451,10 @@ str_const0:
 	.word	4
 	.word	13
 	.word	String_dispTab
-	.word	int_const86
-	.ascii	"codegen-test-files/bigexample.cl"
+	.word	int_const10
+	.ascii	"./codegen-test-files/bigexample.cl"
 	.byte	0	
 	.align	2
-	.word	-1
-int_const86:
-	.word	2
-	.word	4
-	.word	Int_dispTab
-	.word	32
 	.word	-1
 int_const85:
 	.word	2
@@ -1452,8 +1446,12 @@ label0:
 	lw	$t1 12($t1)
 	jalr	$t1
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	la	$a0 bool_const1
 	sw	$a0 28($s0)
+	addiu	$a1 $s0 28
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	bne	$a0 $zero label1
 	la	$a0 str_const0
@@ -1465,10 +1463,14 @@ label1:
 	jalr	$t1
 	la	$a0 str_const1
 	sw	$a0 32($s0)
+	addiu	$a1 $s0 32
+	jal	_GenGC_Assign
 	la	$a0 IO_protObj
 	jal	Object.copy
 	jal	IO_init
 	sw	$a0 36($s0)
+	addiu	$a1 $s0 36
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1485,6 +1487,8 @@ P_init:
 	jal	Object_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1585,6 +1589,9 @@ Main.main:
 	sw	$s1 12($fp)
 	sw	$s2 16($fp)
 	sw	$s3 20($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
 	la	$a0 IO_protObj
 	jal	Object.copy
 	jal	IO_init
@@ -1911,6 +1918,7 @@ Blah.add:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$s1 int_const1
 	la	$a0 int_const3
 	jal	Object.copy
@@ -1932,6 +1940,7 @@ Blah.compare:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$s1 int_const1
 	la	$a0 int_const3
 	lw	$t1 12($s1)
@@ -1954,6 +1963,7 @@ Blah.compareEq:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$s1 int_const1
 	la	$t2 int_const3
 	move	$t1 $s1
@@ -1994,6 +2004,7 @@ Blah.divByZero:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$s1 int_const1
 	la	$a0 int_const2
 	jal	Object.copy
@@ -2050,6 +2061,7 @@ Blah.caller:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 int_const5
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -2100,6 +2112,7 @@ Blah.callee:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	lw	$s1 12($fp)
 	lw	$a0 8($fp)
 	jal	Object.copy
@@ -2137,6 +2150,10 @@ Blah.useLet:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$s1 int_const2
 	la	$s2 int_const8
 	lw	$s3 24($s0)
@@ -2251,6 +2268,7 @@ Blah.useCase:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	move	$a0 $s0
 	bne	$a0 $zero label28
 	la	$a0 str_const0
@@ -2292,6 +2310,7 @@ Blah.useNew:
 	addiu	$fp $sp 16
 	move	$s0 $a0
 	sw	$s1 4($fp)
+	sw	$zero 0($fp)
 	la	$a0 Int_protObj
 	jal	Object.copy
 	jal	Int_init
@@ -2731,6 +2750,13 @@ Blah.bigWhile:
 	sw	$s4 40($fp)
 	sw	$s5 44($fp)
 	sw	$s6 48($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
+	sw	$zero 24($fp)
 	la	$a0 str_const6
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -3090,6 +3116,15 @@ Blah.bigMath:
 	sw	$s4 48($fp)
 	sw	$s5 52($fp)
 	sw	$s6 56($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
+	sw	$zero 24($fp)
+	sw	$zero 28($fp)
+	sw	$zero 32($fp)
 	la	$s1 int_const1
 	la	$a0 int_const3
 	jal	Object.copy
@@ -3887,6 +3922,10 @@ Blah.bigAssign:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	la	$s1 int_const2
 	la	$s2 int_const2
 	la	$s3 int_const2
@@ -4439,6 +4478,8 @@ Blah.setI:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
@@ -4468,6 +4509,10 @@ Blah.bigSelf:
 	sw	$s2 20($fp)
 	sw	$s3 24($fp)
 	sw	$s4 28($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
 	move	$s1 $zero
 	move	$s2 $s0
 	la	$a0 Blah_protObj
@@ -4763,6 +4808,12 @@ Blah.bigStrCompare:
 	sw	$s4 36($fp)
 	sw	$s5 40($fp)
 	sw	$s6 44($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
 	la	$s1 str_const13
 	la	$s2 str_const14
 	la	$s3 str_const15
@@ -5106,6 +5157,15 @@ Blah.bigCase:
 	sw	$s4 48($fp)
 	sw	$s5 52($fp)
 	sw	$s6 56($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
+	sw	$zero 24($fp)
+	sw	$zero 28($fp)
+	sw	$zero 32($fp)
 	la	$a0 A_protObj
 	jal	Object.copy
 	jal	A_init
@@ -5771,6 +5831,8 @@ Blah.bigAttrAccess:
 	move	$s0 $a0
 	sw	$s1 8($fp)
 	sw	$s2 12($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
 	la	$a0 C2_protObj
 	jal	Object.copy
 	jal	C2_init
@@ -5890,6 +5952,8 @@ C2.setX:
 	move	$s0 $a0
 	lw	$a0 0($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)

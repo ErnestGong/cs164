@@ -1,185 +1,59 @@
 README file for Programming Assignment 5  (Java edition)
-=======================================================
-
-Your directory should now contain the following files:
-
- ASTConstants.java    [DO NOT MODIFY]
- ASTLexer.java        [DO NOT MODIFY]
- ASTParser.java       [DO NOT MODIFY]
- AbstractSymbol.java  [DO NOT MODIFY]
- AbstractTable.java   [DO NOT MODIFY]
- BoolConst.java
- Cgen.java            [DO NOT MODIFY]
- CgenClassTable.java
- CgenNode.java        // add getmethods
- CgenSupport.java
- ClassTable.java      [DO NOT MODIFY]
- Flags.java           [DO NOT MODIFY]
- IdSymbol.java        [DO NOT MODIFY]
- IdTable.java         [DO NOT MODIFY]
- IntSymbol.java       // getid
- IntTable.java        [DO NOT MODIFY]
- ListNode.java        [DO NOT MODIFY]
- build.xml            [DO NOT MODIFY]
- README
- StringSymbol.java    // getid
- StringTable.java     [DO NOT MODIFY]
- SymbolTable.java     [DO NOT MODIFY]
- SymtabExample.java   [DO NOT MODIFY]
- TokenConstants.java  [DO NOT MODIFY]
- TreeConstants.java
- TreeNode.java        [DO NOT MODIFY]
- Utilities.java       [DO NOT MODIFY]
- cool-tree.java
- example.cl
- tests
-         1.cl
-         2.cl
-         3.cl
-         4.cl
-         5.cl
-         6.cl
-         checkpoint.cl
- compare-cgen.py      [DO NOT MODIFY]
- mycoolc.py           [DO NOT MODIFY]
- coolc.py             [DO NOT MODIFY]
- runmips.py           [DO NOT MODIFY]
- trap_handler.mars    [DO NOT MODIFY]
- coolc.jar            [DO NOT MODIFY]
-
-
-        The build.xml contains targets for compiling and running your
-        program, as well as handing it in. DO NOT MODIFY.
-
-        The README contains this info. Part of the assignment is to
-        fill the README with the write-up for your project. You should
-        explain design decisions, explain why your code is correct,
-        and why your test cases are adequate. It is part of the
-        assignment to clearly and concisely explain things in text as
-        well as to comment your code.
-
-        In example.cl, you should write a correct Cool program which
-        tests as many aspects of the code generator as possible. It
-        should pass your code generator, and running MARS on the
-        generated output should run the program correctly.
-
-        CgenClassTable.java and CgenNode.java are the skeleton files for
-        the code generator. These skeletons are much larger than the
-        ones for previous assignments.  The skeletons provides three
-        components of the code generator:
-
-                - functions to build the inheritance graph; (we supply
-                  this in case you didn't get this working for PA4)
-
-                - functions to emit global data and constants;
-
-        You should work to understand this code, and it will help you
-        write the rest of the code generator.
-
-        tests is a directory containing seven test cases.
-
-        TreeNode.java and ListNode.java contain definitions used by
-        the tree package. DO NOT MODIFY.
-
-        cool-tree.java specifies and give an implementation of Cool
-        ASTs (see the README for PA3 and the "Cool Tour").  In this
-        assignment, you will need to complete the code generating
-        methods for all Cool expression nodes.
-
-        BoolConst.java, IntSymbol.java, and StringSymbol.java are used
-        to manage constants in Cool programs.  You will need to
-        complete the method for generating constant definitions in
-        each of these classes.
-
-        CgenSupport.java is general support code for the code
-        generator.  You can add functions and constants as you see
-        fit, but do not modify anything that's already there.  This
-        class also serves as a placeholder for a bunch of constants as
-        well as functions to emit MARS instructions (we supply these
-        to save you some tedious coding).
-
-        TreeConstants.java defined some useful symbol constants.  You
-        may add some of your own, if you wish.
-
-        ASTLexer.java, ASTParser.java, and ASTConstants.java implement
-        a lexer and a parser for reading text representation of ASTs
-        from console in the format produced by the parser phase. DO
-        NOT MODIFY.
-
-        Cgen.java supplies the driver for the compiler. You should not
-        modify this code.  The script mycoolc can pass any of the
-        standard flags to the code generator; for this assignment, -c
-        (code generator debug) may be useful as it sets a global
-        variable cgen_debug to true (1).  If you want your code
-        generator to print debug information when the option is set,
-        write your debug code in the following format:
-
-              if (cgen_debug)
-              {
-                ...
-              }
-
-        SymbolTable.java contains a symbol table implementation. Read
-        the comments in the file and look at the example in
-        SymtabExample.java.  You are not required to use this code,
-        but you may find it useful. DO NOT MODIFY.
-
-Instructions
-------------
-
-        To compile your compiler and code generator type:
-
-        % ant cgen
-
-        To test your compiler, type:
-
-        % python mycoolc.py [-o output filename] <file1.cl> <file2.cl> ...
-
-        This command parses all the cool files given on the command
-        line, passes them through the semantic checker, and then hands
-        the program AST to your code generator.
-
-        To run your compiler on the file example.cl, type:
-
-        % ant test
-
-        To run your compiler on test files in tests directory, type:
-
-	% ant test-all
-
-        To run the produced code:
-
-        % python runmips.py file1.s  /* or the output filename you chose */
-
-        To turn in your work at checkpoint, type:
-
-        % ant submit-clean
-        % submit PA5-checkpoint
-
-        To turn in your work finally, type:
-
-        % ant submit-clean
-        % submit PA5
-
-        Be sure to submit all relevant source files.
-        In particular, you probably want to turn in cool-tree.java,
-        TreeConstants.java, BoolConst.java, IntSymbol.java, StringSymbol.java,
-        CgenNode.java, CgenClassTable.java, CgenSupport.java, example.cl, README.
-
-        You may turn in the assignment as many times as you like.
-        However, only the last version will be retained for grading.
-
-        GOOD LUCK!
 
 ---8<------8<------8<------8<---cut here---8<------8<------8<------8<---
 
 Write-up for PA5
 ----------------
+Overview:
+By calling the cgen in class programc (cool-tree.java), CgenClassTable.java handles most works.
+In spite of the functions provided, we first fill in class_nameTab with the corresponding name, and then class_objTab with protObj and init in the ascending order of class tag number(which is stored in the first element of protObj) for each class.
+
+Then we fill in the dispTab. It recursively calls printParentMethods, which will put the method_name and corresponding class into the map if that method_name is not in the map already from children to parent, and then print the method in order from parent to children using the map mentioned above to find the real class for the method (overwrite could exists). If the methods with same name has been filled in by the parent, the children won’t output it again.
+
+For protObj, it will stores tag number, size, entrance for dispTab, and attrs from parents to children. In the meantime, it will stores a map in order to find the offset of attribute in the future. As for tag number it will include the follow the previsit order when we start a dfs from object.It will bring us beneifit when we try to resolve the cgen problem for case. 
+
+For init, it will reserve space for let, case and then pile up the stack. Then, it init its parent attributes first, then cgen the body of attribute. Also, it will call _GenGC_Assign if GC is enabled.
+
+For generating codes for method, it ignores five basic classes, create a list to store the offsets of all parameters, and max spaces for case, and let. Then, it pile up the stack, and cgen the method’s body.
+
+Design Decisions:
+we put all the actions that will manipulate stack into in_method(PrintStream str, Integer offset), out_method(PrintStream str, Integer offset), push(), and pop().
+    in_method generally push old FP, SELF(s0), and RA into stack, and let the new FP point to the next element of RA, so that it can use FP to access the parameters (and elements in let, case that has been saved space earlier). Also it moves ACC to SELF, so that the method can know which dynamic object has been actually dispatched.
+    out_method restore old FP, SELF, RA, pop all the spaces used in this method including spaces for parameters, let, and case. If gc is enabled, it will delete all the contents that is no longer used.
+    pop also will delete the content that is no longer used when it pop an element from stack.
 
 
+We will focus on our design decisions about let, case, new, and GC that are not required by checkpoint.
+     2. constants,arith symbol and basic expression
+    For constants we generate them with IntSymbol and StringSymbl.For arith operation, we will first cgen and push result into stack cgen e2 and then do the operation, pop the value. For compare operation, we will first generate e1 and e2 as previous, but assign a true boolean as the return true if the value in e1 and e2 matches then it jump to next part of code, otherwise it will be false. As for isvoid, we will do similiar things but we will compare address with 0.
+
+     3.condition and loops
+    For condition and loops we will compare the result as in part2(which means eval e1 push the result eval e2 compare) It it matches then we will goto the if condition otherwise we will goto else. For loops we will jump back after we compare the new result. 
+ 
+
+      3. let (with class assign and object):
+    The spaces for the elements used by let has already been reserved before. So it will use a let_lst to maintain reference for let (also mixedt with reference for case variables). The offset is 0 at first, and only cgen for let and case will increment it (different expr in a block can reuse the space for let and case). It will first initialize the variables introduced by let, and then store the result of init expr if it exists. Store the variable name and offset from fp in the head of let_lst, update the offset (+4), then pass it to the cgen for body. Now, for class assign and object, they will first look through let_lst from head, and return the variable as soon as it finds a match (The inner variable in let will be selected). If no match, then it will check the map for parameter, and then map for attributes.
+
+      4. case
+    For case, we take the practice the reference cgen program use. With the address of the <expr>’s return value is put into $a0, we visit class tag according to ($a0) with offset 8. And then we compare tag number with tag number for all branches. In order to accept subclass in our case program, we generate class name index in a dfs order, with recording previsit order and post-visit order, we make sure all subclass’s previsit order is in the range of previsit order and postvisit order of its superclass. Thus we can give a range (say 1 and 3 for object IO with subclass Main and A) for each class and compare it with the class name tag and excute efficiently. Also we compare the order in a reverse ordrer of the previsit states of all the class for all branch’s. Thus we can make sure we will jump into subtypes’s branch earlier than into compare with supertype.
+
+      5. new (SELF_TYPE)
+    If it’s not SELF_TYPE, then copy the corresponding protObj then init.But if it is SELF_TYPE, then use the class tag number stored in SELF(s0), check the class_objTab to find corresponding protObj and init, then copy and init the object.
+      
+     6.GC:
+erase all corresponding elements in the stack when exit a method or pop, also call _GenGC_Assign when assign to an attribute, which could happen in init and class assign.
+
+Test Case Choices:
+    We first ran GC enabled and collecting for each assign (-g -t) on examples provided in PA1, and they all passed.
+
+    Then, we write test cases to test the class_nameTab, class_objTab by printing name for object, and new SELF_TYPE. Also test the dispTab especially for overwriting the inherited methods. 
+
+We generate test cases for all expression, and focus on testing nested and mix expressions of let, case, dispatch, and also self and inheritence. We test case by feeding it different runtime types expect it will bring us output. In perticular, we give branch types include subclass and superclass, also we feed subclass to a superclass branch to test’s if it is still work when involve inheritance. For let we feed it with constant and variable and runtime objects. We expect it will allocate a new address for the id we introduce and is able to function as an assigned variable in the in expr. After the excution we will expect the environment is recovered. 
 
 
+new, case, let:
+    We generate tests cases especially for new SELF_TYPE, nested let, and object access for let variables.
 
-
-
+ 
+GC:  By executing let in a while loop, which executes 70000 times. It throws errors if no GC, but provides correct answer when GC is enabled.
 

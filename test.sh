@@ -10,6 +10,15 @@ do
     		then
     		python compare-cgen.py $file
     	fi
+        if [ ${file: -5} == ".test" ]
+                then
+                python compare-cgen.py $file
+        fi
+        if [ ${file: -5} == ".cool" ]
+                then
+                python compare-cgen.py $file
+        fi
+
     fi
 done
 

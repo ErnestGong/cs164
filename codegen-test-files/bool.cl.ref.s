@@ -17,13 +17,13 @@ _string_tag:
 	.word	4
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const15:
 	.word	4
@@ -161,10 +161,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	4
-	.word	11
+	.word	12
 	.word	String_dispTab
 	.word	int_const9
-	.ascii	"codegen-test-files/bool.cl"
+	.ascii	"./codegen-test-files/bool.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -172,7 +172,7 @@ int_const9:
 	.word	2
 	.word	4
 	.word	Int_dispTab
-	.word	26
+	.word	28
 	.word	-1
 int_const8:
 	.word	2
@@ -430,6 +430,15 @@ Main.main:
 	sw	$s4 48($fp)
 	sw	$s5 52($fp)
 	sw	$s6 56($fp)
+	sw	$zero 0($fp)
+	sw	$zero 4($fp)
+	sw	$zero 8($fp)
+	sw	$zero 12($fp)
+	sw	$zero 16($fp)
+	sw	$zero 20($fp)
+	sw	$zero 24($fp)
+	sw	$zero 28($fp)
+	sw	$zero 32($fp)
 	la	$s1 bool_const1
 	la	$s2 bool_const0
 	move	$s3 $s1

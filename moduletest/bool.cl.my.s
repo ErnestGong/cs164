@@ -17,13 +17,13 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
-	.word	0
+	.word	1
 	.word	-1
 str_const16:
 	.word	5
@@ -173,7 +173,7 @@ str_const0:
 	.word	10
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./moduletest//bool.cl"
+	.ascii	"./moduletest/bool.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -181,7 +181,7 @@ int_const11:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	21
+	.word	20
 	.word	-1
 int_const10:
 	.word	3
@@ -272,14 +272,14 @@ class_objTab:
 	.word	Object_init
 	.word	IO_protObj
 	.word	IO_init
+	.word	Main_protObj
+	.word	Main_init
 	.word	Int_protObj
 	.word	Int_init
 	.word	Bool_protObj
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	Main_protObj
-	.word	Main_init
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -378,7 +378,12 @@ Object_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 IO_init:
 	addiu	$sp $sp -12
@@ -392,7 +397,12 @@ IO_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Int_init:
 	addiu	$sp $sp -12
@@ -406,7 +416,12 @@ Int_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Bool_init:
 	addiu	$sp $sp -12
@@ -420,7 +435,12 @@ Bool_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 String_init:
 	addiu	$sp $sp -12
@@ -434,7 +454,12 @@ String_init:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main_init:
 	addiu	$sp $sp -12
@@ -446,21 +471,38 @@ Main_init:
 	jal	IO_init
 	la	$a0 bool_const1
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	la	$a0 bool_const0
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$a0 12($s0)
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	la	$a0 bool_const1
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	lw	$a0 16($s0)
 	sw	$a0 28($s0)
+	addiu	$a1 $s0 28
+	jal	_GenGC_Assign
 	la	$a0 bool_const0
 	sw	$a0 32($s0)
+	addiu	$a1 $s0 32
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
 Main.main:
 	addiu	$sp $sp -12
@@ -476,7 +518,7 @@ Main.main:
 	bne	$a0 $zero label0
 	la	$a0 str_const0
 	li	$t1 14
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label0:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -485,7 +527,7 @@ label0:
 	bne	$a0 $zero label1
 	la	$a0 str_const0
 	li	$t1 15
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label1:
 	lw	$t1 8($a0)
 	lw	$t1 4($t1)
@@ -496,7 +538,7 @@ label1:
 	bne	$a0 $zero label2
 	la	$a0 str_const0
 	li	$t1 15
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label2:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -508,13 +550,15 @@ label2:
 	bne	$a0 $zero label3
 	la	$a0 str_const0
 	li	$t1 16
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label3:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
 	lw	$a0 12($s0)
 	sw	$a0 36($s0)
+	addiu	$a1 $s0 36
+	jal	_GenGC_Assign
 	la	$a0 str_const3
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -522,7 +566,7 @@ label3:
 	bne	$a0 $zero label4
 	la	$a0 str_const0
 	li	$t1 19
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label4:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -531,7 +575,7 @@ label4:
 	bne	$a0 $zero label5
 	la	$a0 str_const0
 	li	$t1 20
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label5:
 	lw	$t1 8($a0)
 	lw	$t1 4($t1)
@@ -542,7 +586,7 @@ label5:
 	bne	$a0 $zero label6
 	la	$a0 str_const0
 	li	$t1 20
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label6:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -554,13 +598,15 @@ label6:
 	bne	$a0 $zero label7
 	la	$a0 str_const0
 	li	$t1 21
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label7:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr	$t1
 	lw	$a0 20($s0)
 	sw	$a0 40($s0)
+	addiu	$a1 $s0 40
+	jal	_GenGC_Assign
 	la	$a0 str_const4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -568,7 +614,7 @@ label7:
 	bne	$a0 $zero label8
 	la	$a0 str_const0
 	li	$t1 24
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label8:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -577,7 +623,7 @@ label8:
 	bne	$a0 $zero label9
 	la	$a0 str_const0
 	li	$t1 25
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label9:
 	lw	$t1 8($a0)
 	lw	$t1 4($t1)
@@ -588,7 +634,7 @@ label9:
 	bne	$a0 $zero label10
 	la	$a0 str_const0
 	li	$t1 25
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label10:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -600,7 +646,7 @@ label10:
 	bne	$a0 $zero label11
 	la	$a0 str_const0
 	li	$t1 26
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label11:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -609,12 +655,14 @@ label11:
 	bne	$a0 $zero label12
 	la	$a0 str_const0
 	li	$t1 28
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label12:
 	lw	$t1 8($a0)
 	lw	$t1 8($t1)
 	jalr	$t1
 	sw	$a0 36($s0)
+	addiu	$a1 $s0 36
+	jal	_GenGC_Assign
 	la	$a0 str_const3
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -622,7 +670,7 @@ label12:
 	bne	$a0 $zero label13
 	la	$a0 str_const0
 	li	$t1 29
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label13:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -631,7 +679,7 @@ label13:
 	bne	$a0 $zero label14
 	la	$a0 str_const0
 	li	$t1 30
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label14:
 	lw	$t1 8($a0)
 	lw	$t1 4($t1)
@@ -642,7 +690,7 @@ label14:
 	bne	$a0 $zero label15
 	la	$a0 str_const0
 	li	$t1 30
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label15:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -654,7 +702,7 @@ label15:
 	bne	$a0 $zero label16
 	la	$a0 str_const0
 	li	$t1 31
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label16:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -663,12 +711,14 @@ label16:
 	bne	$a0 $zero label17
 	la	$a0 str_const0
 	li	$t1 33
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label17:
 	lw	$t1 8($a0)
 	lw	$t1 8($t1)
 	jalr	$t1
 	sw	$a0 40($s0)
+	addiu	$a1 $s0 40
+	jal	_GenGC_Assign
 	la	$a0 str_const4
 	sw	 $a0 0($sp)
 	addiu	 $sp $sp -4
@@ -676,7 +726,7 @@ label17:
 	bne	$a0 $zero label18
 	la	$a0 str_const0
 	li	$t1 34
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label18:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -685,7 +735,7 @@ label18:
 	bne	$a0 $zero label19
 	la	$a0 str_const0
 	li	$t1 35
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label19:
 	lw	$t1 8($a0)
 	lw	$t1 4($t1)
@@ -696,7 +746,7 @@ label19:
 	bne	$a0 $zero label20
 	la	$a0 str_const0
 	li	$t1 35
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label20:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -708,7 +758,7 @@ label20:
 	bne	$a0 $zero label21
 	la	$a0 str_const0
 	li	$t1 36
-	jal	 _dispatch_abort
+	jal	_dispatch_abort
 label21:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
@@ -716,5 +766,10 @@ label21:
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
 	lw	$ra 4($sp)
-	addiu	$sp $sp 12
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
+	sw	$zero 4($sp)
+	addiu	$sp $sp 4
 	jr	$ra	
